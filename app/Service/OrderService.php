@@ -11,6 +11,7 @@ class  OrderService{
 
     public static function save_order($data){
 
+        //dd($data);
         $recieptId = mt_rand(10000, 99999);
         $items =  CartService::get_cart_items();
         $order = new Order;
@@ -27,7 +28,7 @@ class  OrderService{
         $order->order_date= $data['slot_day'];
         $order->collection_time=$data['slot_time'];
         $order->total= $data['total'];
-        $order->razorpayId = $order->pay_option === 1?$data['razorpayId']:'';
+        $order->razorpayId = $order->pay_option === '1'?$data['razorpayId']:'';
         $order->save();
 
 

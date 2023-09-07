@@ -20,9 +20,9 @@
                                         <th>Order Option</th>
                                         <th>Amount</th>
                                         <th scope="col">Order Date</th>
+                                        <th scope="col">Payment Status</th>
                                         <th scope="col">Action</th>
                                         <th scope="col">View</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -30,10 +30,11 @@
                                         @foreach ($orders as $order)
                                             <tr>
                                                 <td>{{ $order->recieptId }}</td>
-                                                <td>{{ $order->pay_option === '2' ? 'COD' : 'ONLINE' }}</td>
+                                                <td>{{ $order->pay_option === '2' ? 'COD' : 'RAZORPAY' }}</td>
                                                 <td>{{ $order->total }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($order->order_date)->forMat('d-m-Y') }}</td>
-
+                                                <td>{{ \Carbon\Carbon::parse($order->created_at)->forMat('d-m-Y') }}</td>
+                                                <td>{{ $order->status ==='1'?'COMPLETE ONLINE':'PENDING' }}</td>
+                                                
                                                 <td>
                                                     <a href="{{ route('order.download', [$order->id]) }}">
                                                         <button type="button" class="btn btn-success">Download</button>

@@ -9,12 +9,6 @@
           <h1 class="text-capitalize mb-5 text-lg">Sign Up</h1>
           <span class="text-white">Get access to your orders, lab tests & consultations</span>
 
-
-          <!-- <ul class="list-inline breadcumb-nav">
-            <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
-            <li class="list-inline-item"><span class="text-white">/</span></li>
-            <li class="list-inline-item"><a href="#" class="text-white-50">Book your Seat</a></li>
-          </ul> -->
         </div>
       </div>
     </div>
@@ -24,17 +18,19 @@
 <section class="appoinment section">
   <div class="container">
     <div class="row">
-      <div class="col-lg-4">
-        <div class="mt-3">
+      <div class="col-lg-5">
+        {{-- <div class="mt-3">
           <div class="feature-icon mb-3">
             <i class="icofont-support text-lg"></i>
           </div>
           <span class="h3">Call for an Emergency Service!</span>
           <h2 class="text-color mt-3">+{{env('PHONE')}} </h2>
-        </div>
+        </div> --}}
+        <img src="{{asset('images/bg/login.jpg')}}"  class="img-responsive" style="max-width: 100%"/>
+      
       </div>
 
-      <div class="col-lg-8">
+      <div class="col-lg-7">
         <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
           <h2 class="mb-2 title-color">Sign Up</h2>
           <p class="mb-4">Get medicine information, order medicines, book lab tests and consult online from the comfort of your home.</p>

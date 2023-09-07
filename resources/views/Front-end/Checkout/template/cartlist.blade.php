@@ -21,7 +21,9 @@
                                 <td>
                                     <h5 class="font-size-16 text-truncate">
                                         <a href="#" class="text-dark">
-                                            {{$details['type'] === 'package'?ucfirst($details['name']):ucfirst(implode(',', $details['name']))}}
+                                            {{$details['type'] === 'package'?ucfirst($details['name']):
+                                            
+                                            ucfirst(implode(',', $details['name']))}}
                                         </a>
                                     </h5>
                                     <p class="text-muted mb-0">

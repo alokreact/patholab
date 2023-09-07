@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SubTest;
 use App\Models\Organ;
 use DB;
+use App\Models\OrganTest;
 
 class TestByOrganController extends Controller
 {
@@ -110,9 +111,8 @@ class TestByOrganController extends Controller
             DB::beginTransaction();  
             //$organ = Organ::find($request->organ);
             $organ = Organ::where('id',$id)->first();
-            //dd($organ);
-            $organ->subtest()->sync($request->input('sub_tests',[]));
 
+            $organ->subtest()->sync($request->input('sub_tests',[]));
             DB::commit(); // Tell Laravel this transacion's all good and it can persist to DB
             return redirect()->back()->with('message', 'Test updated successfully');
   
@@ -134,6 +134,9 @@ class TestByOrganController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $organtest = OrganTest::find($id);
+        $organtest->delete();
+        $organtest->subtest()->wherePivot('grouptest_id', $grouptest->id)->detach();
+        return redirect()->route('organtest.index')->with('message','Deleted Successfully');
     }
 }

@@ -168,9 +168,11 @@ class CheckoutController extends Controller
                 'amount'          => $total * 1000, // 39900 rupees in paise
                 'currency'        => 'INR'
             ];
+
             $razorpayOrder = $api->order->create($order);
             //dd($razorpayOrder);
             $data['razorpayId'] = $razorpayOrder['id'];
+            
             $response = OrderService::save_order($data);
             $data['items'] = $items;
             $data['date'] = now();
@@ -194,7 +196,7 @@ class CheckoutController extends Controller
                     'total'=> $total                
                 ];
 
-            return view('Front-end.cart.payment-page', compact('response'));
+            return view('Front-end.Cart.payment-page', compact('response'));
             //return view('Front-end.Checkout.rzp_checkout', compact('response'));
         }
     }
@@ -208,6 +210,7 @@ class CheckoutController extends Controller
     public function handleCallback(Request $request){
         
         $api = new Api($this->razorpayKey, $this->razorpayId);
+        
         $razorpay_order_id = $request->input('razorpay_order_id');
         $razorpay_payment_id = $request->input('razorpay_payment_id');
         $razorpay_signature = $request->input('razorpay_signature');
@@ -218,17 +221,23 @@ class CheckoutController extends Controller
             'razorpay_payment_id' => $razorpay_payment_id,
             'razorpay_signature' => $razorpay_signature,
         );
+        //dd($attributes);
         try{
 
             //$api->payment->fetch($razorpay_payment_id)->capture(array('amount' => 1000)); // Replace 1000 with your actual amount
 
             $res= $api->utility->verifyPaymentSignature($attributes);
             
-            $order = Order::find($razorpay_order_id);
-            $order->status = 1;
-            $order->save();
+            $order = Order::where('razorpayId',$razorpay_order_id)->get();
+
+            foreach ($order as $record) {
+                $record->update([
+                    'status' => 1,
+                    'payment_id' =>$razorpay_payment_id    
+                ]);
+            }
         
-            //dd($res);
+                //dd($res);
                 //     $pdfService = new PdfService();
                 //     //dd($data['email']);
                 //     $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);

@@ -23,14 +23,20 @@
   <section class="appoinment section">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4">
-            <div class="mt-3">
+         <div class="col-lg-4">
+          <div class="overlay"></div>
+            {{--<div class="mt-3">
               <div class="feature-icon mb-3">
                 <i class="icofont-support text-lg"></i>
               </div>
                <span class="h3">Call for an Emergency Service!</span>
                 <h2 class="text-color mt-3">+{{env('PHONE')}} </h2>
-            </div>
+            </div>--}}
+
+            <img src="{{asset('images/bg/book-test.png')}}"  class="img-responsive" style="max-width: 100%"/>
+     
+
+
         </div>
   
         <div class="col-lg-8">

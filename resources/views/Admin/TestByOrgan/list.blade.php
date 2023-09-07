@@ -24,10 +24,10 @@
                                 </thead>
 
                                 <tbody>
-                                    @if(count($organs) > 0)
+                                    @if (count($organs) > 0)
                                         @foreach ($organs as $organ)
                                             <tr>
-                                                <td>{{$organ->name}}</td>
+                                                <td>{{ $organ->name }}</td>
                                                 <td>
                                                     @foreach ($organ->subtest as $subtest)
                                                         <span class="badge bg-info text-dark">
@@ -41,7 +41,8 @@
                                                                 class="bi bi-pencil-square"></i></button>
                                                     </a>
 
-                                                    <form action="{{route('admintestbyorgan.destroy',[$organ->id])}}" method="post" style="display:inline">
+                                                    <form action="{{ route('admintestbyorgan.destroy', [$organ->id]) }}"
+                                                        method="post" style="display:inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger ml-3">
@@ -64,6 +65,3 @@
         </section>
     </main>
 @endsection
-
-
- 

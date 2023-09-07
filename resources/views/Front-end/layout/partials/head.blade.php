@@ -6,7 +6,6 @@
   <title>CALL LABS</title>
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="{{asset('plugins/bootstrap/css/bootstrap.min.css')}}">
