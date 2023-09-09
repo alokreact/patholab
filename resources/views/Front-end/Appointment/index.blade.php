@@ -24,7 +24,7 @@
     <div class="container">
       <div class="row">
          <div class="col-lg-4">
-          <div class="overlay"></div>
+          <div class="side-overlay"></div>
             {{--<div class="mt-3">
               <div class="feature-icon mb-3">
                 <i class="icofont-support text-lg"></i>

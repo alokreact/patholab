@@ -238,7 +238,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
 }
 
 .section {
-  padding: 100px 0;
+  padding: 60px 0;
 }
 
 .section-sm {
@@ -264,7 +264,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   right: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.1;
+  opacity: 0.9;
   background: var(--primary-color);
 }
 
@@ -282,6 +282,18 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
+}
+.side-overlay:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background: var(--primary-color);
 }
 
 .text-sm {
@@ -360,7 +372,7 @@ a:focus {
 }
 
 .section-title {
-  margin-bottom: 70px;
+  margin-bottom: 35px;
 }
 
 .section-title h2 {
@@ -2021,11 +2033,21 @@ height: 100%;
   width: 105px;
   height: 105px;
   border-radius: 50%;
-  background-color: #fbb72c;
+  border:2px solid var(--primary-color);
   margin: 0 auto 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.icon-circle img{
+  height: 40px;
+}
+
+.icon-circle:hover{
+
+  background-color: var(--primary-color);
+  transform: scale(1.4);
 }
 
 .organ-circle{
@@ -2042,6 +2064,7 @@ height: 100%;
 
 .organ-circle:hover{
   background-color: var(--primary-color);
+  
 }
 
 .icon-circle i {
@@ -2062,11 +2085,12 @@ height: 100%;
 .organ-circle img{
   width: 60px;
   background-color: #fff;
+  border-radius: 30px;
 }
 
 .organ-circle img:hover{
 
-  transform:scale(1.1);
+  transform:scale(1.4);
 }
 .organ-circle{
 
@@ -2185,7 +2209,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
 .rates{
   display: flex;
     justify-content: space-around;
-    font-size: 13px;
+    font-size: 12px;
     margin: 20px 0px 10px 0px;
     padding: 5px;
     align-items: center;

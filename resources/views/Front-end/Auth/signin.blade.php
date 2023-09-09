@@ -23,8 +23,9 @@
 
     <div class="row">
       <div class="col-lg-5">
-       
-          <img src="{{asset('images/bg/login.jpg')}}"  class="img-responsive" style="max-width: 100%"/>
+        <div class="side-overlay"></div>
+         
+          <img src="{{asset('images/bg/book-test.png')}}"  class="img-responsive" style="max-width: 100%"/>
          
           {{-- <div class="feature-icon mb-3">
             <i class="icofont-support text-lg"></i>

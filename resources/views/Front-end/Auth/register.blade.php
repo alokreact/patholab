@@ -26,7 +26,7 @@
           <span class="h3">Call for an Emergency Service!</span>
           <h2 class="text-color mt-3">+{{env('PHONE')}} </h2>
         </div> --}}
-        <img src="{{asset('images/bg/login.jpg')}}"  class="img-responsive" style="max-width: 100%"/>
+        <img src="{{asset('images/bg/book-test.png')}}"  class="img-responsive" style="max-width: 100%"/>
       
       </div>
 
