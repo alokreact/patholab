@@ -13,6 +13,7 @@ use App\Models\SubTest;
 use App\Models\Report;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Arr;
 
 class OrderController extends Controller
 {
@@ -33,56 +34,52 @@ class OrderController extends Controller
     }
 
     public function show_order(Request $request){   
+       //dd($request->all());
         $tests =  OrderItem::where('order_id', $request->itemId)->get();
         //dd($tests);
-       
-       // $reports = Report::where('order_id', $request->itemId)->get();
-       // dd($reports);
+        $subtests =[];
 
-        //dd($tests[0]['product_id']);
         foreach($tests as $test){
             if($test ['type'] ==='package'){
-                $packages =  OrderItem::with('package')->where('order_id', $request->itemId)->get();
+
+                $packages = OrderItem::with('package.getLab')->where('order_id', $request->itemId)->get();
+                //dd($packages);
+                //$packages = $tests->pluck('package')->toArray();
+                $data = [
+                    'packages' => $packages,
+                ];   
             }
             else{
-                // $test_id = explode(',',$tests[0]['product_id']);
-                 //$subtests =  SubTest::find($test_id);
-                 $order_items = OrderItem::with('subtest')->where('order_id',$request->itemId)->get();
-                //dd($order_items);
+                //$test_id = explode(',',$tests[0]['product_id']);
+                //$subtests =  SubTest::find($test_id);
+                $order_items = OrderItem::with('subtest')->where('order_id',$request->itemId)->get();
+                $subtests = $order_items->toArray();
+                $data = [
+                    'subtest' => $subtests,
+                    'order_items'=>$tests,
+                    'packages'=>[]
+                ];
             }
         }
-        // $combinedResults =[];
+        
+        //dd($data['packages']);
 
-        // foreach ($reports as $report) {
-        //         $test_id = $report->test_id;
-        //         if (!array_key_exists($test_id, $combinedResults)) {
-        //             $combinedResults[$test_id] = [
-        //                 'test_id' => $report->test_id,
-        //                 'user_id' => $report->user_id,
-        //                 'order_id'=>$report->order_id,
-        //                 'report_url'=>$report->report_url
-        //             ];
-        //         }
-        //     }
-
-       //dd($combinedResults);
-        $packages = $tests->pluck('package')->toArray();
-        $subtests = $order_items->toArray();
-        //dd($subtests);
-        $data = [
-            'packages' => $packages,
-            //'package' => $tests->package->pluck('package_name')->toArray(),
-            'subtest' => $subtests,
-            'order_items'=>$tests,
-        ];
+        if(count($data['packages']) >0){
+            return view('Admin.Order.packagedetails',compact('data'));
+        }
+        else{
+            return view('Admin.Order.testdetails',compact('data'));
+        }
+       
         //dd($data);
-        return view('Admin.Order.testdetails',compact('data'));
+        
     }
 
     public function prescription_show(){
         $prescriptions =  Prescription::all();
         return view('Admin.Order.prescription', compact('prescriptions'));
     }
+
     public function uploadReport(Request $request){
 
         if($request->hasFile('file')) {   
@@ -110,6 +107,7 @@ class OrderController extends Controller
         //dd($html);
         return response()->json(['html' => $html]);
     }
+
     public function uploadnewReport(Request $request){
 
         if($request->hasFile('file')) {   

@@ -32,7 +32,7 @@
                 <h3 class="text-md">{{ ucfirst($package['package_name']) }}</h3>
             <div class="divider my-4"></div>
                 <p class="lead">{{$package['package_desc']}}</p>
-                <p>{{$package['package_desc']}}.</p>     
+                
                 
                 <h3 class="mt-5 mb-4">Tests</h3>
                     <div class="divider my-4"></div>

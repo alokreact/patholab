@@ -70,8 +70,8 @@
                     @forelse ($data['items'] as $item)    
                    
                     <tr width="100%">
-                      <td width="30%" style="text-align:left;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:0;border-top:0;word-wrap:break-word;font-family:Verdana, Geneva, Tahoma, sans-serif;">
-                        {{ucfirst(implode(',', $item['name']))}}
+                      <td width="30%" style="text-align:left;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:0;border-top:0;word-wrap:break-word;font-family:Verdana,Geneva,Tahoma, sans-serif;">
+                        {{$item['type'] === 'package'?ucfirst($item['name']):ucfirst(implode(',', $item['name']))}}
                       </td>
                       <td width="15%" style="text-align:right;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:0;border-top:0;font-family:Verdana, Geneva, Tahoma, sans-serif;">
                         {{ucfirst($item['lab_name'])}}

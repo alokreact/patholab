@@ -30,10 +30,7 @@ Route::get('/order/download/{id}', [App\Http\Controllers\Admin\OrderController::
 
 Route::get('/prescription/download', [App\Http\Controllers\Admin\OrderController::class, 'prescription_show'])->name('prescription.download');
 
-
 Route::get('/get-report', [App\Http\Controllers\Admin\OrderController::class,'getRecord'])->name('get-report');
-
-
 Route::get('/show/order', [App\Http\Controllers\Admin\OrderController::class, 'show_order'])->name('show.order');
 
 Route::resource('/slider', 'App\Http\Controllers\Admin\SliderController');
@@ -41,6 +38,10 @@ Route::resource('/slider', 'App\Http\Controllers\Admin\SliderController');
 Route::post('/upload-report', [App\Http\Controllers\Admin\OrderController::class,'uploadReport'])->name('upload.report');
 
 Route::post('/upload-new-report', [App\Http\Controllers\Admin\OrderController::class,'uploadnewReport'])->name('upload.newreport');
+
+
+Route::post('/subtest/price', [App\Http\Controllers\Admin\LabPackageController::class, 'getSubtestprice'])->name('subtestprice');
+
 
 Route::group(['middleware' => ['auth']], function () {   
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');

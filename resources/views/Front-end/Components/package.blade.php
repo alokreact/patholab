@@ -41,9 +41,6 @@
             
         </div>
         </div>
-
-       
-       
        
         {{-- <div class="feature-icon mb-4">
     <img class="card-img-top mt-0" src="{{ asset('Image/' . $package->getLab->image) }}"
@@ -59,7 +56,7 @@
 
                             <div class="doctor-profile">
                                 <div class="doctor-img">
-                                    <img src="{{ asset('images/team/2.jpg') }}" alt="doctor-image"
+                                    <img src="{{ $package->image? asset('images/bg/'. $package->image): asset('images/team/2.jpg') }}" alt="doctor-image"
                                         class="img-fluid w-100">
                                 </div>
 

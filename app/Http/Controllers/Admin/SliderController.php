@@ -90,11 +90,12 @@ class SliderController extends Controller
          $data = $request->except('_method', '_token'); 
           if ($request->file('image')) {  
 
-                 $file = $request->file('image');
+                $file = $request->file('image');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
-                $file->move(public_path('Image'), $filename);
+                $file->move(public_path('images/bg'), $filename);
                 $data['image'] = $filename;
         }    
+        
         $slider->update($data);
         //$organ->update($data);
         return redirect()->back()->with('message', 'Slider updated successfully');

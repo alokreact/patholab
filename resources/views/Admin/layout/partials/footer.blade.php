@@ -33,19 +33,19 @@
 
 <script type="text/javascript">
 
-$.ajaxSetup({
+    $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
             }
-        });
+    });
 
-    $(document).ready(function() {
+    $(document).ready(function(){
 
         $(".js-example-basic-single").select2();
-
         $(".js-example-tags").select2({
             tags: true
         });
+
         $(".js-grouptest-tags").select2({
             tags: true
         })
@@ -55,34 +55,39 @@ $.ajaxSetup({
     });
 
     $(document).ready(function() {
-        $(".js-labs").select2({
-            tags: true
-        });
+            $(".js-labs").select2({
+                tags: true
+            });
+            $('.js-labs').on('select2:selecting', function(e) {
+                var data = e.params.args.data;
+                //console.log('data',data.id);
 
-        $('.js-labs').on('select2:selecting', function(e) {
+                $.ajax({
+                    method:'POST',
+                    url:"{{route('subtestprice')}}",
+                    data:{id: data.id},
+                    success:function(res){
 
-            var data = e.params.args.data;
-            //console.log('data',data.dataset);
-
-            var price = $(this).find(":selected").data("price");
-
-            var dummy =
+                        //console.log('ress>>',res)
+                var dummy =
                 '<label for="inputEmail3" class="col-sm-2 col-form-label mt-3">Details</label><div class="col-sm-5 "><input type="text" class="form-control" id="inputText" name="subtest_id[]" value="' +
                 data.text +
                 '"></div><div class="col-sm-5"><input type="text" class="form-control" id="inputText" name="price[' +
-                data.id + ']" placeholder="Price" value="' + price + '"></div>\r\n';
+                data.id + ']" placeholder="Price" value="' + res.price + '"></div>\r\n';
+                $('#details').append(dummy);
+                    }
 
-            $('#details').append(dummy);
+                })
+                //var price = $(this).find(":selected").data("price");
+            });
 
-        });
-
-        $('.js-labs').on('select2:unselecting', function(e) {
-            console.log('removing: ', e.params.args.data);
-        });
+            $('.js-labs').on('select2:unselecting', function(e) {
+                console.log('removing: ', e.params.args.data);
+            });
     });
 
-    $('#js-labs').select2('data');
 
+    $('#js-labs').select2('data');
 
     $('.open-modal').click(function() {
         var itemId = $(this).data('id');

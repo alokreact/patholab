@@ -95,6 +95,6 @@ class ProfileController extends Controller
 
     public function product(){
 
-        return view('Front-end.Search.index');
+        return view('Front-end.Profile.booking');
     }
 }

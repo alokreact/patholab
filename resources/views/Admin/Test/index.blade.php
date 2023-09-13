@@ -4,7 +4,7 @@
 
 @section('content')
     <main id="main" class="main">
-        @include('Admin.layout.partials.breadcrumb',['first_link'=>'Test'])
+        @include('Admin.layout.partials.breadcrumb', ['first_link' => 'Test'])
 
         <section class="section">
             <div class="row">
@@ -21,7 +21,7 @@
                                         <th>Price</th>
                                         <th>Volume</th>
                                         <th>Sample Type</th>
-                                         <th scope="col">Action</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,10 +38,11 @@
                                                         <button type="button" class="btn btn-success"><i
                                                                 class="bi bi-pencil-square"></i></button>
                                                     </a>
-                                                    <form action="{{route('test.destroy',[$subtest->id])}}" method="post" style="display:inline">@csrf
+                                                    <form action="{{ route('test.destroy', [$subtest->id]) }}" method="post"
+                                                        style="display:inline">@csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger ml-3"><i
-                                                                class="ik ik-trash-2"></i></button>
+                                                                class="bi bi-trash"></i></button>
                                                     </form>
                                                 </td>
 

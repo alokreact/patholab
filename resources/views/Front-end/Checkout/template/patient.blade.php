@@ -9,7 +9,6 @@
 
              <h5 class="font-size-16 mb-1">Add Patients</h5>     
              {{-- <p class="text-muted text-truncate mb-4">Neque porro quisquam est</p> --}}
-             
              @if(count($patients) > 0) 
                 <input type="button" class="btn btn-success" value="+" id="show_patient_btn" style="float: right"/>
              @else
@@ -17,11 +16,9 @@
              @endif
              
              <div class="mb-3">
-
                  @if(count($patients) > 0)
                      <div class="row" id="patient-list">
                          @foreach ($patients as $patient)
-                    
                              <div class="col-lg-4 col-sm-6 mb-2">
                                  <div data-bs-toggle="collapse">
                                      <label class="card-radio-label mb-0">
@@ -37,14 +34,25 @@
                                                  class="text-muted fw-normal d-block">{{ ucfirst($patient->gender == '1' ?'Male':'Female') }}</span>
                                          </div>
                                      </label>
+                                     <div class="action_box">
                                      <div class="edit-btn bg-light  rounded">
                                          <a href="#" data-bs-toggle="tooltip" data-placement="top" title=""
                                              data-bs-original-title="Edit">
                                              <i class="bx bx-pencil font-size-16"></i>
                                          </a>
+                                        </div>
+                                    <div class="edit-btn bg-light  rounded">
+                                    
+                                         <a href="#" data-bs-toggle="tooltip" data-placement="top" title=""
+                                         data-bs-original-title="Edit">
+                                         <i class="bx bxs-trash font-size-16"></i>
+                                        </a>
                                      </div>
+                                     </div>
+
                                  </div>
                              </div>
+                             <div id="new_patient"></div>
                          @endforeach
 
                      </div>

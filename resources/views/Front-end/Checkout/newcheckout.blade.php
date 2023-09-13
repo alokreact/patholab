@@ -239,6 +239,7 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
 
+<div class="checkout">
     <div class="container">
         <div class="row">
             <div class="col-xl-8">
@@ -248,7 +249,7 @@
                             @include('Front-end.Checkout.template.address')
                       
                             @include('Front-end.Checkout.template.patient')
-                      
+                       
                             <li class="checkout-item">
                                     @include('Front-end.Checkout.template.slot')
                                 </div>
@@ -264,7 +265,7 @@
                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                     </div> <!-- end col -->
 
-                    <div class="col">
+                    <div class="col" style="display: flex;place-content: end">
                         <div class="text-end mt-2 mt-sm-0">
                             <input type="submit" class="btn btn-success" value="Proceed">
                                 {{-- <i class="mdi mdi-cart-outline me-1"></i>--}}
@@ -281,4 +282,5 @@
         </div>
         <!-- end row -->
     </div>
+</div>    
 @endsection

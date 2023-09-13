@@ -288,12 +288,14 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
+    
+  width: 46%;
   height: 100%;
   opacity: 0.1;
   background: var(--primary-color);
+  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .text-sm {
@@ -628,10 +630,12 @@ height: 100%;
 
 .client-thumb {
   text-align: center;
+  height: 81px;
+  width: 275px;
 }
 
 .features {
-  margin-top: -70px;
+  margin-top: -45px;
 }
 
 .feature-item {
@@ -811,6 +815,11 @@ height: 100%;
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+ /* .doctor-profile{
+
+  width: 330px;
+  height: 280px;
+}  */
 
 .lh-35 {
   line-height: 35px;
@@ -1642,7 +1651,7 @@ height: 100%;
         display: flex;
         line-height: normal;
         text-align: center;
-        justify-content: space-end;
+        justify-content: space-between;
     }
 
     .btn-signin {
@@ -1656,17 +1665,20 @@ height: 100%;
         margin-right:0px;
         color: #fff;
     }
+    .signup form{
+      margin-top: 9px;
+    }
 
     .btn-signup {
         font-family: inherit;
 
         border-radius: 100px;
-        border: 1px solid #FF9C00;
+        border: 1px solid var(--secondary-color);
         background: rgba(255, 255, 255, 0.40);
         /*width: 91px;*/
         /*height: 35px;*/
         flex-shrink: 0;
-        margin-left:-45px;
+        /* margin-left:-45px; */
     }
 
 
@@ -2160,15 +2172,33 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   .signup{
     display: none;
   }
+  .btn-signup{
+    margin-left: 0px;
+  }
+  #search-results{
+
+    font-size: 11px !important;
+  }
+  .chip{
+    font-size: 12px !important;
+  }
+  .text-section h5{
+    font-size: 12px !important;
+  }
   
 }
 
+@media (min-width: 1700px){
+.checkout .container{
+
+    max-width: 1470px;
+  }
+}
 /* .rounded-circle{
   background-color:#01D5A3 !important ;
 } */
 
 .border-rad{
- 
   border-radius: 20px;
   width: 86%;
 }
@@ -2452,6 +2482,23 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   font-size: 12px;
 }
 .text-warning {
-
   color: #F01400 !important;
 }
+
+.appoinment{
+  position: relative;
+}
+
+/* .appoinment::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 38%;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: url("../images/bg/book-test.png") no-repeat 50% 50%;
+  background-size:contain;
+
+} */

@@ -1,6 +1,7 @@
 @extends('Admin.layout.master')
 @section('title', __('LabPackage'))
 @section('action', __('Create'))
+
 @section('content')
     <main id="main" class="main">
         @include('Admin.layout.partials.breadcrumb')

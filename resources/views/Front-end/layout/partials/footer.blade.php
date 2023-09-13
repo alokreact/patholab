@@ -133,60 +133,56 @@
 
 <script>
 	
-	 $.ajaxSetup({
+	$.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
             }
-        });
+	});
 
-		$('#search-input').on('input', function() {
-			console.log('wrt');
-			var locationurl = "{{route('subtest.ajax')}}";
+	$('#search-input').on('input', function() {
+		console.log('wrt');
+		var locationurl = "{{route('subtest.ajax')}}";
+		var query = $(this).val();
 
-                var query = $(this).val();
-
-                if (query.length >= 2) { // Adjust the minimum number of characters required before triggering the search
-                    $.ajax({
-                        url: locationurl,
-                        type: 'POST',
-                        data: {query: query},
-                        success: function(data) {
-                            $('#search-results').empty();
-                            if (data.length > 0) {
-                           		$.each(data, function(index, product) {
-                        			$('#search-results').append('<a href="#" class="list-group-item list-group-item-action" data-id="' + product.id + '">' + product.sub_test_name + '</a>');
-                    			});
-                            } 
-							else {
-                                $('#search-results').append($('<option>', {
-                                    value: '',
-                                    text: 'No results found'
-                                }));
-                            }
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
-                    });
-                } else {
-                    $('#search-results').empty();
-                }
-            });
+		if (query.length >= 2) { // Adjust the minimum number of characters required before triggering the search
+			$.ajax({
+				url: locationurl,
+				type: 'POST',
+				data: {query: query},
+				success: function(data) {
+					$('#search-results').empty();
+					if (data.length > 0) {
+						$.each(data, function(index, product) {
+							$('#search-results').append('<a href="#" class="list-group-item list-group-item-action" data-id="' + product.id + '">' + product.sub_test_name + '</a>');
+						});
+					} 
+					else {
+						$('#search-results').append($('<option>', {
+							value: '',
+							text: 'No results found'
+						}));
+					}
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		} else {
+			$('#search-results').empty();
+		}
+	});
 
 		
 		
-		$(document).on('click', '.list-group-item', function() {
-            var productName = $(this).text();
-			console.log('ert',productName);
-			var subtest = $(this).data("id");
-
-			console.log('ert',subtest);
-
-		 
-            $('#selectedProduct').val(subtest);
-            $('#search-input').val(productName);
-            $('#search-results').empty();
-        });
+	$(document).on('click', '.list-group-item', function() {
+		var productName = $(this).text();
+		console.log('ert',productName);
+		var subtest = $(this).data("id");
+		console.log('ert',subtest);
+		$('#selectedProduct').val(subtest);
+		$('#search-input').val(productName);
+		$('#search-results').empty();
+	});
 
 
 	
@@ -258,11 +254,19 @@
 
 
 		$("#menu-toggle").click(function(e) {
-  e.preventDefault();
+  			e.preventDefault();
 
-  $("#wrapper").toggleClass("toggled");
-	$('#wrapper').show();		
-});
+  			$("#wrapper").toggleClass("toggled");
+				$('#wrapper').show();		
+		});
+
+		$("#show_patient_btn").click(function(e) {
+			console.log('>>>')
+			e.preventDefault();
+			$(this).hide();
+			$('#patient-add').show();
+			//$('#patient-list').hide();
+		});
 
 
 		$(".cart_remove").click(function(e) {
@@ -295,9 +299,7 @@
 
 		$(".cart_update").change(function (e) {
 			e.preventDefault();
-	
 			var ele = $(this);
-	
 			$.ajax({
 				url: '{{ route('update_cart') }}',
 				method: "patch",
@@ -313,7 +315,7 @@
 		});
 
 
-		$(document).ready(function() {
+	$(document).ready(function() {
 			$('#checkout-form').submit(function(e) {
 				e.preventDefault();
 
@@ -389,18 +391,20 @@
 				}
 
 			})
-		});	
+	});	
 
+	
+	
 	$("#add_patient").on('click',function(event) {
+		
 		event.preventDefault(); // Prevent form submission
-	 	$(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
+		$(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
 
 		var name = $("#patient_name").val();
     	var age = $("#age").val();
 		var gender = $("#gender").val();		
 
 		var errors = [];
-
 		if (name.trim() === '') {
 			errors.push('Name is required.');
 		}
@@ -412,7 +416,7 @@
 			errors.push('Gender is required.');
 		}
 
-		if (errors.length > 0) {
+		if(errors.length > 0) {
 			var errorHtml = '<ul>';
 			errors.forEach(function(error) {
 				errorHtml += '<li>' + error + '</li>';
@@ -424,43 +428,50 @@
 				//title: 'Validation Errors',
 				html: errorHtml,
 			});
+			$(this).html('Save');	
 		} 
-		else {
-		
-		$.ajax({
-			type: "POST",
-			url: "{{route('savepatient')}}", // Your backend processing script
-			data: {
-				name: name,
-				age: age,
-				gender:gender
-			},
+
+		else{
+			$.ajax({
+				type: "POST",
+				url: "{{route('savepatient')}}", // Your backend processing script
+				data: {
+					name: name,
+					age: age,
+					gender:gender
+				},
 			success: function(response) {
-				if(response.status === 'success'){
-						
-					Swal.fire({
-                    	icon: 'success',
-                    	title: 'Added Successfully',
-                    	//html: errorHtml,
-                	}).then((result) => {
-          				if (result.isConfirmed) {
-            				window.location.reload(); // Reload the page
-          				}
-        			});			
+				if(response.status === 'success'){	
+
+					//console.log('>>msg',response.patient); return;
+					$('#patient-add').hide();
+
+					var patient_block = '<div class="col-lg-4 col-sm-6 mb-2"><div data-bs-toggle="collapse">'
+						patient_block +='<label class="card-radio-label mb-0"><input type="checkbox" name="patient[]" id="patient" class="card-radio-input" value="'+response.patient.id+'">'
+						patient_block +='<div class="card-radio text-truncate p-3"><span class="fs-14 mb-2 d-block">' + response.patient.name+ ' </span><span class="text-muted fw-normal text-wrap mb-1 d-block">Age - ' + response.patient.age+ '</span><span class="text-muted fw-normal text-wrap mb-1 d-block">' + response.patient.gender+ '</span></div></label>'
+						patient_block +='<div class="edit-btn bg-light  rounded">'
+						patient_block +='<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bx-pencil font-size-16"></i></a>'
+						patient_block += '<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bxs-trash font-size-16"></i></a></div>'
+						patient_block +='</div>\r\n';
+					
+							$('#patient-list').append(patient_block);
+
+
+					// Swal.fire({
+                    // 	icon: 'success',
+                    // 	title: 'Added Successfully',
+                    // 	//html: errorHtml,
+                	// }).then((result) => {
+          			// 	if (result.isConfirmed) {
+            		// 		window.location.reload(); // Reload the page
+          			// 	}
+        			// });			
 				}
-	
 			}
 		});
 	}
   	
 	});
-
-	$('#show_patient_btn').on('click', function(){
-		$(this).hide();
-		$('#patient-add').show();
-
-		$('#patient-list').hide();
-	})  
 
 </script>
 @yield('page_specific_js')

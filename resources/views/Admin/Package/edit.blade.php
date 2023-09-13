@@ -36,7 +36,8 @@
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Package Desc</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="inputText" name="package_desc">
+                                        {{-- <input type="text" class="form-control" id="inputText" name="package_desc"> --}}
+                                        <textarea class="form-control" style="height: 200px" name="package_desc">{{$package->package_desc}}</textarea>              
                                         @if ($errors->has('package_desc'))
                                             <strong style="color:red"> {{ $errors->first('package_desc') }}</strong>
                                         @endif
@@ -81,6 +82,28 @@
                                     </div>
                                 </div>
 
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" id="inputEmail" name="image"
+                                            onchange="previewImage(event)">
+
+                                        <img id="imagePreview" src="#" alt="Image Preview"
+                                            style="display: none; max-width: 200px; max-height: 200px;">
+                                        @if ($errors->has('image'))
+                                            <strong style="color:red"> {{$errors->first('image') }}</strong>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <img src="{{ asset('images/bg/' . $package->image) }}" height='100px' width='100px' />
+
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Category</label>

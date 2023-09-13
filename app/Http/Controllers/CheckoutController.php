@@ -23,14 +23,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
-     private $razorpayId = "DLDiT3zaLoZI9ZsN27Yd7dJ0";
-    private  $razorpayKey = "rzp_test_BqPPqd2H5aA49G";
+    //private $razorpayId = "DLDiT3zaLoZI9ZsN27Yd7dJ0";
+    // private  $razorpayKey = "rzp_test_BqPPqd2H5aA49G";
 
-    // private $razorpayId = "rzp_live_Sov1SDDvaLh47j";
-    // private $razorpayKey = "rHIkpFOzmESeLw2IpNbhyI99";
+    private $razorpayId = "rHIkpFOzmESeLw2IpNbhyI99";
+    private $razorpayKey = "rzp_live_Sov1SDDvaLh47j";
 
     public function addPatient(Request $request)
     {
+        
         $data = $request->all();
        //dd($request->all());
 
@@ -40,9 +41,13 @@ class CheckoutController extends Controller
         $patient->gender = $request->input('gender');
         $patient->user_id = Auth::user()->id;
         $patient->save();
-        
+        $new_patient = $patient->toArray();
+        //dd($new_patient);
+
+        $res_patient = ['name'=> $new_patient['name'], 'age'=> $new_patient['age'],
+                         'gender'=>$new_patient['gender'] == '1'?'Male':'female'];
  
-        return response()->json(['status'=>'success','message' => 'Data saved successfully']);
+        return response()->json(['status'=>'success','patient'=>$res_patient]);
         //return view('layouts.frontend.user-details');
     }
 
@@ -162,10 +167,10 @@ class CheckoutController extends Controller
             $data['total'] = $total;
             //dd($this->razorpayId);
             $api = new Api($this->razorpayKey, $this->razorpayId);
-            //dd($api);
+           // dd($api);
             $order = [
                 'receipt'         => 'order_'.$recieptId,
-                'amount'          => $total * 1000, // 39900 rupees in paise
+                'amount'          => $total * 100, // 39900 rupees in paise
                 'currency'        => 'INR'
             ];
 

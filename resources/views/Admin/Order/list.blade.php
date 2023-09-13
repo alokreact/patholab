@@ -42,14 +42,13 @@
                                                 </td>
                                                 <td>
                                                     <form method="get" action="{{route('show.order')}}">
-
                                                         <input type="hidden" value="{{ $order->id }}" name="itemId"/>
+                                                        <input type="hidden" value="{{ $order->type }}" name="type"/>
                                                         <button type="submit" class="btn btn-primary open-modal">
-                                                        View
-                                                    </button>
+                                                          View
+                                                        </button>
 
                                                     </form>
-
                                                 </td>
                                             </tr>
                                             <!-- View Modal -->

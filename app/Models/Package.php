@@ -15,7 +15,7 @@ class Package extends Model
 
     protected $guarded = [];
    
-    protected $fillable = ['lab_name','category','package_name','price','package_desc','status'];
+    protected $fillable = ['lab_name','category','package_name','price','package_desc','image','status'];
 
     // public function parenttest()
     // {

@@ -1,65 +1,31 @@
 @extends('Front-end.layout.mainlayout')
+
 @section('content')
-    <section class="page-title bg-1">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="block text-center">
-                        <h1 class="text-capitalize mb-5 text-lg">My Profile</h1>
-                        <span class="text-white">Order Overview</span>
-                    </div>
+<section class="page-title bg-1">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block text-center">
+                    <h1 class="text-capitalize mb-5 text-lg">My Profile</h1>
+                    <span class="text-white">Order Overview</span>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section class="section blog-wrap">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-12 mb-5">
-
-                            <div class="row">
-
-                                <div class="col-md-4"
-                                    style="width: 100%;
-                        height: auto;
-                        flex-shrink: 0;background: #FBF9F8;">
-
-                                    <ul class="menu" style="list-style: none;padding:45px">
-                                        <li
-                                            style="border-bottom: 1px Solid #000;
-                                    padding: 19px">
-                                            <img src="{{ asset('images/home.png') }}" class="fluid-img" />
-                                            <a href=""
-                                                style="color: #000;
-                                        font-family: inherit;
-                                        font-size: 14px;
-                                        font-style: normal;
-                                        font-weight: 600;
-                                        line-height: normal; padding:12px"
-                                                class="mb-2">Profile</a>
-                                        </li>
-
-                                        <li
-                                            style="border-bottom: 1px Solid #000;
-                                    padding: 19px">
-                                            <img src="{{ asset('images/clipboard.png') }}" class="fluid-img" /> <a
-                                                href=""
-                                                style="color: #000;
-                                        font-family: inherit;
-                                        font-size: 14px;
-                                        font-style: normal;
-                                        font-weight: 600;
-                                        line-height: normal;padding:12px"
-                                                class="mb-2">Report Download</a>
-                                        </li>
-
-                                </div>
-
-                                <div class="single-blog-item col-md-8">
+<section class="section blog-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12 mb-5">
+                        <div class="row">
+                            
+                            @include('Front-end.Profile.sidebar')
+                            
+                                <div class="single-blog-item col-md-7">
                                     <table id="cart" class="table table-hover table-condensed cart-table">
                                         <thead>
                                             <tr>
@@ -89,7 +55,7 @@
                                                     <td>
                                                         @if ($order_item->report_url)
                                                             @php
-                                                                $report_urls = explode(',', $order_item->report_url);                          
+                                                                $report_urls = explode(',', $order_item->report_url);
                                                             @endphp
                                                             @foreach ($report_urls as $url)
                                                                 <a href="{{ asset('/public/Image/' . $url) }}"

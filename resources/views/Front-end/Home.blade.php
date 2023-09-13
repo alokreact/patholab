@@ -54,7 +54,7 @@
 
     @include('Front-end.Components.package')
 
-    <section class="section about">
+    <section class="section about gray-bg">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-4 col-sm-6">
@@ -83,7 +83,7 @@
     </section>
 
 
-    <section class="section service gray-bg">
+    <section class="section service">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-7 text-center">

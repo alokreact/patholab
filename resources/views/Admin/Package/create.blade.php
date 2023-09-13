@@ -1,11 +1,8 @@
 @extends('Admin.layout.master')
- 
 @section('title', __('Package'))
 @section('action', __('Create'))
-
 @section('content')
 <main id="main" class="main">
-
   @include('Admin.layout.partials.breadcrumb',['page'=>'Home',])
   
 
@@ -48,7 +45,7 @@
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Package Desc</label>
             <div class="col-sm-10">
-                 <textarea class="form-control" style="height: 100px" name="package_desc"></textarea>               
+                 <textarea class="form-control" style="height: 200px" name="package_desc"></textarea>               
                 @if($errors->has('package_desc'))
                     <strong style="color:red"> {{ $errors->first('package_desc') }}</strong>
                 @endif
@@ -58,14 +55,10 @@
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Lab Name</label>
             <div class="col-sm-10">
-
               <select name="lab_name" class="form-control @if ($errors->has('lab_name')) is-invalid @endif">
-
                 <option value="0">--Select Lab--</option>
                 @forelse($labs as $lab)
-
-                <option value="{{$lab->id}}">{{$lab->lab_name}}</option>
-
+                  <option value="{{$lab->id}}">{{$lab->lab_name}}</option>
                 @empty
 
                 @endforelse
@@ -130,7 +123,16 @@
         </div>
         </div>
 
+        <div class="row mb-3">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Image</label>
+          <div class="col-sm-10">
+              <input type="file" class="form-control" id="inputEmail" name="image">
+              @if ($errors->has('image'))
+                  <strong style="color:red"> {{ $errors->first('image') }}</strong>
+              @endif
 
+          </div>
+       </div>
 
              <fieldset class="row mb-3">
               <legend class="col-form-label col-sm-2 pt-0">Status</legend>

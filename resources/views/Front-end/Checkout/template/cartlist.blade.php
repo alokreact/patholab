@@ -9,7 +9,7 @@
                 <table class="table table-centered mb-0 table-nowrap">
                     <thead>
                         <tr>
-                            <th class="border-top-0" style="width: 110px;" scope="col">Test/Package</th>
+                            <th class="border-top-0" style="width: 330px;" scope="col">Test/Package</th>
                             <th class="border-top-0" scope="col">Price</th>
                         </tr>
                     </thead>
@@ -73,15 +73,15 @@
                 <h5 class="font-size-16 mb-0">Payment<span class="float-end ms-2"></span></h5>
 
                 <div class="col-lg-12 col-sm-12 mb-2 mt-4">
-                    <div data-bs-toggle="collapse">
+                    <div data-bs-toggle="collapse" style="display: flex;justify-content: space-between">
                         <label class="card-radio-label mb-0">
-                           <div class="card-radio text-truncate p-3" style="display: inline-flex">
+                           <div class="card-radio text-truncate" style="display: inline-flex">
                                 {{-- <span class="fs-14 mb-2 d-block">Razorpay</span> --}}
-
                                 <img src="{{asset('images/service/Razorpay-removebg.png')}}" class="img-responsive razoprpayimg"  />
                             </div>
                         </label>
-                        <div class="edit-btn rounded" style="margin-top: -60px">
+
+                        <div class="edit-btn rounded" style="margin-top:30px">
                             <input type="radio" name="pay_option" id="patient"
                             class="card-radio-input" style="display: block; height:30px" value="1">
                         </div>
@@ -92,7 +92,7 @@
                     <div data-bs-toggle="collapse">
                         <label class="card-radio-label mb-0">
                            <div class="card-radio text-truncate p-3">
-                                <span class="fs-14 mb-2 d-block">Cash on Sample Pickup</span>
+                                <span class="fs-14 mb-2 d-block">Pay by Cash/Card during sample collection</span>
                             </div>
                         </label>
                         <div class="edit-btn rounded">
