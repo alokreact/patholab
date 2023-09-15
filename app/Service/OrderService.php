@@ -32,32 +32,40 @@ class  OrderService{
         $order->save();
 
 
-        if($order->id){ 
-            //dd($items);
-            foreach($items as $item) { 
-                $item_id = explode(',',$item['id']);
-                $single_price = $item['type'] === 'package'? '':explode(',',$item['singleprice']);
-                //dd($item_id);
-
-                foreach($item_id as $key=>$product_id){
-                    $order_item = new OrderItem;
-                    $order_item->user_id=Auth::user()->id;
-                    $order_item->product_id= trim($product_id);
-                    $order_item->order_id= $order->id;
-                    $order_item->price= $item['type'] === 'package'?$item['price']:$single_price[$key];
-                    $order_item->qty= $item['quantity'];
-                    $order_item->lab_id= $item['lab_name'];
-                    $order_item->type= $item['type'];
-                    $order_item->patient_id= implode(',' , $data['patient']);
-                    $order_item->save();
-                    }
-                }        
-        }
+        
 
         return $order->id;
 
 
     }
+
+
+    public static function save_order_items($patient,$order_id, $items){
+
+        $insertedIds =[];
+            foreach($items as $item) { 
+                $item_id = explode(',',$item['id']);
+                $single_price = $item['type'] === 'package'? '':explode(',',$item['singleprice']);
+                //dd($item_id);
+                foreach($item_id as $key=>$product_id){
+                    $order_item = new OrderItem;
+                    $order_item->user_id=Auth::user()->id;
+                    $order_item->product_id= trim($product_id);
+                    $order_item->order_id= $order_id;
+                    $order_item->price= $item['type'] === 'package'?$item['price']:$single_price[$key];
+                    $order_item->qty= $item['quantity'];
+                    $order_item->lab_id= $item['lab_name'];
+                    $order_item->type= $item['type'];
+                    $order_item->patient_id= implode(',' , $patient);
+                    $order_item->save();
+
+                    $insertedIds[] = $order_item->id;
+                    }
+                }    
+                return $insertedIds;
+                    
+        
+        }
     
 }
 

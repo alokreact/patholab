@@ -14,13 +14,13 @@
         </div>
     </section>
 
-
     <style>
         .booking-container {
             gap: 20px;
             display: flex;
             margin-bottom: 20px;
             flex-direction: column;
+            justify-content: flex-end;
         }
 
         .booking-date {
@@ -71,60 +71,73 @@
         }
 
         .bookingCard__buttons {
-
             background: linear-gradient(223.23deg, hsla(0, 0%, 100%, .5) -39.74%, hsla(10, 71%, 92%, .5) 94.44%);
             padding: 20px 40px;
             display: flex;
             justify-content: flex-end;
-
         }
     </style>
+
     <section class="section blog-wrap">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-12 mb-5">
-                            <div class="row">
-
+                            <div class="booking-section"> 
+                            
+                            <div class="row" style="display: flex;justify-content: end">
                                 @include('Front-end.Profile.sidebar')
 
-                                <div class="single-blog-item col-md-7">
-                                    <div class="booking-container">
-                                        <p class="booking-date"> 12 August 1997</p>
-                                        <div class="booking-box">
-                                            <div class="booking-box_top">
-                                                <h3>Booking ID: <span>5086842</span></h3>
-                                            </div>
+                                @foreach ($order_items as $items)
+                                    <div class="single-blog-item col-md-7">
+                                        <div class="booking-container">
+                                            <p class="booking-date">
+                                                Order Date: {{ date('d-m-Y', strtotime($items->created_at)) }}
+                                            </p>
+                                            <div class="booking-box">
+                                                <div class="booking-box_top">
+                                                    <h3>Booking ID: <span>{{ $items->receiptId }}
+                                                        </span>
+                                                    </h3>
+                                                </div>
 
-                                            <div class="booking_collectionDetails">
-                                                <h3>Collection date &amp; time</h3>
-                                                <div class="collectionDetails_info">
-                                                    <div class="collectionDetails_info_dateTime">
-                                                        <p>16<sup>th</sup> Aug'23 | 06:00 AM - 07:00 AM</p>
+                                                <div class="booking_collectionDetails">
+                                                    <h3>Collection date &amp; time</h3>
+                                                    <div class="collectionDetails_info">
+                                                        <div class="collectionDetails_info_dateTime">
+
+                                                            <p> {{ date('d-m-Y', strtotime($items->order_date)) }}<sup></sup>
+                                                                | {{ $items->collection_time }}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="bookingCard__family">
-                                                <div class="bookingCard__family__member">
-                                                    <h2>Test | 23 | Male</h2>
-                                                    <ul>
-                                                        <li>Fit India Full Body checkup with Vitamin Screening</li>
-                                                        <li>Complete Blood Count (CBC) Test</li>
-                                                    </ul>
+                                                <div class="bookingCard__family">
+                                                    <div class="bookingCard__family__member">
+
+
+                                                        <ul>
+                                                            @foreach ($items->OrderItems()->where('order_id', $items->id)->get() as $items)
+                                                                @foreach ($items->subtest()->where('id', $items->product_id)->get() as $subtests)
+                                                                    <li>{{ $subtests->sub_test_name }}</li>
+                                                                @endforeach
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="bookingCard__buttons">
+                                                    <button class="btn btn-main-2 btn-full-round" type="button">Download
+                                                        Reports</button>
                                                 </div>
                                             </div>
-
-                                            <div class="bookingCard__buttons">
-                                                <button class="btn btn-main-2 btn-full-round" type="button">Download
-                                                    Reports</button>
-                                            </div>
-
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\SubTest;
 use App\Models\Package;
+use App\Models\Order;
+use App\models\Patient;
 
 class OrderItem extends Model
 {
@@ -23,9 +25,16 @@ class OrderItem extends Model
 
     public function package()
     {
+        return $this->hasMany(Package::class,'id','product_id');   
+    }
 
-        return $this->hasMany(Package::class,'id','product_id');
-        
+    public function order(){
+
+        return $this->hasOne(Order::class,'id','order_id');   
+    }
+
+    public function patient(){
+        return $this->hasMany(Patient::class,'id','patient_id');
     }
 
 }

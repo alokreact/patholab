@@ -12,22 +12,23 @@ use App\Service\PdfService;
 use App\models\Report;
 
 use App\Mail\OrderEmail;
+use App\models\Order;
 
-class ProfileController extends Controller
-{
+class ProfileController extends Controller{
+
     public function index(){
 
          $user = Auth::User();
-
          if($user){
-            $order_items = OrderItem::with('subtest')->where('user_id',$user->id)->get();
-           // $reports =Report::where('user_id',$user->id)->get();
-        
+            $order_items = Order::where('user_id',$user->id)->get();
+           // $order_items = OrderItem::with('order','subtest')->where('user_id',$user->id)->get();
+            //$reports =Report::where('user_id',$user->id)->get();
             //dd($order_items);
 
-        return view('Front-end.Profile.index',compact('order_items'));
+            return view('Front-end.Profile.booking',compact('order_items'));
          }
          else{
+
              abort('404');
          }
     }

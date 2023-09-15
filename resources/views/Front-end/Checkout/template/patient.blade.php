@@ -19,7 +19,7 @@
                  @if(count($patients) > 0)
                      <div class="row" id="patient-list">
                          @foreach ($patients as $patient)
-                             <div class="col-lg-4 col-sm-6 mb-2">
+                             <div class="col-lg-4 col-sm-6 mb-2 patient-div">
                                  <div data-bs-toggle="collapse">
                                      <label class="card-radio-label mb-0">
                                          <input type="checkbox" name="patient[]" id="patient"
@@ -35,16 +35,11 @@
                                          </div>
                                      </label>
                                      <div class="action_box">
-                                     <div class="edit-btn bg-light  rounded">
-                                         <a href="#" data-bs-toggle="tooltip" data-placement="top" title=""
-                                             data-bs-original-title="Edit">
-                                             <i class="bx bx-pencil font-size-16"></i>
-                                         </a>
-                                        </div>
+                                    
                                     <div class="edit-btn bg-light  rounded">
                                     
-                                         <a href="#" data-bs-toggle="tooltip" data-placement="top" title=""
-                                         data-bs-original-title="Edit">
+                                        <a href="#" class="delete_patient"
+                                          data-id="{{$patient->id}}">
                                          <i class="bx bxs-trash font-size-16"></i>
                                         </a>
                                      </div>
@@ -53,8 +48,11 @@
                                  </div>
                              </div>
                              <div id="new_patient"></div>
-                         @endforeach
 
+                             @endforeach
+                             
+                             <input type="hidden" name="new_patient[]" id="new_patient_textbox" class="card-radio-input" value="">
+                       
                      </div>
                  @else
                
@@ -82,9 +80,7 @@
                                         <option value="1">Male</option>
                                         <option value="2">Female</option>
                                     </select>
-                                 {{-- <input type="text" id="gender" class="form-control" placeholder="Enter Phone no."
-                                     name="gender"> --}}
-                             </div>
+                              </div>
                          </div>
 
                          <div class="col-lg-1">
@@ -112,7 +108,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="billing-email-address">Age</label>
                             <input type="number" id="age" class="form-control" name="age"
-                                placeholder="Enter email">
+                                placeholder="Enter Age">
                         </div>
                     </div>
 
@@ -123,8 +119,7 @@
                                    <option value="1">Male</option>
                                    <option value="2">Female</option>
                                </select>
-                            {{-- <input type="text" id="gender" class="form-control" placeholder="Enter Phone no."
-                                name="gender"> --}}
+                           
                         </div>
                     </div>
 

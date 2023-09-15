@@ -29,12 +29,10 @@ class CheckoutController extends Controller
     private $razorpayId = "rHIkpFOzmESeLw2IpNbhyI99";
     private $razorpayKey = "rzp_live_Sov1SDDvaLh47j";
 
-    public function addPatient(Request $request)
-    {
+    public function addPatient(Request $request){
         
         $data = $request->all();
        //dd($request->all());
-
         $patient = new Patient();
         $patient->name = $request->input('name');
         $patient->age = $request->input('age');
@@ -44,7 +42,7 @@ class CheckoutController extends Controller
         $new_patient = $patient->toArray();
         //dd($new_patient);
 
-        $res_patient = ['name'=> $new_patient['name'], 'age'=> $new_patient['age'],
+        $res_patient = ['id'=>$new_patient['id'],'name'=> $new_patient['name'], 'age'=> $new_patient['age'],
                          'gender'=>$new_patient['gender'] == '1'?'Male':'female'];
  
         return response()->json(['status'=>'success','patient'=>$res_patient]);
@@ -105,57 +103,48 @@ class CheckoutController extends Controller
             return  response()->json(['data'=>[],'message'=>'Some Error, Please try again!'],400);
         }
     }
-    public function save_pay_option(Request $request){
-           // dd($request->get('pay_option'));
-            if($request->get('pay_option') === "2"){
-                $items =  CartService::get_cart_items();
-                $itemsCollection = new Collection($items);
-                $total = $itemsCollection->sum('price');
-                $patients = Patient::where('user_id','=',Auth::user()->id)->get();
-                //dd($patients);
-                //return view('Front-end.Checkout.index');
-                return view('Front-end.Checkout.newcheckout',\compact('total','items','patients'));
 
-            }
-
-            else{
-                return view('Front-end.Checkout.razorpay');
-            }
-    }
+     
 
     public function save_order(Request $request){
 
         $data = $request->all();
         //dd($request->all());
         if($data['pay_option'] === '2'){
-            //dd($data);
+
             $recieptId = mt_rand(10000, 99999);
             $items =  CartService::get_cart_items();
             $itemsCollection = new Collection($items);
             $total = $itemsCollection->sum('price');
             $data['total'] = $total;
-            $response = OrderService::save_order($data);
-        
-            $data['items'] = $items;
-            $data['date'] = now();
-            $data['order_id'] = $recieptId;
+            $order_id = OrderService::save_order($data);
             
-            if($response !== null) { 
-              
-                $pdfService = new PdfService();
-                //dd($data['email']);
-                $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
-                //Send email with PDF attachment
-                $pdfFileName = 'order.pdf';
-                $email = $data['email'];
-                Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName,$email) {
-                    $message->to($email)
-                        ->subject('Order Confirmation')
-                        ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
-                });
-                $request->session()->forget('cart');
-                //Mail::to($data['email'])->send(new OrderEmail($items));
-                return redirect()->route('confirmation');
+            $response = OrderService::save_order_items(
+                    isset($data['patient'])? $data['patient']: $data['new_patient'], $order_id,$items);
+            
+            if(count($response) >0){
+
+                $data['items'] = $items;
+                $data['date'] = now();
+                $data['order_id'] = $recieptId;
+                
+                
+                    $pdfService = new PdfService();
+                    //dd($data['email']);
+                    $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
+                    //Send email with PDF attachment
+                    $pdfFileName = 'order.pdf';
+                    $email = $data['email'];
+                    Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName,$email) {
+                        $message->to($email)
+                            ->subject('Order Confirmation')
+                            ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
+                    });
+                    $request->session()->forget('cart');
+                    //Mail::to($data['email'])->send(new OrderEmail($items));
+                    return redirect()->route('confirmation');
+                
+                
             }
         }
 

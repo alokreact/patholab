@@ -68,8 +68,6 @@ Route::post('/checkout/submit', [App\Http\Controllers\CheckoutController::class,
 // Route::post('cart', [App\Http\Controllers\CartController_new::class,'cart'])->name('cart');
 
 Route::get('/cart', [App\Http\Controllers\CartController_new::class,'index'])->name('cart.index');
-
-
 Route::post('add-to-cart', [App\Http\Controllers\CartController::class,'addProduct'])->name('add_to_cart');
 
 Route::post('/package/add', [App\Http\Controllers\CartController::class,'addPackage'])->name('add_to_package');
@@ -97,6 +95,7 @@ Route::get('/product', [App\Http\Controllers\ProfileController::class,'product']
 
 
 Route::post('/save/patient', [App\Http\Controllers\CheckoutController::class,'addPatient'])->name('savepatient');
+Route::post('/delete/patient', [App\Http\Controllers\PatientController::class,'delete'])->name('deletepatient');
 
 
 Route::get('/email-template', [App\Http\Controllers\ProfileController::class,'emailTemplate'])->name('email-template');

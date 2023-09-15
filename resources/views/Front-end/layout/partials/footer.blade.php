@@ -315,7 +315,7 @@
 		});
 
 
-	$(document).ready(function() {
+		$(document).ready(function() {
 			$('#checkout-form').submit(function(e) {
 				e.preventDefault();
 
@@ -391,87 +391,120 @@
 				}
 
 			})
-	});	
+		});	
 
 	
 	
-	$("#add_patient").on('click',function(event) {
+		$("#add_patient").on('click',function(event) {
 		
-		event.preventDefault(); // Prevent form submission
-		$(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
+			event.preventDefault(); // Prevent form submission
+			$(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
 
-		var name = $("#patient_name").val();
-    	var age = $("#age").val();
-		var gender = $("#gender").val();		
+			var name = $("#patient_name").val();
+			var age = $("#age").val();
+			var gender = $("#gender").val();		
 
-		var errors = [];
-		if (name.trim() === '') {
-			errors.push('Name is required.');
-		}
-		if(age.trim() === ''){
-			errors.push('Age is required.');
-
-		}
-		if(gender.trim() === ''){
-			errors.push('Gender is required.');
-		}
-
-		if(errors.length > 0) {
-			var errorHtml = '<ul>';
-			errors.forEach(function(error) {
-				errorHtml += '<li>' + error + '</li>';
-			});
-			errorHtml += '</ul>';
-
-			Swal.fire({
-				icon: 'error',
-				//title: 'Validation Errors',
-				html: errorHtml,
-			});
-			$(this).html('Save');	
-		} 
-
-		else{
-			$.ajax({
-				type: "POST",
-				url: "{{route('savepatient')}}", // Your backend processing script
-				data: {
-					name: name,
-					age: age,
-					gender:gender
-				},
-			success: function(response) {
-				if(response.status === 'success'){	
-
-					//console.log('>>msg',response.patient); return;
-					$('#patient-add').hide();
-
-					var patient_block = '<div class="col-lg-4 col-sm-6 mb-2"><div data-bs-toggle="collapse">'
-						patient_block +='<label class="card-radio-label mb-0"><input type="checkbox" name="patient[]" id="patient" class="card-radio-input" value="'+response.patient.id+'">'
-						patient_block +='<div class="card-radio text-truncate p-3"><span class="fs-14 mb-2 d-block">' + response.patient.name+ ' </span><span class="text-muted fw-normal text-wrap mb-1 d-block">Age - ' + response.patient.age+ '</span><span class="text-muted fw-normal text-wrap mb-1 d-block">' + response.patient.gender+ '</span></div></label>'
-						patient_block +='<div class="edit-btn bg-light  rounded">'
-						patient_block +='<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bx-pencil font-size-16"></i></a>'
-						patient_block += '<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bxs-trash font-size-16"></i></a></div>'
-						patient_block +='</div>\r\n';
-					
-							$('#patient-list').append(patient_block);
-
-
-					// Swal.fire({
-                    // 	icon: 'success',
-                    // 	title: 'Added Successfully',
-                    // 	//html: errorHtml,
-                	// }).then((result) => {
-          			// 	if (result.isConfirmed) {
-            		// 		window.location.reload(); // Reload the page
-          			// 	}
-        			// });			
-				}
+			var errors = [];
+			if (name.trim() === '') {
+				errors.push('Name is required.');
 			}
-		});
-	}
-  	
-	});
+			if(age.trim() === ''){
+				errors.push('Age is required.');
 
+			}
+			if(gender.trim() === ''){
+				errors.push('Gender is required.');
+			}
+
+			if(errors.length > 0) {
+				var errorHtml = '<ul>';
+				errors.forEach(function(error) {
+					errorHtml += '<li>' + error + '</li>';
+				});
+				errorHtml += '</ul>';
+
+				Swal.fire({
+					icon: 'error',
+					//title: 'Validation Errors',
+					html: errorHtml,
+				});
+				$(this).html('Save');	
+			} 
+
+			else{
+				$.ajax({
+					type: "POST",
+					url: "{{route('savepatient')}}", // Your backend processing script
+					data: {
+						name: name,
+						age: age,
+						gender:gender
+					},
+				success: function(response) {
+					if(response.status === 'success'){	
+
+						//console.log('>>msg',response.patient); return;
+						$('#patient-add').hide();
+
+						var patient_block = '<div class="col-lg-4 col-sm-6 mb-2"><div data-bs-toggle="collapse">'
+							patient_block +='<label class="card-radio-label mb-0"><input type="checkbox" name="patient[]" id="patient" class="card-radio-input" value="'+response.patient.id+'">'
+							patient_block +='<div class="card-radio text-truncate p-3"><span class="fs-14 mb-2 d-block">' + response.patient.name+ ' </span><span class="text-muted fw-normal text-wrap mb-1 d-block">Age - ' + response.patient.age+ '</span><span class="text-muted fw-normal text-wrap mb-1 d-block">' + response.patient.gender+ '</span></div></label>'
+							patient_block +='<div class="edit-btn bg-light  rounded">'
+							patient_block +='<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bx-pencil font-size-16"></i></a>'
+							patient_block += '<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bxs-trash font-size-16"></i></a></div>'
+							patient_block +='</div>\r\n';
+						
+							$('#patient-list').append(patient_block);
+							$('#new_patient_textbox').val(response.patient.id);
+
+						// Swal.fire({
+						// 	icon: 'success',
+						// 	title: 'Added Successfully',
+						// 	//html: errorHtml,
+						// }).then((result) => {
+						// 	if (result.isConfirmed) {
+						// 		window.location.reload(); // Reload the page
+						// 	}
+						// });			
+					}
+				}
+			});
+		}
+		
+		
+
+
+		});
+
+
+		$(document).on('click','.delete_patient',function(e){
+
+			e.preventDefault();
+			var id =$(this).data('id');
+			var itemDiv = $(this).closest('.patient-div');
+			console.log('>>id', id)
+			$.ajax({
+				method:'post',
+				url :"{{route('deletepatient')}}",
+				data:{id, id},
+				success:function(response){
+					console.log('>>>',response)
+
+					itemDiv.fadeOut('slow', function() {
+                    $(this).remove();
+                });
+					//  Swal.fire({
+					// 	 	icon: 'success',
+					// 		title: 'Added Successfully',
+					// 		//html: errorHtml,
+					// 	}).then((result) => {
+							 
+					// 	});	
+
+				}
+			})
+
+		})
+	
 </script>
 @yield('page_specific_js')
