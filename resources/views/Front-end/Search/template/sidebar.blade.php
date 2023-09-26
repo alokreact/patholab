@@ -1,4 +1,4 @@
-<aside class="col-md-3">            
+<aside class="col-md-3 search-tpl-sidebar">            
     <div class="card">
 
       <article class="filter-group">

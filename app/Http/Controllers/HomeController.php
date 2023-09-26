@@ -72,8 +72,7 @@ class HomeController extends Controller
 
     public function searchsubtest(Request $request){        
         if($request->input('subtest') !== null) {
-            
-      
+        
             $submittedValue = $request->input('subtest');
             $previousValues = Session::get('selectedProducts', []);
             if(!empty($submittedValue)) {
@@ -81,19 +80,16 @@ class HomeController extends Controller
                     $previousValues[] = $submittedValue;
                 }
             }
-            //Store the updated values back to the session
-            //dd($previousValues);
-            // if(count($previousValues) >1){
-                
-            //     $cart = \Session::forget('cart');
-            // }
             $labs = collect();
             $labs = SubTest::with('getLab')->find($previousValues);
+
+            //dd(count($labs));
 
             $combinedResults = [];
             
             foreach ($labs as $test) {
                 foreach ($test->getLab as $lab) {
+
                     $labName = $lab->lab_name;
                     $price = $lab->pivot->price; // You might need to adjust this based on your data structure
             
@@ -112,16 +108,22 @@ class HomeController extends Controller
                         $combinedResults[$labName]['test_names'] .= ', ' . $test->sub_test_name;
                         $combinedResults[$labName]['total_price'] += $price;
                         $combinedResults[$labName]['single_price'].=', '.$lab->pivot->price;
-
                     }
                 }
             }    
-            //dd($combinedResults);
+            $test=[];
+
+            foreach($combinedResults as $key=> $item){
+              //  print_r($item['test_names']);
+                $test[] = explode(',' ,$item['test_names']);
+                     
+            }
+           // dd($test);
+            
             $organs = Organ::take(12)->get();
             $categories = Category::take(12)->get();
-            //dd($labs);
+            
             Session::put('selectedProducts', $previousValues);
-            //return  view('Front-end.Labs.index', compact('labs')); 
             return  view('Front-end.Search.index', compact('labs','combinedResults','organs','categories')); 
         }
         else {

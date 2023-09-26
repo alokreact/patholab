@@ -234,6 +234,51 @@
         font-size: 13px;
         font-weight: 500
     }
+    .Stepper_cont{
+
+        position: fixed;
+    top: 162px;
+    width: 44%;
+    background: #fff;
+    padding: 35px 0;
+    }
+    .Stepper_stepsCont{
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+    }
+    .Stepper_stepCont{
+        align-items:flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        z-index: 1;
+    }
+    .Stepper_step{
+
+        width: 48px;
+        height: 48px;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    }
+    .Stepper_number{
+        font-size:17px;
+        color: #fff;
+
+    }
+    .Stepper_line{
+    width: calc(100% - 72px);
+    height: 2px;
+    background: linear-gradient(90deg,#31ccb0 50%,#9d9fa1 0);
+    background-size: 200%;
+    background-position: 100% 0;
+    transition: all .25s linear;
+    position: absolute;
+    top: 44px;
+    left: 36px;
+    }
 </style>
 
 @extends('Front-end.layout.mainlayout')
@@ -244,8 +289,42 @@
         <div class="row">
             <div class="col-xl-8">
                 <div class="card">
+                    
                     <div class="card-body">
-                        <ol class="activity-checkout mb-0 px-4 mt-3">
+
+                        
+                        <div class="Stepper_cont mt-4 mb-4" id="cart-stepper">
+                            <div class="Stepper_stepsCont">
+                                <div class="Stepper_stepCont">
+                                    <div class="Stepper_step" style="background: #01D5A3; cursor: default; transition: all 0ms linear 250ms;">
+                                        <span class="Stepper_number">1</span>
+                                    </div>    
+                                    <span>Confirm<br>Tests</span>
+                                </div>
+                                <div class="Stepper_stepCont">
+                                    <div class="Stepper_step" style="background: #01D5A3; cursor: not-allowed;">
+                                        <span class="Stepper_number">2</span>
+                                    </div>
+                                        <span>Add<br>Patients</span>
+                                </div>
+                                <div class="Stepper_stepCont">
+                                    <div class="Stepper_step" style="background: rgb(157, 159, 161); cursor: not-allowed;">
+                                        <span class="Stepper_number">3</span>
+                                    </div><span>Address<br>&amp;&nbsp;Time</span>
+                                </div>
+                                <div class="Stepper_stepCont">
+                                    <div class="Stepper_step" style="background: rgb(157, 159, 161); cursor: not-allowed;">
+                                        <span class="Stepper_number">4</span>
+                                    </div>
+                                    <span>Payment</span>
+                                </div>
+                            </div>
+                                <hr class="Stepper_line" style="background-position: 100% 0px;">
+                        </div>
+             
+
+                      
+                        <ol class="activity-checkout mb-0 px-4" style="margin-top: 120px">
                             @include('Front-end.Checkout.template.address')
                       
                             @include('Front-end.Checkout.template.patient')
@@ -256,10 +335,15 @@
                             </li>
                         
                         </ol>
+
+
                     </div>
                 </div>
 
                 <div class="row my-4">
+
+
+
                     <div class="col">
                         <a href="#" class="btn btn-link text-muted">
                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>

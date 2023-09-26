@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUrlColumnToSliders extends Migration
+class CreateOtpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddUrlColumnToSliders extends Migration
      */
     public function up()
     {
-        Schema::table('sliders', function (Blueprint $table) {
-            $table->string('url')->nullable();
+        Schema::create('otps', function (Blueprint $table) {
+            $table->id();
+            $table->string('otp_code', 4);
+            $table->string('email')->nullable();
+            $table->timestamp('expires_at');
+            $table->timestamps();
         });
     }
 
@@ -25,9 +29,6 @@ class AddUrlColumnToSliders extends Migration
      */
     public function down()
     {
-        Schema::table('sliders', function (Blueprint $table) {
-            //
-            $table->dropColumn('url');
-        });
+        Schema::dropIfExists('otps');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\models\Patient;
+use App\Models\Patient;
 
 class PatientController extends Controller
 {
@@ -12,7 +12,6 @@ class PatientController extends Controller
         //dd($request->all());
         $patient = Patient::find($request->id);
         $patient->delete();
-          
         return response()->json(['status'=>'success']);
 
     }

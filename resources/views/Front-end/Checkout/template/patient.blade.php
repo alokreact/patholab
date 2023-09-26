@@ -1,7 +1,7 @@
  <li class="checkout-item">
      <div class="avatar checkout-icon p-1">
          <div class="avatar-title rounded-circle bg-primary">
-             <i class="bx bxs-truck text-white font-size-20"></i>
+             2{{-- <i class="bx bxs-truck text-white font-size-20"></i> --}}
          </div>
      </div>
      <div class="feed-item-list">

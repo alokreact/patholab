@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\SubTest;
 use App\Models\Package;
 use App\Models\Order;
-use App\models\Patient;
+use App\Models\Patient;
 
 class OrderItem extends Model
 {

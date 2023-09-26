@@ -58,11 +58,14 @@
                 <div>₹{{ $lab['total_price'] }}/-</div>
                     @php
                         $cart = session('cart', []);
+                        echo "<pre>"; print_r($cart);
+                            
                     @endphp
 
                         @if(session()->has('cart') && itemExistsInCarts($lab['lab_name'], $cart))
                             <button class="btn btn-main-2 btn_add_to_cart_test" disabled="true">Already Added</button>
                         @else
+                       
                         <button class="btn btn-main-2 btn_add_to_cart_test" value="{{$lab['id']}}" data-type="test" data-lab="{{ $lab['lab_name'] }}"data-price="{{ $lab['total_price'] }}">
                                         Add To cart
                                     </button>
@@ -78,16 +81,7 @@
     </div>
 
         
-                {{-- <nav class="mt-4" aria-label="Page navigation sample">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav> --}}
-
+         
         </main>
     </div>
 </div>
@@ -97,9 +91,11 @@
     <script>
         var addToCarturl = "{{ route('add_to_cart') }}";
         //var addToCarturl = "{{ route('cart') }}";
-        $('.btn_add_to_cart_test').on('click', function() {
+        $(document).on('click','.btn_add_to_cart_test', function() {
 
             var button = $(this);
+            console.log('>>>','test')
+
             $(button).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
 
             var productId = $(this).val();
@@ -113,8 +109,7 @@
                 labId: labId,
                 price: price
             };
-            console.log('productId', productId)
-
+           
             $.ajax({
                 type: "POST",
                 data: formData,
@@ -122,11 +117,7 @@
                 success: function(response) {
                     console.log('productId', response.status)
                     if (response.status === 200) {
-                        // $('#addtMsg').click();
-                        // $(button).attr('disabled', true);
-                        // $(button).html('Add To Cart');
-                         //window.location.reload();
-
+                    
                          Swal.fire({
                     	    icon: 'success',
                     	    title: 'Added Successfully',

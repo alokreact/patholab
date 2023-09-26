@@ -11,8 +11,7 @@ use Auth;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class CartController extends Controller
-{
+class CartController extends Controller{
 
     function itemExistsInCart($itemId, &$cart){
 
@@ -104,10 +103,12 @@ class CartController extends Controller
     public function cart()
     {
         $user = Auth::user();
-        if ($user && Auth::user()->role == '2') {
+        
+        if($user && Auth::user()->role == '2') {
 
             return view('Front-end.Cart.index');
-        } else {
+        } 
+        else {
 
             return redirect()->route('signin');
         }

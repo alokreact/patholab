@@ -442,7 +442,6 @@
 					},
 				success: function(response) {
 					if(response.status === 'success'){	
-
 						//console.log('>>msg',response.patient); return;
 						$('#patient-add').hide();
 
@@ -455,52 +454,156 @@
 							patient_block +='</div>\r\n';
 						
 							$('#patient-list').append(patient_block);
-							$('#new_patient_textbox').val(response.patient.id);
-
-						// Swal.fire({
-						// 	icon: 'success',
-						// 	title: 'Added Successfully',
-						// 	//html: errorHtml,
-						// }).then((result) => {
-						// 	if (result.isConfirmed) {
-						// 		window.location.reload(); // Reload the page
-						// 	}
-						// });			
+							$('#new_patient_textbox').val(response.patient.id);			
 					}
 				}
 			});
 		}
-		
-		
-
-
+	
 		});
-
 
 		$(document).on('click','.delete_patient',function(e){
 
 			e.preventDefault();
 			var id =$(this).data('id');
 			var itemDiv = $(this).closest('.patient-div');
-			console.log('>>id', id)
 			$.ajax({
 				method:'post',
 				url :"{{route('deletepatient')}}",
 				data:{id, id},
 				success:function(response){
-					console.log('>>>',response)
-
 					itemDiv.fadeOut('slow', function() {
                     $(this).remove();
                 });
-					//  Swal.fire({
-					// 	 	icon: 'success',
-					// 		title: 'Added Successfully',
-					// 		//html: errorHtml,
-					// 	}).then((result) => {
-							 
-					// 	});	
+				}
+			})
 
+		})
+
+
+		$(document).on('click','.otp-btn',function(e){
+			e.preventDefault();
+			
+			var phone = $('#mobile').val();
+			var errors =[];
+
+			if(phone.trim() === ''){
+				errors.push('Phone no is required.');
+			}
+			if(errors.length > 0) {
+				var errorHtml = '<ul>';
+				errors.forEach(function(error) {
+					errorHtml += '<li>' + error + '</li>';
+				});
+				errorHtml += '</ul>';
+
+				Swal.fire({
+					icon: 'error',
+					//title: 'Validation Errors',
+					html: errorHtml,
+				});	
+			} 
+			else{
+				$.ajax({
+					method:'post',
+					url :"{{route('otp.create')}}",
+					data:{phone,phone},
+					success:function(response){
+							if(response.status ==='success'){
+								$('.otp-btn').hide();
+								$('#send-otp').hide();
+								$('#verify-otp').show();
+								startTimer();
+							}
+							else{
+			
+								Swal.fire({
+									icon: 'error',
+									title: 'Login Error',
+									html: response.message,
+								});
+							}
+					}
+				})
+			}	
+
+		})
+
+		var timer = null;
+        var minutes = 10;
+        var seconds = 0;
+
+        function startTimer() {
+            timer = setInterval(function () {
+                if (minutes == 0 && seconds == 0) {
+                    clearInterval(timer);
+                    document.getElementById('resend-link').style.display = 'block';
+                } else {
+                    if (seconds == 0) {
+                        minutes--;
+                        seconds = 59;
+                    } else {
+                        seconds--;
+                    }
+
+                    // Display the updated time
+                    document.getElementById('minutes').textContent = minutes;
+                    document.getElementById('seconds').textContent = seconds < 10 ? '0' + seconds : seconds;
+                }
+            }, 1000);
+        }
+
+		$(document).on('click','#btn-verify-otp', function(){
+
+			var otps = $('input[type="number"][name="otp[]"]');
+			var phone = $('#mobile').val();
+			
+			console.log('>>',otps);
+
+			var dataToSend = {};
+
+			// Convert the serialized data to an object
+			$.each(otps, function (index, element) {
+				// Check if the key (input name) already exists in the dataToSend object
+				if (dataToSend[element.name]) {
+					// If it exists, convert it to an array and push the new value
+					if (!Array.isArray(dataToSend[element.name])) {
+						dataToSend[element.name] = [dataToSend[element.name]];
+					}
+					dataToSend[element.name].push(element.value);
+				} else {
+					// If it doesn't exist, create a new key-value pair
+					dataToSend[element.name] = element.value;
+				}
+			});
+
+			dataToSend['phone']= phone;
+
+			$.ajax({
+
+				url:"{{route('otp.verify')}}",
+				data:dataToSend,
+				method:'post',
+				success:function(response){
+					if(response.status === 'success'){
+						Swal.fire({
+								icon: 'success',
+								//title: 'Login Error',
+								html: response.message,
+						}).then((result) => {
+							if (result.isConfirmed) {		
+								window.location.href =response.redirectTo;
+							}
+						})
+					}
+					else{
+						Swal.fire({
+								icon: 'error',
+								//title: 'Login Error',
+								html: response.message,
+						})
+					}
+					//console.log(response);
 				}
 			})
 

@@ -42,7 +42,7 @@
 
               <div class="col-lg-6">
                 <div class="form-group">
-                  <label for="name">Name:</label>
+                  <label for="name">First Name:</label>
                   <input name="name" id="name" type="text" class="form-control" placeholder="Name" autocomplete="off">
 
                   @if($errors->has('name'))

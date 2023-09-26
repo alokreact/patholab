@@ -104,15 +104,15 @@
 
                       <div class="ProductCard__foot_item">
                         <div class="field_content1 mt-2">
-                          <img src="https://www.pathkindlabs.com/public/ecommerce/image/icon-1.png" />
+                          <img src="{{asset('images/service/icon-1.png')}}" />
                           <span>Include : 1  Parameters</span>
                         </div>
                         <div class="field_content2 mt-2">
-                          <img src="https://www.pathkindlabs.com/public/ecommerce/image/icon-2.png" />
+                          <img src="{{asset('images/service/icon-2.png')}}" />
                           <span>Specimen : {{ucfirst($test->sample_type)}}</span>
                         </div>
                         <div class="field_content3 mt-2">
-                          <img src="https://www.pathkindlabs.com/public/ecommerce/image/icon-3.png" />
+                          <img src="{{asset('images/service/icon-3.png')}}" />
                           <span>Report Delivery : NA</span>
                         </div>
                       </div>

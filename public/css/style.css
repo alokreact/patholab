@@ -497,8 +497,8 @@ a:focus {
   /* background: #fff;
   background: url("../images/bg/slider-bg-1.jpg") no-repeat;*/
   background-size: cover; 
-  min-height: 430px;
-  height: 400px !important;
+  /* min-height: 430px;
+  height: 400px !important; */
 
 }
 .carousel-inner img {
@@ -542,7 +542,7 @@ height: 100%;
     line-height: 50px;
   }
   .banner {
-    min-height: 450px;
+    /* min-height: 450px; */
     background: #fff !important;
   }
 }
@@ -553,7 +553,7 @@ height: 100%;
     line-height: 40px;
   }
   .banner {
-    min-height: 450px;
+    /* min-height: 450px; */
     background: #fff !important;
   }
 }
@@ -2185,7 +2185,25 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   .text-section h5{
     font-size: 12px !important;
   }
-  
+
+  .search-tpl-sidebar{
+    display: none;
+  }
+  .bg-light-subtle{
+    max-width: 100% !important;
+  }
+  .test-search .container{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+  } 
+  .card img{
+    max-width: 130px !important;
+    height:65px !important;
+    margin:6px !important;
+  }
+  .cta-sectionn{
+    max-width: 100% !important;
+  }
 }
 
 @media (min-width: 1700px){
@@ -2489,6 +2507,33 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   position: relative;
 }
 
+.banner .container{
+  max-width: 1540px;
+}
+
+section.banner-sec{
+  margin-top: -10px;
+  clear:both;
+}
+.d-flex-desk{
+  display: flex;
+  margin-top: 25px;
+  margin-bottom: 25px
+}
+
+.banner-form{
+  width: 100%;
+  margin-top: 0px;
+  background-image: linear-gradient(to top, #fff, #fff 37%) !important;
+  box-sizing: border-box;
+  box-shadow: 0 0px 18px 0 rgb(0 0 0 / 16%);
+  border-radius: 25px;
+  padding: 40px 20px 40px 20px;
+  margin: 0 auto;
+}
+.banner-form .region.region-schedule-home-collection{
+  padding: 6px;
+}
 /* .appoinment::after{
   content: "";
   position: absolute;

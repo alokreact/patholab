@@ -64,25 +64,31 @@
 
     .card img {
         max-width: 25%;
-        margin: 22px;
+        margin: 20px;
         padding: 0.5em;
         border-radius: 0.7em;
+        height: 90px;
     }
 
     .testcard-body {
         display: flex;
         justify-content: space-between;
         width: 100%;
+        flex-direction: column
     }
 
     .text-section {
-        max-width: 55%;
+        max-width: 75%;
     }
-    .text-section h5{
-       color: #00a651 !important;
-       font-size: 18px !important;
+
+    .text-section h5 {
+        color: #00a651 !important;
+        font-size: 14px !important;
+        font-weight: 400;
     }
-    .text-section span,p{
+
+    .text-section span,
+    p {
 
         font-size: 14px;
         color: #222;
@@ -113,27 +119,31 @@
             font-size: 0.9em;
         }
     }
+    .add-button{
+        display: flex;
+        justify-content: flex-end;
+    }
 </style>
 
- 
+
 @extends('Front-end.layout.mainlayout')
-    @section('content')
+@section('content')
     <div id="loadedViewContainer">
 
-    <section class="page-title bg-1" >
-        <div class="overlay"></div>
+        <section class="page-title bg-1">
+            <div class="overlay"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="block text-center">
                             <span class="text-white"></span>
                             <h1 class="text-capitalize mb-5 text-lg">Select Lab for Home Sample Collection</h1>
-                        
+
                             @forelse($labs as $lab)
-                            <div class="chip">
-                                {{ $lab->sub_test_name }}    
-                                <i class="icofont-close-circled removeSelected"  data-id="{{$lab->id}}"></i>
-                            </div>
+                                <div class="chip">
+                                    {{ $lab->sub_test_name }}
+                                    <i class="icofont-close-circled removeSelected" data-id="{{ $lab->id }}"></i>
+                                </div>
                             @empty
                                 <p>No Tests</p>
                             @endforelse
@@ -141,94 +151,83 @@
                     </div>
                 </div>
             </div>
-    </section>
+        </section>
 
-    <div class="container mt-4">
-        <div class="row">
-            @include('Front-end.Search.template.sidebar')
-            <main class="col-md-9">
-                <header class="border-bottom mb-4 pb-3">
-                    <div class="form-inline">
-                        <span class="mr-md-auto">
-                            {{-- @forelse ($labs as $lab)
-          
-                                {{count($lab)}}Items found 
+        <div class="container mt-4">
+            <div class="row">
+                @include('Front-end.Search.template.sidebar')
+                
+                <main class="col-md-9 test-search">
+                    <header class="border-bottom mb-4 pb-3">
+                        <div class="form-inline">
+                            <span class="mr-md-auto">
+                            </span>
+                        </div>
+                    </header><!-- sect-heading -->
 
-                            @empty
-                                <p></p>
-                            
-                            @endforelse --}}
-                        </span>
-                    </div>
-                </header><!-- sect-heading -->
+                    <div class="container">
+                        @forelse ($combinedResults as $lab)
+                            <div class="card bg-light-subtle mt-4">
+                                <img src="{{ $lab['image'] ? asset('Image/'.$lab['image']) : 'http://localhost/applab/Image/202210160825WhatsApp Image 2022-10-16 at 01.25.30 (2).jpeg' }}"
+                                    alt="{{ $lab['lab_name'] }}">
+                                <div class="testcard-body">
+                                    <div class="text-section">
+                                        <h5 class="fw-bold" style="font-size: 14px">
+                                            {{ ucfirst($lab['test_names']) }}</h5>
 
-        <div class="container">
-
-            @forelse ($combinedResults as $lab)
-              
-            <div class="card bg-light-subtle mt-4">
-                <img src="{{$lab['image']? asset('Image/'.$lab['image']):'http://localhost/applab/Image/202210160825WhatsApp Image 2022-10-16 at 01.25.30 (2).jpeg' }}" alt="{{ $lab['lab_name'] }}">
-            <div class="testcard-body">
-                <div class="text-section">
-                    <h5 class="card-title fw-bold" style="font-size: 14px">{{ ucfirst($lab['test_names']) }}</h5>
-                    <p class="card-text">{{ ucfirst($lab['lab_name']) }}</p>
-                    <span><i class="icofont-google-map"
-                        style="font-size:16px;color:#000"></i>{{ $lab['city'] }}</span>
-                </div>
+                                        <p class="card-text">{{ ucfirst($lab['lab_name']) }}</p>
+                                        <span><i class="icofont-google-map" style="font-size:16px;color:#000"></i>{{ $lab['city'] }}</span>
+                                    </div>
 
 
-                <div class="cta-sectionn">
-                    {{-- <div>₹{{ $lab['total_price'] }}/-</div> --}}
-                  
-                    <div class="rates boxes " style="margin-left: 50px; width:100%">
-                        <del>₹<span class="_test_mrp">{{ $lab['total_price'] * 2 }}/-</span></del>
+                                    <div class="cta-sectionn">
+                                        <div class="rates boxes " style="margin-left: 50px; width:100%">
+                                            <del>₹<span class="_test_mrp">{{ $lab['total_price'] * 2 }}/-</span></del>
 
-                        <div class="blue">₹<span class="_test_selling">{{ $lab['total_price'] }}/-</span> </div>
-                        <div class="sm">50% discount </div>
+                                            <div class="blue">₹<span
+                                                    class="_test_selling">{{ $lab['total_price'] }}/-</span> </div>
+                                            <div class="sm">50% discount </div>
+                                        </div>
+                                    </div>
 
-                    </div>
-                    
-                  @php
-                        $cart = session('cart', []);
-                    @endphp
+                                    @php
+                                        $cart = session('cart', []);
+                              
+                                    @endphp
 
-                        @if(session()->has('cart') && itemExistsInCarts($lab['lab_name'], $cart))
-                            <button class="btn btn-main-2 btn_add_to_cart_test" disabled="true">Already Added</button>
-                        @else
-                        <button class="btn btn-main-2 btn_add_to_cart_test" value="{{$lab['id']}}" data-type="test" data-lab="{{ $lab['lab_name'] }}" data-price="{{ $lab['total_price'] }}"
-                        
-                        data-singleprice="{{ $lab['single_price'] }}">
+                                    @if(session()->has('cart') && itemExistsInCarts($lab['lab_name'], $cart))
+                                    <div class="add-button"> 
+                                
+                                        <button class="btn btn-main-2 btn_add_to_cart_test" disabled="true">Already
+                                             Added</button>
+                                        </div>
+                                    @else
+                                        <div class="add-button"> 
+                                            <button class="btn btn-main-2 btn_add_to_cart_test" value="{{ $lab['id'] }}"
+                                            data-type="test" data-lab="{{ $lab['lab_name'] }}"
+                                            data-price="{{ $lab['total_price'] }}"
+                                            data-singleprice="{{ $lab['single_price'] }}">
                                         Add To cart
                                     </button>
+                                    </div>
                                 @endif
-                    {{-- <a href="#" class="btn btn-dark">Buy Now</a> --}}
-                    </div>
-                </div>
-            </div>
-            {{-- @empty
+                                </div>
+                            </div>
+                            {{-- @empty
             <p></p>
             @endforelse --}}
-            @empty
-            <p></p>
-            @endforelse                    
-        </div>
+                        @empty
+                            <p></p>
+                        @endforelse
+                    </div>
 
-        
-                {{-- <nav class="mt-4" aria-label="Page navigation sample">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav> --}}
 
-            </main>
+
+                </main>
+            </div>
         </div>
     </div>
-    </div>
-    @endsection
+@endsection
 
 
 @push('after-scripts')
@@ -251,7 +250,7 @@
                 dataType: dataType,
                 labId: labId,
                 price: price,
-                singleprice:singleprice
+                singleprice: singleprice
             };
             console.log('productId', productId)
 
@@ -265,13 +264,13 @@
                         // $('#addtMsg').click();
                         // $(button).attr('disabled', true);
                         // $(button).html('Add To Cart');
-                         //window.location.reload();
+                        //window.location.reload();
 
-                         Swal.fire({
-                    	    icon: 'success',
-                    	    title: 'Added Successfully',
-                    	    //html: errorHtml,
-                	    }).then((result) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Added Successfully',
+                            //html: errorHtml,
+                        }).then((result) => {
                             if (result.isConfirmed) {
                                 window.location.reload(); // Reload the page
                             }
@@ -288,4 +287,3 @@
         });
     </script>
 @endpush
-

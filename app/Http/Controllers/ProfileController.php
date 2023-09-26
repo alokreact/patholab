@@ -6,29 +6,27 @@ use Illuminate\Http\Request;
 use Auth;
 
 use App\Models\OrderItem;
-Use App\models\SubTest;
+Use App\Models\SubTest;
 use Mail;
 use App\Service\PdfService;
-use App\models\Report;
+use App\Models\Report;
 
 use App\Mail\OrderEmail;
-use App\models\Order;
+use App\Models\Order;
 
 class ProfileController extends Controller{
 
     public function index(){
-
          $user = Auth::User();
+         
          if($user){
+
             $order_items = Order::where('user_id',$user->id)->get();
-           // $order_items = OrderItem::with('order','subtest')->where('user_id',$user->id)->get();
             //$reports =Report::where('user_id',$user->id)->get();
             //dd($order_items);
-
             return view('Front-end.Profile.booking',compact('order_items'));
          }
          else{
-
              abort('404');
          }
     }
@@ -92,10 +90,13 @@ class ProfileController extends Controller{
 
         return "Email sent with PDF attachment!";
     }
-    
-
     public function product(){
-
         return view('Front-end.Profile.booking');
+    }
+
+    public function prescription(){
+
+        return view('Front-end.Profile.tpl.prescription');
+
     }
 }

@@ -89,9 +89,11 @@ Route::post('/pay_option/save', [App\Http\Controllers\CheckoutController::class,
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
+Route::get('/create/prescription', [App\Http\Controllers\ProfileController::class,'prescription'])->name('upload-prescription');
+
+
 
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
-Route::get('/product', [App\Http\Controllers\ProfileController::class,'product'])->name('check');
 
 
 Route::post('/save/patient', [App\Http\Controllers\CheckoutController::class,'addPatient'])->name('savepatient');
@@ -99,7 +101,10 @@ Route::post('/delete/patient', [App\Http\Controllers\PatientController::class,'d
 
 
 Route::get('/email-template', [App\Http\Controllers\ProfileController::class,'emailTemplate'])->name('email-template');
-
 Route::get('/email-send', [App\Http\Controllers\ProfileController::class,'send_email'])->name('send-email');
+
+
+Route::post('/create/otp', [App\Http\Controllers\AuthController::class,'generateOTP'])->name('otp.create');
+Route::post('/verify/otp', [App\Http\Controllers\AuthController::class,'verifyOTP'])->name('otp.verify');
 
 include"admin.php";

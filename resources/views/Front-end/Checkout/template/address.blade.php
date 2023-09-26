@@ -1,9 +1,10 @@
 <li class="checkout-item">
     <div class="avatar checkout-icon p-1">
-        <div class="avatar-title rounded-circle bg-primary">
-            <i class="bx bxs-receipt text-white font-size-20"></i>
+        <div class="avatar-title rounded-circle">
+            1{{-- <i class="bx bxs-receipt text-white font-size-20"></i> --}}
         </div>
     </div>
+    
     <div class="feed-item-list">
         <div>
             <h5 class="font-size-16 mb-1">Billing Info</h5>
