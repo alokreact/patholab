@@ -11,10 +11,8 @@ class ContactController extends Controller
 {
     public function index()
     {
-
         return view('Front-end.Contact.index');
     }
-
    
     public function appointment()
     {
@@ -25,7 +23,9 @@ class ContactController extends Controller
     public function store_appointment(Request $request)
     {
 
+
         $data = $request->all();
+
 
         $validate = $request->validate([
             'name' => 'required',
@@ -70,16 +70,12 @@ class ContactController extends Controller
 
         if ($validate) {
 
-           // dd($data);
-
             if($request->file('report')) {
 
                 $file = $request->file('report');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
-                
-                //echo $filename;die;
-
-                $file->move(public_path('Image'), $filename);
+                             
+                $file->move(public_path('images/reports'), $filename);
                 //$data['report'] = $filename;
             
                 $prescription = new Prescription;
@@ -88,8 +84,7 @@ class ContactController extends Controller
                 $prescription->report = $filename;
                 $prescription->save();
                 //Appointment::create($data);
-
-                return  redirect()->back()->with('message', 'Uploaded Successfully. Our team will contact you soon!');
+                return  response()->json(['message'=>'Report Uploaded Successfully. Our team will contact you soon!']);
             }
         }
     }

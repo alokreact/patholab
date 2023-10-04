@@ -112,7 +112,7 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <h4>Address</h4>
+                        <a href="{{route('address')}}"><h4>Address</h4></a>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <a href="{{route('upload-prescription')}}"><h4>Family Members</h4></a>
+                        <a href="{{route('patient')}}"><h4>Family Members</h4></a>
                     </div>
                 </div>
 
@@ -159,7 +159,9 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <h4>my Referal</h4>
+                   
+                        <a href="{{route('coupon')}}"><h4>My Referal</h4></a>
+             
                     </div>
                 </div>
 

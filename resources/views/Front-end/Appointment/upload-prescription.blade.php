@@ -36,7 +36,7 @@
 
                         <span style="color:red"> Fields marked with * are mandatory.</span>
                     </p>
-                    <form id="#" class="appoinment-form" method="post" enctype="multipart/form-data" action="{{route('prescription.submit')}}">
+                    <form id="#" class="prescrption-form" method="post" enctype="multipart/form-data" action="{{route('prescription.submit')}}">
 
                         @csrf
                         <div class="row">
@@ -46,6 +46,8 @@
                                     @if($errors->has('name'))
                                     <strong style="color:red"> {{ $errors->first('name') }}</strong>
                                     @endif
+                                    <span class="error_name" style="color:red"></span>  
+                                                        
                                 </div>
                             </div>
 
@@ -55,6 +57,8 @@
                                     @if($errors->has('phone'))
                                     <strong style="color:red"> {{ $errors->first('phone') }}</strong>
                                     @endif
+                                    <span class="error_phone" style="color:red"></span>  
+                                                        
                                 </div>
                             </div>
 
@@ -62,18 +66,21 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
 
-                                    <input type="file" name="report" id="report" class="form-control" />
+                                    <input type="file" name="report" id="fileInput" class="form-control" />
 
                                 </div>
                                 @if($errors->has('report'))
                                 <strong style="color:red"> {{ $errors->first('report') }}</strong>
                                 @endif
+
+                                <span class="error_report" style="color:red"></span>  
+                                                        
                             </div>
 
 
                         </div>
 
-                        <button type="submit" class="btn btn-main btn-round-full">Subbmit<i class="icofont-simple-right ml-2"></i></button>
+                        <button type="button" class="btn btn-main btn-round-full prescription-btn">Subbmit<i class="icofont-simple-right ml-2"></i></button>
                     </form>
                 </div>
             </div>

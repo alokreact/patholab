@@ -16,10 +16,8 @@ class SliderController extends Controller
     public function index()
     {
         $sliders = Slider::all();
-
         return view('Admin.Sliders.list',compact('sliders'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

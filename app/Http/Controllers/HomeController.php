@@ -15,18 +15,11 @@ use App\Models\Slider;
 use App\Service\CartService;
 use PhpParser\Node\Stmt\GroupUse;
 use Session;
+use App\Models\Cart;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //$this->middleware('auth');
-    }
+     
     /**
      * Show the application dashboard.
      *
@@ -38,27 +31,23 @@ class HomeController extends Controller
         $organs = Organ::take(12)->get();
         $packages = Package::with('grouptest.subtest')->withCount("grouptest")->get();
 
-        //dd($packages);
-
         $banners = Slider::all();
-        //dd($banners);
         $subtest = GroupTest::with('subtest')->find(8);
-        //dd($subtest);
-        $commentsCount = [];
-
+    
+        
         foreach ($packages as $package) {
             foreach ($package->grouptest as $grouptest) {
-                //dd($grouptest->pivot->parent_test_id);
+            
                 $subtest = GroupTest::withCount('subtest')->find($grouptest->pivot->parent_test_id);
                 //$subtes = GroupTest::with('subtest')->find($subtest->parent_test_id);
                 //dd($subtest);
             }
         }
-        //print_r($commentsCount);die;
-        // echo $subtest_count->subtest_count;
         $categories = Category::with('package')->inRandomOrder()->take(6)->get();
         return view('Front-end.Home', compact('labs', 'organs', 'packages', 'categories','banners'));
     }
+
+
     public function getlistofajaxSubtest(Request $request){
         if ($request->input('query')!== null) {
             //echo "hi";die;
@@ -73,8 +62,11 @@ class HomeController extends Controller
     public function searchsubtest(Request $request){        
         if($request->input('subtest') !== null) {
         
+            \Cart::destroy();
+            
             $submittedValue = $request->input('subtest');
             $previousValues = Session::get('selectedProducts', []);
+    
             if(!empty($submittedValue)) {
                 if(!in_array($submittedValue, $previousValues)) {
                     $previousValues[] = $submittedValue;
@@ -83,20 +75,21 @@ class HomeController extends Controller
             $labs = collect();
             $labs = SubTest::with('getLab')->find($previousValues);
 
-            //dd(count($labs));
-
-            $combinedResults = [];
-            
+            //dd($labs);
+            $combinedResults = [];            
             foreach ($labs as $test) {
                 foreach ($test->getLab as $lab) {
 
                     $labName = $lab->lab_name;
+                    $labId = $lab->id;
+                  
                     $price = $lab->pivot->price; // You might need to adjust this based on your data structure
             
                     if (!array_key_exists($labName, $combinedResults)) {
                         $combinedResults[$labName] = [
                             'id'=>$test->id,
                             'lab_name' => $labName,
+                            'lab_id'=>$labId,
                             'total_price' => $price,
                             'city'=>$lab->city,
                             'test_names' => $test->sub_test_name,
@@ -112,25 +105,25 @@ class HomeController extends Controller
                 }
             }    
             $test=[];
-
             foreach($combinedResults as $key=> $item){
               //  print_r($item['test_names']);
-                $test[] = explode(',' ,$item['test_names']);
-                     
+                $test[] = explode(',' ,$item['test_names']);             
             }
-           // dd($test);
             
             $organs = Organ::take(12)->get();
             $categories = Category::take(12)->get();
-            
+
+                
             Session::put('selectedProducts', $previousValues);
+
             return  view('Front-end.Search.index', compact('labs','combinedResults','organs','categories')); 
         }
         else {
-            # code...
+                # code...
             abort(404);
         }
     }
+
     public function removeSelectedTest(Request $request){
 
         $selectedValues = $request->input('selectedValues');
@@ -173,6 +166,9 @@ class HomeController extends Controller
                 }
             }
         }
+        $cart = session()->get('cart',[]);
+        $cart = \Session::forget('cart');
+
         $html = view('Front-end.Search.removesearch', compact('labs','organs','combinedResults','categories'))->render();
         return response()->json(['html' => $html]);
     }

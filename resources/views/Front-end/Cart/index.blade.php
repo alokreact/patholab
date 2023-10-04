@@ -27,7 +27,7 @@
                                     <table id="cart" class="table table-hover table-condensed cart-table">
                                         <thead>
                                             <tr>
-                                                <th style="width:30%">Name</th>
+                                                <th style="width:30%">Test Name</th>
                                                 <th style="width:20%">Lab Name</th>
                                                 <th style="width:10%">Price</th>
                                                 <th style="width:8%">Quantity</th>
@@ -38,41 +38,50 @@
                                         <tbody>
                                             @php $total = 0 @endphp
 
-                                            @php 
-                                                //echo "<pre>"; print_r(session('cart')) ;die;
-                                            @endphp
-                                            @if (session('cart'))
-                                                @foreach (session('cart') as $id => $details)
-                                                    @php $total += $details['price'] * $details['quantity'] @endphp
-                                                    <tr data-id="{{$id}}">
-                                                      <td data-th="Product">
-                                                            <div class="row">
-                                                                <div class="col-sm-9">
-                                                                    <h4 class="nomargin">{{$details['type'] === 'package'?ucfirst($details['name']):ucfirst(implode(',', $details['name']))}}</h4>
-                                                                </div>
+                                            @foreach ($carts as $id => $details)
+                                                <tr data-id="{{ $id }}">
+                                                    <td data-th="Product">
+                                                        <div class="row">
+                                                            <div class="col-sm-9">
+                                                                <h6 class="nomargin">
+                                                                    @forelse($product_names as $name)
+                                                                    {{ $name }}, 
+                                                                @empty
+        
+                                                                @endforelse
+                                                                </h6>
                                                             </div>
-                                                        </td> 
-                                                        <td data-th="Price">{{ ucfirst($details['lab_name']) }}</td>
+                                                        </div>
+                                                    </td>
 
-                                                        <td data-th="Price">₹{{ $details['price'] }}</td>
-                                                        <td data-th="Quantity">
-                                                            <input type="number" value="{{ $details['quantity'] }}"
-                                                                class="form-control quantity cart_update" min="1" />
-                                                        </td>
-                                                        <td data-th="Subtotal" class="text-center">
-                                                            ₹{{ $details['price'] * $details['quantity'] }}</td>
-                                                        <td class="actions" data-th="">
-                                                            <button class="btn btn-danger btn-sm cart_remove"><i
-                                                                    class="fa fa-trash-o"></i> Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+
+                                                    <td data-th="Price">
+                                                        <h4>{{ $details->name }}</h4>
+                                                    </td>
+
+
+
+                                                    <td data-th="Price">₹{{ $details->price }}/-</td>
+                                                    <td data-th="Quantity">
+                                                        <input type="number" value="{{ $details->qty }}"
+                                                            class="form-control quantity cart_update" min="1" />
+                                                    </td>
+
+                                                    <td data-th="Subtotal" class="text-center">
+                                                        ₹{{ $details->price }}/-</td>
+
+
+                                                    <td class="actions">
+                                                        <button class="btn btn-danger btn-sm cart_remove"><i
+                                                                class="fa fa-trash-o"></i> Delete</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="5" class="text-right">
-                                                    <h3><strong>Total ₹{{ $total }}</strong></h3>
+
                                                 </td>
                                             </tr>
                                             <tr>

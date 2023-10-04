@@ -42,6 +42,12 @@ Route::post('/upload-new-report', [App\Http\Controllers\Admin\OrderController::c
 
 Route::post('/subtest/price', [App\Http\Controllers\Admin\LabPackageController::class, 'getSubtestprice'])->name('subtestprice');
 
+Route::get('/create/coupon', [App\Http\Controllers\Admin\CouponController::class, 'create'])->name('coupon.create');
+
+Route::post('/save/coupon', [App\Http\Controllers\Admin\CouponController::class, 'store'])->name('coupon.store');
+
+Route::get('/get/coupon', [App\Http\Controllers\Admin\CouponController::class, 'index'])->name('coupon.index');
+
 
 Route::group(['middleware' => ['auth']], function () {   
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');

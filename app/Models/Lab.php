@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use App\Models\Package;
 
+use App\Models\Cart;
+
 class Lab extends Model
 {
     use HasFactory;
@@ -27,5 +29,11 @@ class Lab extends Model
         return $this->belongsToMany(SubTest::class,'lab_package')
                      ->withPivot(['price']);
     }
+
+
+    public function cart(){
+        return $this->belongsTo (Cart::class,'lab_id','id');
+    }
+
 
 }

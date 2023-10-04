@@ -1,3 +1,25 @@
+<style>
+    .PriceDetails_wrapper {
+        border-bottom: 1px solid #d9d9d9;
+        border-radius: 15px;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 20px
+    }
+    .PriceDetails_details {
+        display: flex;
+        padding: 25px;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        color: #2f3032;
+        font-style: italic;
+    }
+</style>
 <div class="col-xl-4">
     <div class="card checkout-order-summary">
         <div class="card-body">
@@ -15,25 +37,21 @@
                     </thead>
                     <tbody>
                         @php $total = 0 @endphp
-                        @foreach ($items as $id => $details)
-                            @php $total += $details['price'] * $details['quantity'] @endphp
+                        @foreach ($cartItems as $id => $details)
                             <tr>
                                 <td>
                                     <h5 class="font-size-16 text-truncate">
                                         <a href="#" class="text-dark">
-                                            {{$details['type'] === 'package'?ucfirst($details['name']):
-                                            
-                                            ucfirst(implode(',', $details['name']))}}
+                                        
                                         </a>
                                     </h5>
                                     <p class="text-muted mb-0">
-                                        <b>Lab -</b> {{ ucfirst($details['lab_name']) }}
+                                        <b>Lab -</b> {{ ucfirst($details->name) }}
                                     </p>
                                     <p class="text-muted mb-0 mt-1"></p>
-
                                 </td>
 
-                                <td>₹{{ $details['price'] }}/-</td>
+                                <td>₹{{ $details->price }}/-</td>
                             </tr>
                         @endforeach
 
@@ -43,7 +61,7 @@
                                 <h5 class="font-size-14 m-0">Sub Total :</h5>
                             </td>
                             <td>
-                                ₹{{ $total }}/-
+                                ₹{{ $details->price }}/-
                             </td>
                         </tr>
 
@@ -61,7 +79,7 @@
                                 <h5 class="font-size-14 m-0">Total:</h5>
                             </td>
                             <td>
-                                ₹{{ $total }}/-
+                                ₹{{ $details->price }}/-
                             </td>
                         </tr>
                     </tbody>
@@ -69,42 +87,39 @@
                 </table>
             </div>
 
+
+
             <div class="p-3 bg-light mb-3 mt-4">
-                <h5 class="font-size-16 mb-0">Payment<span class="float-end ms-2"></span></h5>
+                <h6 class="PriceDetails_head font-size-16 mb-0">Payment</h6>
 
-                <div class="col-lg-12 col-sm-12 mb-2 mt-4">
-                    <div data-bs-toggle="collapse" style="display: flex;justify-content: space-between">
-                        <label class="card-radio-label mb-0">
-                           <div class="card-radio text-truncate" style="display: inline-flex">
-                                {{-- <span class="fs-14 mb-2 d-block">Razorpay</span> --}}
-                                <img src="{{asset('images/service/Razorpay-removebg.png')}}" class="img-responsive razoprpayimg"  />
+                <div class="PriceDetails_wrapper">
+
+                    <div class="PriceDetails_details card-radio">
+                        <p style="margin: 0px">
+                            <img src="{{ asset('images/service/razorpay.png') }}" class="img-responsive razoprpayimg" />
+                        </p>
+
+                        <span>
+                            <div class="edit-btn rounded" style="margin-top:-15px">
+                                <input type="radio" name="pay_option" id="patient" class="card-radio-input"
+                                    style="display: block; height:30px" value="1">
                             </div>
-                        </label>
-
-                        <div class="edit-btn rounded" style="margin-top:30px">
-                            <input type="radio" name="pay_option" id="patient"
-                            class="card-radio-input" style="display: block; height:30px" value="1">
-                        </div>
+                        </span>
                     </div>
-                </div>
 
-                <div class="col-lg-12 col-sm-12 mb-2 mt-4">
-                    <div data-bs-toggle="collapse">
-                        <label class="card-radio-label mb-0">
-                           <div class="card-radio text-truncate p-3">
-                                <span class="fs-14 mb-2 d-block">Pay by Cash/Card during sample collection</span>
+
+                    <div class="PriceDetails_details card-radio">
+                        <p style="margin: 0px">Pay by Cash/Card</p>
+                        <span style="font-weight: 400;">
+                            <div class="edit-btn rounded" style="margin-top: -15px">
+                                <input type="radio" name="pay_option" id="patient" class="card-radio-input"
+                                    style="display: block; height:30px" value="2">
                             </div>
-                        </label>
-                        <div class="edit-btn rounded">
-                            <input type="radio" name="pay_option" id="patient"
-                            class="card-radio-input" style="display: block; height:30px" value="2">
-
-             
-                        </div>
+                        </span>
                     </div>
+
+                    
                 </div>
-
-
             </div>
         </div>
     </div>

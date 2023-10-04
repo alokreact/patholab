@@ -71,33 +71,12 @@ class CheckoutController extends Controller
     }
 
     public function checkout(){
-        try{
-            \DB::beginTransaction();
-            $cart = session()->get('cart',[]);
-            $items =  CartService::get_cart_items();
-           
-            //dd($checkout_items);
-            foreach($items as $id => $details){
-
-                $cart = new Cart;
-                //$cart->product_id = $details['id'];
-                $cart->user_id=Auth::user()->id;
-                $cart->session_id=session()->getId();
-                //$cart->product_name = $details['name'];
-                $cart->amount = $details['price'];
-                $cart->qty = 1;
-                $cart->type = 'package';          
-                $cart->save();       
-            }
-            \DB::commit();
-            //return view('Front-end.Checkout.pay_option',compact('items'));
-            $items =  CartService::get_cart_items();              
-            $itemsCollection = new Collection($items);
-            $total = $itemsCollection->sum('price');
+       try{
+            $cartItems =  \Cart::content();              
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
-
-            return view('Front-end.Checkout.newcheckout',\compact('total','items','patients'));
+            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients'));
         }
+
         catch (Exception $e){
             \DB::rollback();
             return  response()->json(['data'=>[],'message'=>'Some Error, Please try again!'],400);
@@ -109,7 +88,7 @@ class CheckoutController extends Controller
     public function save_order(Request $request){
 
         $data = $request->all();
-        //dd($request->all());
+        dd($request->all());
         if($data['pay_option'] === '2'){
 
             $recieptId = mt_rand(10000, 99999);

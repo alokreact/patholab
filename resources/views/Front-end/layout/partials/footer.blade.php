@@ -126,6 +126,8 @@
 
     <script src="{{asset('js/script.js')}}"></script>
     <script src="{{asset('js/contact.js')}}"></script>
+	<script src="{{asset('js/custom.js')}}"></script>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>  
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -143,8 +145,9 @@
 		console.log('wrt');
 		var locationurl = "{{route('subtest.ajax')}}";
 		var query = $(this).val();
-
-		if (query.length >= 2) { // Adjust the minimum number of characters required before triggering the search
+		
+		if (query.length >= 2) {
+			
 			$.ajax({
 				url: locationurl,
 				type: 'POST',
@@ -168,6 +171,7 @@
 				}
 			});
 		} else {
+
 			$('#search-results').empty();
 		}
 	});
@@ -175,19 +179,22 @@
 		
 		
 	$(document).on('click', '.list-group-item', function() {
+	
 		var productName = $(this).text();
-		console.log('ert',productName);
+		console.log('productname',productName);
+
 		var subtest = $(this).data("id");
-		console.log('ert',subtest);
+		console.log('subtest',subtest);
+
 		$('#selectedProduct').val(subtest);
 		$('#search-input').val(productName);
 		$('#search-results').empty();
+		$('#searchSubtest-form').off('submit').submit();
+  	
 	});
 
-
-	
 		// ... (code for remove search item)
-		$(document).ready(function() {        
+	$(document).ready(function() {        
         	$('.removeSelected').on("click",function() {
 				//alert("Icon clicked!");
 				var removeUrl = "{{route('remove-test')}}";
@@ -206,7 +213,139 @@
 					}
 				});
         	});
-    	});
+    	
+			
+			var currentTab = 1;
+			var totalTabs = $(".tab-pane").length;
+
+			function showTab(tabNumber) {
+				console.log('tabNumber',tabNumber)
+				$(".tab-pane").removeClass("active");
+				$("#tab" + tabNumber).addClass("active");
+			}
+			showTab(currentTab);
+
+			$("#nextTab").click(function(e) {
+				e.preventDefault();
+				console.log('currentTab',currentTab)
+				
+				if(currentTab === 1){
+					var name = $('input[name="name"]').val();
+					var email = $('input[name="email"]').val();
+					var phone = $('input[name="phone"]').val();
+					var address = $('[name="address"]').val();
+					var city = $('input[name="city"]').val();
+					var zip = $('input[name="zip"]').val();
+
+					var errors = [];
+
+					if (name.trim() === '') {
+						errors.push('Name is required.');
+					}
+
+					if (email.trim() === '') {
+						errors.push('Email is required.');
+					}
+					if (phone.trim() === '') {
+						errors.push('Phone is required.');
+					}
+					if($.isNumeric(phone.trim()) && phone.trim().length > 10){
+						errors.push('Phone No should be numeric and must be 10 digits.');
+					}
+					if (address.trim() === '') {
+						errors.push('Address is required.');
+					}
+					if (city.trim() === '') {
+						errors.push('City is required.');
+					}
+					if (zip.trim() === '') {
+						errors.push('Zipcode is required.');
+					}
+					if(zip.trim().length >6){
+						errors.push('Zip No should be numeric and must be 6 digits.');
+					}
+				
+					if(errors.length > 0) {
+						var errorHtml = '<ul>';
+						errors.forEach(function(error) {
+							errorHtml += '<li>' + error + '</li>';
+						});
+						errorHtml += '</ul>';
+
+						Swal.fire({
+							icon: 'error',
+							html: errorHtml,
+						});
+					} else {
+						currentTab++;
+						showTab(currentTab);
+					}
+				}
+
+				if(currentTab === 2){
+					var errors =[];
+					var patient = $('input[name="patient[]"]:checked').val();
+					if(!patient) {
+       				 	errors.push('Please select an Patient.');
+    				}
+
+					if(errors.length > 0) {
+						var errorHtml = '<ul>';
+						errors.forEach(function(error) {
+							errorHtml += '<li>' + error + '</li>';
+						});
+						errorHtml += '</ul>';
+
+						Swal.fire({
+							icon: 'error',
+							//title: 'Validation Errors',
+							html: errorHtml,
+						});
+    
+					} else {
+						currentTab++;
+						showTab(currentTab);
+					}
+			
+				}	
+				if(currentTab === 3){
+
+					var errors =[];
+					var slot_day = $('#slot_day').val();
+					var slot_day = $('#slot_time').val();
+					
+					if(!slot_day) {
+       				 	errors.push('Please select an Patient.');
+    				}
+
+					if(errors.length > 0) {
+						var errorHtml = '<ul>';
+						errors.forEach(function(error) {
+							errorHtml += '<li>' + error + '</li>';
+						});
+						errorHtml += '</ul>';
+
+						Swal.fire({
+							icon: 'error',
+							//title: 'Validation Errors',
+							html: errorHtml,
+						});
+    
+					} else {
+						currentTab++;
+						showTab(currentTab);
+					}
+			
+					$('#checkout-form').off('submit').submit();
+  
+				}	
+				
+				if(currentTab > totalTabs) {
+					currentTab = 1;
+				}
+			
+			});
+		});
 
 
 		$("#loadedViewContainer").on("click", ".removeSelected", function() {
@@ -316,81 +455,7 @@
 
 
 		$(document).ready(function() {
-			$('#checkout-form').submit(function(e) {
-				e.preventDefault();
 
-				// Validate form fields
-				var name = $('input[name="name"]').val();
-				var email = $('input[name="email"]').val();
-				var phone = $('input[name="phone"]').val();
-				var address = $('[name="address"]').val();
-				var city = $('input[name="city"]').val();
-				var zip = $('input[name="zip"]').val();
-				//var slot_day = $('input[name="slot-day"]:checked").val();
-				var slot_day = $("input[name='slot_day']:checked").val();
-				var slot_time = $('input[name="slot_time"]:checked').val();
-				var patient = $('input[name="patient[]"]:checked').val();
-				var pay_option = $('input[name="pay_option"]:checked').val();
-				
-
-				var errors = [];
-
-				if (name.trim() === '') {
-					errors.push('Name is required.');
-				}
-
-				if (email.trim() === '') {
-					errors.push('Email is required.');
-				}
-				if (phone.trim() === '') {
-					errors.push('Phone is required.');
-				}
-				if($.isNumeric(phone.trim()) && phone.trim().length > 10){
-					errors.push('Phone No should be numeric and must be 10 digits.');
-				}
-				if (address.trim() === '') {
-					errors.push('Address is required.');
-				}
-				if (city.trim() === '') {
-					errors.push('City is required.');
-				}
-				if (zip.trim() === '') {
-					errors.push('Zipcode is required.');
-				}
-				if(zip.trim().length >6){
-					errors.push('Zip No should be numeric and must be 6 digits.');
-				}
-				if(!slot_day) {
-					errors.push('Please select day.');
-				}
-				if(!slot_time) {
-					errors.push('Please select time.');
-				}
-				if(!patient) {
-					errors.push('Please select Patient.');
-				}
-				if(!pay_option) {
-					errors.push('Please select Payent Option.');
-				}
-
-				if (errors.length > 0) {
-					var errorHtml = '<ul>';
-					errors.forEach(function(error) {
-						errorHtml += '<li>' + error + '</li>';
-					});
-					errorHtml += '</ul>';
-
-					Swal.fire({
-						icon: 'error',
-						//title: 'Validation Errors',
-						html: errorHtml,
-					});
-				} else {
-					//If no errors, submit the form
-					$('#checkout-form').off('submit').submit();
-				}
-
-			})
 		});	
 
 	
@@ -553,6 +618,8 @@
             }, 1000);
         }
 
+
+
 		$(document).on('click','#btn-verify-otp', function(){
 
 			var otps = $('input[type="number"][name="otp[]"]');
@@ -608,6 +675,17 @@
 			})
 
 		})
+
+
+
+		
+
+
+
 	
+</script>
+
+<script>
+    APP_URL = '{{url('/')}}' ;
 </script>
 @yield('page_specific_js')

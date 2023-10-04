@@ -117,12 +117,8 @@ class OrderController extends Controller
 
             $OrderItem = OrderItem::find($request->input('id')); // Replace OrderItem with your actual model name
             
-            //dd($OrderItem['report_url']);
-
             $OrderItem->report_url = $OrderItem['report_url'].','.$filename;
-            
             $OrderItem->save();
-
             return response()->json(['success' => true, 'message' => 'File uploaded successfully']);
         }
         return response()->json(['success' => false, 'message' => 'No file found']);

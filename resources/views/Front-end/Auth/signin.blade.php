@@ -64,7 +64,7 @@
                         <form id="#" class="appoinment-form" method="post" action="{{ route('signin') }}">
                             @csrf
                             <div class="row">
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="name">Email:</label>
                                         <input name="email" id="email" type="text" class="form-control"
@@ -87,18 +87,18 @@
                                             <strong style="color:red"> {{ $errors->first('password') }}</strong>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
-                            <button class="btn btn-main btn-round-full" type="submit">Sign In<i
-                                    class="icofont-simple-right ml-2"></i></a>
+                            {{-- <button class="btn btn-main btn-round-full" type="submit">Sign In
+                                <i class="icofont-simple-right ml-2"></i> --}}
                         </form>
                     </div>
 
 
 
-                    <div class="appoinment-wrap mt-5 pl-lg-5">
-                        <h2>OR </h2>
+                    <div class="appoinment-wrap mt-2 pl-lg-5">
+                        {{-- <h2>OR </h2> --}}
                         <div class="row mt-5">
                             <div class="col-lg-8" id="send-otp">
                                 <div class="form-group">

@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="col-lg-7 col-md-7 col-sm-8 mr-2">
-                    <form action="{{ route('searchsubtest') }}" method="post">
+                    <form action="{{ route('searchsubtest') }}" method="post" id="searchSubtest-form">
                         @csrf
                         <div class="select-container" style="display: flex">
                             <div class="p-1 bg-light shadow-sm border-rad">
@@ -30,17 +30,11 @@
                             </div>
                             <input type="hidden" id="selectedProduct" name="subtest" required>
 
-                            <button type="submit" class="btn btn-signin btn-round-full btn-search mx-2">
-                                <i class="icofont-search-1"></i></button>
 
                             <div id="search-results" class="list-group mt-2"></div>
                         </div>
 
-
                     </form>
-
-
-
 
                 </div>
 
@@ -52,18 +46,18 @@
                     </a>
 
                     <a href="{{ route('cart') }}" class="call-us-desk">
-
                         <i class="icofont-cart"></i>
-                        <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                        {{-- @php
+                            $cart_count = 0;
+                            foreach ($carts as $key => $cart) {
+                                $cart_count = $cart->cartItems->count();
+                            }          
+                        @endphp --}}
+                        <span
+                            class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                     </a>
-
-
-
-
                 </div>
             </div>
-
-
         </div>
 
 
@@ -137,7 +131,7 @@
                             style="color:#00a651">Upload Prescription</a></li>
 
                 </ul>
-                
+
                 <div class="mobile-signup">
                     @if (auth()->check())
                         @can('isUser')

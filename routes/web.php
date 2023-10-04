@@ -56,8 +56,6 @@ Route::get('/callback/success', [App\Http\Controllers\CheckoutController::class,
 
 
 
-
-
 Route::delete('/remove/cart', [App\Http\Controllers\CartController::class,'remove_product'])->name('remove_product_from_cart');
 Route::patch('/update/cart', [App\Http\Controllers\CartController::class,'update_product'])->name('update_cart');
 
@@ -65,14 +63,13 @@ Route::get('/checkout', [App\Http\Controllers\CheckoutController::class,'checkou
 Route::post('/checkout/submit', [App\Http\Controllers\CheckoutController::class,'save_order'])->name('checkout.submit');
 
 
-// Route::post('cart', [App\Http\Controllers\CartController_new::class,'cart'])->name('cart');
 
 Route::get('/cart', [App\Http\Controllers\CartController_new::class,'index'])->name('cart.index');
-Route::post('add-to-cart', [App\Http\Controllers\CartController::class,'addProduct'])->name('add_to_cart');
 
+Route::post('/add-to-cart', [App\Http\Controllers\CartController::class,'addProduct'])->name('add_to_cart');
 Route::post('/package/add', [App\Http\Controllers\CartController::class,'addPackage'])->name('add_to_package');
-
 Route::get('cart', [App\Http\Controllers\CartController::class,'cart'])->name('cart');
+
 
 Route::get('session/remove', [App\Http\Controllers\CartController_new::class,'deleteSessionData'])->name('session');
 Route::post('/remove-selected', [App\Http\Controllers\HomeController::class,'removeSelectedTest'])->name('remove-test');
@@ -90,21 +87,23 @@ Route::post('/pay_option/save', [App\Http\Controllers\CheckoutController::class,
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
 Route::get('/create/prescription', [App\Http\Controllers\ProfileController::class,'prescription'])->name('upload-prescription');
+Route::get('/create/address', [App\Http\Controllers\ProfileController::class,'address'])->name('address');
+Route::get('/create/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');
 
-
+Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
 
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
-
 
 Route::post('/save/patient', [App\Http\Controllers\CheckoutController::class,'addPatient'])->name('savepatient');
 Route::post('/delete/patient', [App\Http\Controllers\PatientController::class,'delete'])->name('deletepatient');
 
-
 Route::get('/email-template', [App\Http\Controllers\ProfileController::class,'emailTemplate'])->name('email-template');
 Route::get('/email-send', [App\Http\Controllers\ProfileController::class,'send_email'])->name('send-email');
 
-
 Route::post('/create/otp', [App\Http\Controllers\AuthController::class,'generateOTP'])->name('otp.create');
 Route::post('/verify/otp', [App\Http\Controllers\AuthController::class,'verifyOTP'])->name('otp.verify');
+
+
+Route::post('/test/add-to-cart', [App\Http\Controllers\CartController::class,'addToCart']);
 
 include"admin.php";

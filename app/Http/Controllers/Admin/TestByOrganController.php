@@ -58,7 +58,7 @@ class TestByOrganController extends Controller
   
         } catch (\Exception $exp) {
 
-            dd($exp->getMessage());
+            //dd($exp->getMessage());
             DB::rollBack(); // Tell Laravel, "It's not you, it's me. Please don't persist to DB"
             throw  $exp;
             return redirect()->back()->with('message', 'Please try agin, after sometime!');

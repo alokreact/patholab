@@ -42,7 +42,8 @@ class AuthController extends Controller{
             }
         }
         else{
-            return view('Front-end.Auth.signin');
+            $carts =[];
+            return view('Front-end.Auth.signin',compact('carts'));
         }
     }
 

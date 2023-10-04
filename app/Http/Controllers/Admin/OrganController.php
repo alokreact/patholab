@@ -40,10 +40,8 @@ class OrganController extends Controller
      */
     public function store(OrganCreateRequest $request)
     {
-        
         $data = $request->all();
-
-        if ($request->file('image')) {
+        if($request->file('image')) {
     
             $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
@@ -53,7 +51,6 @@ class OrganController extends Controller
         }
     
         Organ::create($data);
-        
         return redirect()->back()->with('message','Organ Created Succesfully');
     }
     /**
@@ -92,11 +89,8 @@ class OrganController extends Controller
         $data = $request->except('_method', '_token');  
         // $user = User::find($id);
         
-        
-
-        if ($request->file('image')) {  
-
-                 $file = $request->file('image');
+        if($request->file('image')) {  
+                $file = $request->file('image');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
                 $file->move(public_path('Image'), $filename);
                 $data['image'] = $filename;
@@ -116,8 +110,6 @@ class OrganController extends Controller
     {
         $organ = Organ::find($id);
         $organ->delete();
-
         return redirect()->route('organ.index')->with('message','Deleted Successfully');
-
     }
 }

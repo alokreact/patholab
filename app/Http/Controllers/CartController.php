@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,14 +6,16 @@ use App\Models\Lab;
 use App\Models\SubTest;
 use App\Models\Cart;
 use App\Models\Package;
+use App\Service\CartService;
+use App\Models\CartItem;
 use Auth;
+//use Gloudemans\Shoppingcart\Facades\Cart;
 
 use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller{
 
     function itemExistsInCart($itemId, &$cart){
-
         foreach($cart as $item) {
 
             //dd($item['id']);
@@ -37,20 +38,18 @@ class CartController extends Controller{
     }
 
     public function addProduct(Request $request){
-        //dd($request->all());
+        
         $productId = $request->input('productId');
         $productId_arr = explode(',',$productId);
-       // dd($productId_arr);
-       $single_price = $request->input('singleprice');
+        $single_price = $request->input('singleprice');
         $product = SubTest::find($productId_arr);
-        //dd($product->pluck('sub_test_name'));   
         $labName = $request->input('labId');
+      
         $price = $request->input('price');
         $cart = session()->get('cart',[]);
-        
         $cart = \Session::forget('cart');
-      
-            // Item doesn't exist in the cart, add it as a new item
+
+            //Item doesn't exist in the cart, add it as a new item
             $cart[] = [
                 'id' => $productId,
                 'lab_name' => $labName,
@@ -61,14 +60,15 @@ class CartController extends Controller{
                 'singleprice'=>$single_price
 
             ];
-
-        
-        // Add the cart item to the 'cart' session
+        //Add the cart item to the 'cart' session
         \Session::put('cart', $cart);
-       
-        //dd($cart);
-       
-        return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
+         $items =  CartService::get_cart_items();
+        
+         $user = Auth::user();
+            
+         $cart = ['count'=>count($items)];
+        
+         return response()->json(['cart' =>$cart, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
     public function addPackage(Request $request){
@@ -98,15 +98,21 @@ class CartController extends Controller{
         return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
+    public function cart(){
 
-
-    public function cart()
-    {
         $user = Auth::user();
         
         if($user && Auth::user()->role == '2') {
-
-            return view('Front-end.Cart.index');
+            $carts =[];
+            $carts = \Cart::content();
+            $product_names =[];
+            //dd($carts);
+            if(count($carts)>0){
+                $product_id=$carts->pluck('options')[0]['product_id'];
+                $products = SubTest::find($product_id);
+                $product_names = $products->pluck('sub_test_name');
+            }
+            return view('Front-end.Cart.index',compact('carts','product_names'));
         } 
         else {
 
@@ -116,10 +122,6 @@ class CartController extends Controller{
 
     public function remove_product(Request $request)
     {
-        //dd($request->id);
-        //$cart = session()->get('cart');
-        //dd($cart);
- 
        // if ($request->id) {
             $cart = session()->get('cart');
          
@@ -141,53 +143,28 @@ class CartController extends Controller{
         }
     }
 
-    public function add_to_cart(Request $request)
-    {
-        //dd($request->productId);
-        $type = $request->dataType;
 
-        if ($type === 'package') {
+    public function addToCart(Request $request){
+ 
+        \Cart::destroy();
 
-            $package = Package::find($request->productId);
+        $productId = $request->input('productId');
+        $productId_arr = explode(',',$productId);
+       
+        $single_price = $request->input('singleprice');
+        $product = SubTest::find($productId_arr);
+        $labId = $request->input('labId');
+        $price = $request->input('price');
+        $lab = Lab::find($labId);
 
-            $cart = session()->get('cart', []);
-            $cart['package-' . $package->id] = [
-                "name" =>  $package->package_name,
-                "price" => $package->price,
-                "lab_name" => $package->getLab->lab_name,
-                "quantity" => 1,
-                "type" => 'package',
-                "id" => $package->id
-            ];
-            session()->put('cart', $cart);
-            // $cart = new Cart;
-            // $cart->product_id = $package->id;
-            // $cart->product_name = $package->name;
-            // $cart->amount = $package->price;
-            // $cart->qty = 1;
+       
+        \Cart::add(['id' => $labId, 'name' => $lab->lab_name, 'qty' => 1, 'price' => $price, 'weight' =>2, 'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price)]]);
 
-            // $cart->save();
-            return response()->json(['status' => 200, 'data' => $cart], Response::HTTP_OK);
-        } else if ($type = "test") {
+         $cart = \Cart::count();
 
-            $test = SubTest::with('getLab')->find($request->productId);
-            $lab = Lab::find($request->labId);
-            //dd($lab->subtest[]);
-
-            $cart = session()->get('cart', []);
-
-            $cart['test-' . $test->id] = [
-                "name" =>  $test->sub_test_name,
-                "price" => $request->price,
-                "lab_name" => $lab->lab_name,
-                "quantity" => 1,
-                "type" => 'test',
-                "id" => $test->id
-            ];
-            session()->put('cart', $cart);
-            return response()->json(['status' => 200, 'data' => $cart], Response::HTTP_OK);
-        } else {
-            return response()->json(['message' => 'Product Not Found.'], Response::HTTP_NOT_FOUND);
-        }
+        return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
+       
     }
+
+
 }

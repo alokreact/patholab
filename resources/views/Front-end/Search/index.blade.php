@@ -78,7 +78,7 @@
     }
 
     .text-section {
-        max-width: 75%;
+        max-width: 100%;
     }
 
     .text-section h5 {
@@ -119,7 +119,8 @@
             font-size: 0.9em;
         }
     }
-    .add-button{
+
+    .add-button {
         display: flex;
         justify-content: flex-end;
     }
@@ -156,11 +157,12 @@
         <div class="container mt-4">
             <div class="row">
                 @include('Front-end.Search.template.sidebar')
-                
+
                 <main class="col-md-9 test-search">
                     <header class="border-bottom mb-4 pb-3">
                         <div class="form-inline">
                             <span class="mr-md-auto">
+                                {{ count($combinedResults) }} Labs Found
                             </span>
                         </div>
                     </header><!-- sect-heading -->
@@ -168,7 +170,7 @@
                     <div class="container">
                         @forelse ($combinedResults as $lab)
                             <div class="card bg-light-subtle mt-4">
-                                <img src="{{ $lab['image'] ? asset('Image/'.$lab['image']) : 'http://localhost/applab/Image/202210160825WhatsApp Image 2022-10-16 at 01.25.30 (2).jpeg' }}"
+                                <img src="{{ $lab['image'] ? asset('Image/' . $lab['image']) : 'http://localhost/applab/Image/202210160825WhatsApp Image 2022-10-16 at 01.25.30 (2).jpeg' }}"
                                     alt="{{ $lab['lab_name'] }}">
                                 <div class="testcard-body">
                                     <div class="text-section">
@@ -176,7 +178,8 @@
                                             {{ ucfirst($lab['test_names']) }}</h5>
 
                                         <p class="card-text">{{ ucfirst($lab['lab_name']) }}</p>
-                                        <span><i class="icofont-google-map" style="font-size:16px;color:#000"></i>{{ $lab['city'] }}</span>
+                                        <span><i class="icofont-google-map"
+                                                style="font-size:16px;color:#000"></i>{{ $lab['city'] }}</span>
                                     </div>
 
 
@@ -190,32 +193,22 @@
                                         </div>
                                     </div>
 
-                                    @php
-                                        $cart = session('cart', []);
-                              
-                                    @endphp
-
-                                    @if(session()->has('cart') && itemExistsInCarts($lab['lab_name'], $cart))
-                                    <div class="add-button"> 
-                                
-                                        <button class="btn btn-main-2 btn_add_to_cart_test" disabled="true">Already
-                                             Added</button>
-                                        </div>
-                                    @else
-                                        <div class="add-button"> 
-                                            <button class="btn btn-main-2 btn_add_to_cart_test" value="{{ $lab['id'] }}"
-                                            data-type="test" data-lab="{{ $lab['lab_name'] }}"
+                                  
+                                    <div class="add-button">
+                                        
+                                        <button class="btn btn-main-2 btn_add_to_cart_test" value="{{ $lab['id'] }}"
+                                            data-type="test" data-lab="{{ $lab['lab_id'] }}"
                                             data-price="{{ $lab['total_price'] }}"
                                             data-singleprice="{{ $lab['single_price'] }}">
-                                        Add To cart
-                                    </button>
+                                            Add To cart
+                                        </button>
+
+
+
                                     </div>
-                                @endif
                                 </div>
                             </div>
-                            {{-- @empty
-            <p></p>
-            @endforelse --}}
+
                         @empty
                             <p></p>
                         @endforelse
@@ -231,59 +224,5 @@
 
 
 @push('after-scripts')
-    <script>
-        var addToCarturl = "{{ route('add_to_cart') }}";
-        //var addToCarturl = "{{ route('cart') }}";
-        $('.btn_add_to_cart_test').on('click', function() {
-
-            var button = $(this);
-            $(button).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
-
-            var productId = $(this).val();
-            var dataType = $(this).attr("data-type");
-            var labId = $(this).attr("data-lab");
-            var price = $(this).attr("data-price");
-            var singleprice = $(this).attr("data-singleprice");
-
-            var formData = {
-                productId: productId,
-                dataType: dataType,
-                labId: labId,
-                price: price,
-                singleprice: singleprice
-            };
-            console.log('productId', productId)
-
-            $.ajax({
-                type: "POST",
-                data: formData,
-                url: addToCarturl,
-                success: function(response) {
-                    console.log('productId', response.status)
-                    if (response.status === 200) {
-                        // $('#addtMsg').click();
-                        // $(button).attr('disabled', true);
-                        // $(button).html('Add To Cart');
-                        //window.location.reload();
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Added Successfully',
-                            //html: errorHtml,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload(); // Reload the page
-                            }
-                        });
-                    } else {
-                        alert(response.data)
-                        //window.location.reload();
-                    }
-                },
-                error: function(data) {
-                    console.log(data);
-                }
-            });
-        });
-    </script>
+    <script></script>
 @endpush

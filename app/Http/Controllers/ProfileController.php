@@ -16,15 +16,22 @@ use App\Models\Order;
 
 class ProfileController extends Controller{
 
+    public $carts;
+
+    public function __construct(){
+
+        $this->carts= [];
+
+    }
     public function index(){
-         $user = Auth::User();
-         
+         $user = Auth::User();    
          if($user){
+            $carts =[];
 
             $order_items = Order::where('user_id',$user->id)->get();
             //$reports =Report::where('user_id',$user->id)->get();
             //dd($order_items);
-            return view('Front-end.Profile.booking',compact('order_items'));
+            return view('Front-end.Profile.booking',compact('order_items','carts'));
          }
          else{
              abort('404');
@@ -95,8 +102,19 @@ class ProfileController extends Controller{
     }
 
     public function prescription(){
-
-        return view('Front-end.Profile.tpl.prescription');
-
+        $carts =[];
+        return view('Front-end.Profile.tpl.prescription',compact('carts'));
     }
+
+    public function address(){
+        return view('Front-end.Profile.tpl.address');
+    }
+
+    public function patient(){
+        return view('Front-end.Profile.tpl.patient');
+    }
+    public function coupon(){
+        return view('Front-end.Profile.tpl.coupon');
+    }
+
 }

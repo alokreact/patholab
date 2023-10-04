@@ -179,17 +179,21 @@
     .card-radio-input:checked+.card-radio {
         border-color: #3b76e1 !important
     }
+
     .font-size-16 {
         font-size: 16px !important;
     }
+
     .text-truncate {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     a {
         text-decoration: none !important;
     }
+
     .form-control {
         display: block;
         width: 100%;
@@ -234,137 +238,140 @@
         font-size: 13px;
         font-weight: 500
     }
-    .Stepper_cont{
 
-        position: fixed;
-    top: 162px;
-    width: 44%;
-    background: #fff;
-    padding: 35px 0;
+    .Stepper_cont {
+
+        position: relative;
+        top: 1px;
+        width: 90%;
+        background: #fff;
+        padding: 35px 22px;
+        font-family: inherit;
+        font-size: 16px;
     }
-    .Stepper_stepsCont{
+
+    .Stepper_stepsCont {
         display: flex;
         justify-content: space-between;
         text-align: center;
     }
-    .Stepper_stepCont{
-        align-items:flex-start;
+
+    
+
+    .Stepper_stepCont {
+        align-items: flex-start;
         display: flex;
         flex-direction: column;
         gap: 6px;
         z-index: 1;
     }
-    .Stepper_step{
+
+    .Stepper_step {
 
         width: 48px;
         height: 48px;
         display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
     }
-    .Stepper_number{
-        font-size:17px;
-        color: #fff;
 
+    .Stepper_number {
+        font-size: 17px;
+        color: #fff;
     }
-    .Stepper_line{
-    width: calc(100% - 72px);
-    height: 2px;
-    background: linear-gradient(90deg,#31ccb0 50%,#9d9fa1 0);
-    background-size: 200%;
-    background-position: 100% 0;
-    transition: all .25s linear;
-    position: absolute;
-    top: 44px;
-    left: 36px;
+
+    .Stepper_line {
+        width: calc(100% - 72px);
+        height: 2px;
+        background: linear-gradient(90deg, #31ccb0 50%, #9d9fa1 0);
+        background-size: 200%;
+        background-position: 100% 0;
+        transition: all .25s linear;
+        position: absolute;
+        top: 44px;
+        left: 36px;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.active {
+        display: block;
+    }
+    .Stepper_number a{
+
+        color: #fff;
     }
 </style>
 
 @extends('Front-end.layout.mainlayout')
 @section('content')
+    <div class="checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8">
 
-<div class="checkout">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-8">
-                <div class="card">
-                    
-                    <div class="card-body">
+                    @include('Front-end.Checkout.template.step')
 
-                        
-                        <div class="Stepper_cont mt-4 mb-4" id="cart-stepper">
-                            <div class="Stepper_stepsCont">
-                                <div class="Stepper_stepCont">
-                                    <div class="Stepper_step" style="background: #01D5A3; cursor: default; transition: all 0ms linear 250ms;">
-                                        <span class="Stepper_number">1</span>
-                                    </div>    
-                                    <span>Confirm<br>Tests</span>
-                                </div>
-                                <div class="Stepper_stepCont">
-                                    <div class="Stepper_step" style="background: #01D5A3; cursor: not-allowed;">
-                                        <span class="Stepper_number">2</span>
-                                    </div>
-                                        <span>Add<br>Patients</span>
-                                </div>
-                                <div class="Stepper_stepCont">
-                                    <div class="Stepper_step" style="background: rgb(157, 159, 161); cursor: not-allowed;">
-                                        <span class="Stepper_number">3</span>
-                                    </div><span>Address<br>&amp;&nbsp;Time</span>
-                                </div>
-                                <div class="Stepper_stepCont">
-                                    <div class="Stepper_step" style="background: rgb(157, 159, 161); cursor: not-allowed;">
-                                        <span class="Stepper_number">4</span>
-                                    </div>
-                                    <span>Payment</span>
+                    <div class="tab-content" style="margin-top:0px">
+
+                        <div id="tab1" class="tab-pane">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
+                                        @include('Front-end.Checkout.template.address')
+                                    </ol>
                                 </div>
                             </div>
-                                <hr class="Stepper_line" style="background-position: 100% 0px;">
+
                         </div>
-             
 
-                      
-                        <ol class="activity-checkout mb-0 px-4" style="margin-top: 120px">
-                            @include('Front-end.Checkout.template.address')
-                      
-                            @include('Front-end.Checkout.template.patient')
-                       
-                            <li class="checkout-item">
-                                    @include('Front-end.Checkout.template.slot')
+                        <div id="tab2" class="tab-pane">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
+                                        @include('Front-end.Checkout.template.patient')
+                                    </ol>
                                 </div>
-                            </li>
-                        
-                        </ol>
+                            </div>
+                        </div>
 
+                        <div id="tab3" class="tab-pane">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 120px">
+                                        <li class="checkout-item">
+                                            @include('Front-end.Checkout.template.slot')
 
+                                </div>
+                                </li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row my-4">
-
-
-
                     <div class="col">
                         <a href="#" class="btn btn-link text-muted">
                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                    </div> <!-- end col -->
+                    </div>
 
                     <div class="col" style="display: flex;place-content: end">
                         <div class="text-end mt-2 mt-sm-0">
-                            <input type="submit" class="btn btn-success" value="Proceed">
-                                {{-- <i class="mdi mdi-cart-outline me-1"></i>--}}
-                                
+                            <input type="submit" id="nextTab" class="btn btn-success" value="Proceed">
                         </div>
-                    
                     </div> <!-- end col -->
                 </div> <!-- end row-->
-            
             </div>
+
             @include('Front-end.Checkout.template.cartlist')
-        </form>
-               
+
+            </form>
         </div>
         <!-- end row -->
     </div>
-</div>    
+    </div>
 @endsection
