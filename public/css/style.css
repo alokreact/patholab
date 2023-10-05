@@ -2534,6 +2534,12 @@ section.banner-sec{
 .banner-form .region.region-schedule-home-collection{
   padding: 6px;
 }
+.Stepper_step .icofont-tick-mark{
+  
+  font-size: 24px;
+  font-weight: 900;
+  color:#fff;
+}
 /* .appoinment::after{
   content: "";
   position: absolute;

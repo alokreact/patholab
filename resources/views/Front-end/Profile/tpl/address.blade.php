@@ -68,7 +68,8 @@
             flex-direction: column;
             gap: 6px;
         }
-        .booking-details input{
+
+        .booking-details input {
             height: 55px !important;
             padding: 12px !important;
         }
@@ -91,9 +92,8 @@
                                         </p>
 
                                         <div class="booking-box">
-
-                                            <form id="#" class="appoinment-form" method="post"
-                                                enctype="multipart/form-data" action="{{ route('prescription.submit') }}">
+                                            <form id="#" class="address-form" method="post"
+                                                enctype="multipart/form-data">
                                                 @csrf
 
                                                 <div class="booking-details">
@@ -128,8 +128,8 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="billing-city">Email</label>
-                                                                <input type="text" class="form-control" id="phone"
-                                                                    placeholder="Enter City" name="phone">
+                                                                <input type="text" class="form-control" id="email"
+                                                                    placeholder="Enter City" name="email">
 
                                                                 @if ($errors->has('phone'))
                                                                     <strong style="color:red">
@@ -142,7 +142,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label"
                                                                     for="billing-address">Address</label>
-                                                                <textarea class="form-control" id="address" rows="3" placeholder="Enter full address" name="address"></textarea>
+                                                                <textarea class="form-control" id="address1" rows="3" placeholder="Enter full address" name="address"></textarea>
 
                                                                 @if ($errors->has('name'))
                                                                     <strong style="color:red">
@@ -154,9 +154,9 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="form-label" for="billing-city">City</label>
-                                                                <input type="text" class="form-control" id="billing-city"
+                                                                <input type="text" class="form-control" id="city"
                                                                     placeholder="Enter City" name="city">
-                                                                @if ($errors->has('phone'))
+                                                                @if ($errors->has('city'))
                                                                     <strong style="color:red">
                                                                         {{ $errors->first('phone') }}</strong>
                                                                 @endif
@@ -166,32 +166,37 @@
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
 
-                                                                <label class="form-label" for="zip-code">Zip / Postal
-                                                                    code</label>
-                                                                <input type="text" class="form-control" id="zip-code"
+                                                                <label class="form-label" for="zip-code">State</label>
+                                                                <input type="text" class="form-control" id="state"
                                                                     placeholder="Enter Postal code" name="zip">
                                                             </div>
-                                                            @if ($errors->has('report'))
+                                                         </div>
+
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+
+                                                                <label class="form-label" for="zip-code">Zip / Postal
+                                                                    code</label>
+                                                                <input type="text" class="form-control" id="zip"
+                                                                    placeholder="Enter Postal code" name="zip">
+                                                            </div>
+                                                            @if ($errors->has('zip'))
                                                                 <strong style="color:red">
-                                                                    {{ $errors->first('report') }}</strong>
+                                                                    {{ $errors->first('zip') }}</strong>
                                                             @endif
                                                         </div>
 
 
 
                                                     </div>
-                                                    <button type="submit" class="btn btn-main btn-round-full">Subbmit<i
+                                                    <button type="submit" class="btn btn-main btn-round-full address-btn">Subbmit<i
                                                             class="icofont-simple-right ml-2"></i></button>
 
                                                 </div>
                                             </form>
 
-
-
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

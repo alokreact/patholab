@@ -1,4 +1,4 @@
-<div class="Stepper_cont mt-4 mb-4" id="cart-stepper">
+<div class="Stepper_cont mt-4" id="cart-stepper">
     <div class="Stepper_stepsCont">
 
         <div class="Stepper_stepCont">

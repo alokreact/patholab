@@ -9,8 +9,8 @@
 
 .four_zero_four_bg{
  
- background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-    height: 400px;
+ 	background-image: url('images/404.jpg');
+    height: 500px;
     background-position: center;
  }
  
@@ -40,12 +40,12 @@
 		<div class="col-sm-12 ">
 		<div class="col-sm-10 col-sm-offset-1  text-center">
 		<div class="four_zero_four_bg">
-			<h1 class="text-center ">404</h1>
-		
+			{{-- <h1 class="text-center ">404</h1>
+		 --}}
 		
 		</div>
 		
-		<div class="contant_box_404">
+		<div class="contant_box_404 mt-120" style="margin-top: 30px">
 		<h3 class="h2">
 		Look like you're lost
 		</h3>

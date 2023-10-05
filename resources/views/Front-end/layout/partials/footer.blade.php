@@ -228,7 +228,7 @@
 			$("#nextTab").click(function(e) {
 				e.preventDefault();
 				console.log('currentTab',currentTab)
-				
+			        
 				if(currentTab === 1){
 					var name = $('input[name="name"]').val();
 					var email = $('input[name="email"]').val();
@@ -271,18 +271,22 @@
 							errorHtml += '<li>' + error + '</li>';
 						});
 						errorHtml += '</ul>';
-
 						Swal.fire({
 							icon: 'error',
 							html: errorHtml,
 						});
+
 					} else {
-						currentTab++;
-						showTab(currentTab);
+						var iconUrl = '<i class="icofont-spinner-alt-6" style="padding:2px"></i>';
+						nextTab = currentTab + 1;
+						$('.Stepper_step').css('background-color', '#ccc');
+						$('.Stepper_step').eq(currentTab-1).css('background-color','#1e7e34');
+						$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
+						showTab(nextTab);
 					}
 				}
 
-				if(currentTab === 2){
+				if(nextTab === 2){
 					var errors =[];
 					var patient = $('input[name="patient[]"]:checked').val();
 					if(!patient) {
@@ -303,8 +307,15 @@
 						});
     
 					} else {
-						currentTab++;
-						showTab(currentTab);
+						nextTab =currentTab+2;
+						$('.Stepper_step').css('background-color', '#ccc');
+						$('.Stepper_step').eq(currentTab-1).css('background-color','#1e7e34');
+						$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
+					
+						$('.Stepper_step').eq(currentTab).css('background-color','#1e7e34');
+						$('.Stepper_step').eq(currentTab).html('<i class="icofont-tick-mark"></i>');
+					
+						showTab(nextTab);
 					}
 			
 				}	

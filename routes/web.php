@@ -48,6 +48,8 @@ Route::get('/prescription', [App\Http\Controllers\ContactController::class, 'pre
 Route::post('/prescription/submit', [App\Http\Controllers\ContactController::class, 'store_prescription'])->name('prescription.submit');
 
 
+Route::post('/address/submit', [App\Http\Controllers\AddressController::class, 'store']);
+
 
 
 //Route::post('/checkout/submit', [App\Http\Controllers\CheckoutController::class,'iniitiate'])->name('checkout.submit');

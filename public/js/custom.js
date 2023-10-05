@@ -117,3 +117,80 @@ $('.prescription-btn').on('click',function(e){
         }
 });
 
+
+$('.address-btn').on('click',function(e){
+    e.preventDefault();
+    console.log('working');
+    var valid = true;
+    var name = $('#name').val();
+    var phone = $('#phone').val();
+    var email = $('#email').val();
+    var address1 = $('#address1').val();
+    var state = $('#state').val();
+    var city = $('#city').val();
+    var zip = $('#city').val();
+  
+    if(name === ''){
+        $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required!');
+        valid = false;
+    } 
+    else if(phone ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+    }
+    else if(email ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+
+    }
+    else if(state ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+
+    }
+    else if(city ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+    }
+    else if(zip ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+
+    }
+    else{
+        console.log('>>>',valid)
+        valid = true;
+    }
+
+    if(valid){
+        var formData = $('.address-form').serialize();
+        console.log('form',formData)
+
+        $.ajax({
+                url:APP_URL+'/address/submit',
+                method:'post',
+                data:formData,
+                success:function(res,textStatus, xhr){
+                    if (xhr.status === 201) {
+                        const Toast = Swal.mixin({
+                            toast:true,
+                            position:'top-end',
+                            icon:'success',
+                            showConfirmbutton:false,
+                            timer:3000
+                        })
+                        Toast.fire({
+                            type:'success',
+                            title: res.message,
+                            //html: errorHtml,
+                        })
+                    }
+
+                }
+        });
+        //$('.prescrption-form').submit();
+    }
+});
+
+
+

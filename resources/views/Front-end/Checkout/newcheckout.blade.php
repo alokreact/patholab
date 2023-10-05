@@ -256,7 +256,7 @@
         text-align: center;
     }
 
-    
+
 
     .Stepper_stepCont {
         align-items: flex-start;
@@ -300,7 +300,8 @@
     .tab-pane.active {
         display: block;
     }
-    .Stepper_number a{
+
+    .Stepper_number a {
 
         color: #fff;
     }
@@ -312,9 +313,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-8">
-
                     @include('Front-end.Checkout.template.step')
-
                     <div class="tab-content" style="margin-top:0px">
 
                         <div id="tab1" class="tab-pane">
