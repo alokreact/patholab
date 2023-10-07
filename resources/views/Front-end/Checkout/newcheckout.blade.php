@@ -305,6 +305,11 @@
 
         color: #fff;
     }
+
+    #address-list {
+        display: flex;
+        flex-direction: column;
+    }
 </style>
 
 @extends('Front-end.layout.mainlayout')
@@ -316,39 +321,52 @@
                     @include('Front-end.Checkout.template.step')
                     <div class="tab-content" style="margin-top:0px">
 
-                        <div id="tab1" class="tab-pane">
-                            <div class="card">
-                                <div class="card-body">
-                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
-                                        @include('Front-end.Checkout.template.address')
+                        <form id="checkout-form" method="POST" action="{{ route('checkout.submit') }}">
+                            @csrf
+                            <div id="tab1" class="tab-pane">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
+                                            @include('Front-end.Checkout.template.address')
+                                        </ol>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="tab2" class="tab-pane">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
+                                            @include('Front-end.Checkout.template.patient')
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab3" class="tab-pane">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ol class="activity-checkout mb-0 px-4">
+                                            <li class="checkout-item">
+                                                @include('Front-end.Checkout.template.slot')
+
+                                                <div class="col" style="display: flex;place-content: end">
+                                                    <div class="text-end mt-2 mt-sm-0">
+                                                        <input type="button" id="slot_tab_forward_btn"
+                                                            class="btn btn-success" value="Proceed">
+                                                    </div>
+                                                </div>
+
+                                    </div>
+                                    </li>
+
+
                                     </ol>
                                 </div>
                             </div>
 
-                        </div>
 
-                        <div id="tab2" class="tab-pane">
-                            <div class="card">
-                                <div class="card-body">
-                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 20px">
-                                        @include('Front-end.Checkout.template.patient')
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="tab3" class="tab-pane">
-                            <div class="card">
-                                <div class="card-body">
-                                    <ol class="activity-checkout mb-0 px-4" style="margin-top: 120px">
-                                        <li class="checkout-item">
-                                            @include('Front-end.Checkout.template.slot')
-
-                                </div>
-                                </li>
-                                </ol>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -358,11 +376,7 @@
                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
                     </div>
 
-                    <div class="col" style="display: flex;place-content: end">
-                        <div class="text-end mt-2 mt-sm-0">
-                            <input type="submit" id="nextTab" class="btn btn-success" value="Proceed">
-                        </div>
-                    </div> <!-- end col -->
+                    <!-- end col -->
                 </div> <!-- end row-->
             </div>
 

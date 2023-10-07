@@ -9,12 +9,10 @@
 
              <h5 class="font-size-16 mb-1">Add Patients</h5>
              {{-- <p class="text-muted text-truncate mb-4">Neque porro quisquam est</p> --}}
-             @if (count($patients) > 0)
-                 <input type="button" class="btn btn-success" value="+" id="show_patient_btn" style="float: right" />
-             @else
-                 <p></p>
-             @endif
-
+             <a href="{{route('patient.create')}}">
+                <input type="button" class="btn btn-success" value="+"  style="float: right" />
+                   </a>
+             
              <div class="mb-3">
                  @if (count($patients) > 0)
                      <div class="row" id="patient-list">
@@ -54,82 +52,15 @@
 
                      </div>
                  @else
-                     <div class="row">
-                         <div class="col-lg-4 col-sm-6">
-                             <div class="mb-3">
-                                 <label class="form-label" for="billing-name">Name</label>
-                                 <input type="text" name="patient_name" id="patient_name" class="form-control"
-                                     placeholder="Enter name">
-                             </div>
-                         </div>
-
-                         <div class="col-lg-4">
-                             <div class="mb-3">
-                                 <label class="form-label" for="billing-email-address">Age</label>
-                                 <input type="number" id="age" class="form-control" name="age"
-                                     placeholder="Enter age">
-                             </div>
-                         </div>
-
-                         <div class="col-lg-3">
-                             <div class="mb-3">
-                                 <label class="form-label" for="billing-phone">Gender</label>
-                                 <select name="gender" id="gender" class="form-control">
-                                     <option value="1">Male</option>
-                                     <option value="2">Female</option>
-                                 </select>
-                             </div>
-                         </div>
-
-                         <div class="col-lg-1">
-                             <div class="mb-3 mt-3">
-                                 <label class="form-label" for="billing-phone"> </label>
-
-                                 <button type="button" id="add_patient" class="btn btn-success">Save</button>
-                                 {{-- <i id="spinner" class="fa fa-spinner fa-spin" style="display: none;"></i> --}}
-                             </div>
-                         </div>
-                     </div>
-
+                    
                  @endif
 
-                 <div class="row" id="patient-add" style="display: none">
-                     <div class="col-lg-4 col-sm-6">
-                         <div class="mb-3">
-                             <label class="form-label" for="billing-name">Name</label>
-                             <input type="text" name="patient_name" id="patient_name" class="form-control"
-                                 placeholder="Enter name">
-                         </div>
-                     </div>
+                 <div class="col" style="display: flex;place-content: end">
+                    <div class="text-end mt-2">
+                        <input type="submit" id="pateint_tab_forward_btn" class="btn btn-success" value="Proceed">
+                    </div>
+                </div>
 
-                     <div class="col-lg-4">
-                         <div class="mb-3">
-                             <label class="form-label" for="billing-email-address">Age</label>
-                             <input type="number" id="age" class="form-control" name="age"
-                                 placeholder="Enter Age">
-                         </div>
-                     </div>
-
-                     <div class="col-lg-3">
-                         <div class="mb-3">
-                             <label class="form-label" for="billing-phone">Gender</label>
-                             <select name="gender" id="gender" class="form-control">
-                                 <option value="1">Male</option>
-                                 <option value="2">Female</option>
-                             </select>
-
-                         </div>
-                     </div>
-
-                     <div class="col-lg-1">
-                         <div class="mb-3 mt-3">
-                             <label class="form-label" for="billing-phone"></label>
-
-                             <button type="button" id="add_patient" class="btn btn-success">Save</button>
-                             {{-- <i id="spinner" class="fa fa-spinner fa-spin" style="display: none;"></i> --}}
-                         </div>
-                     </div>
-                 </div>
 
              </div>
          </div>

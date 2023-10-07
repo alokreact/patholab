@@ -13,6 +13,8 @@ use App\Models\Report;
 
 use App\Mail\OrderEmail;
 use App\Models\Order;
+use App\Models\Address;
+use App\Models\Patient;
 
 class ProfileController extends Controller{
 
@@ -107,14 +109,23 @@ class ProfileController extends Controller{
     }
 
     public function address(){
-        return view('Front-end.Profile.tpl.address');
+
+        $addresses = Address::where('user_id', Auth::user()->id)->get();
+        return view('Front-end.Profile.tpl.address',compact('addresses'));
     }
 
     public function patient(){
-        return view('Front-end.Profile.tpl.patient');
+        $patients = Patient::where('user_id', Auth::user()->id)->get();
+        
+        return view('Front-end.Profile.tpl.patient',compact('patients'));
     }
     public function coupon(){
         return view('Front-end.Profile.tpl.coupon');
+    }
+
+    public function createPatient(){
+        return view('Front-end.Profile.components.patient_form');
+
     }
 
 }

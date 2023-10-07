@@ -26,6 +26,7 @@
                     <label class="card-radio-label">
                         <input type="radio" name="slot_day" id="slot_day" class="card-radio-input"
                             value="<?php echo $date->format('Y-m-d'); ?>">
+
                         <span class="card-radio py-3 text-center text-truncate">
                             {{-- <i class="bx bx-credit-card d-block h2 mb-3"></i> --}}
                             <?php
@@ -72,4 +73,4 @@ $rangeEnd = $startTime->add($currentInterval)->format('g A');
     }
 ?>
 
-</div>
+    </div>

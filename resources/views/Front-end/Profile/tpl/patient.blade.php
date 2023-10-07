@@ -18,6 +18,7 @@
         .booking-section {
             width: 100%;
         }
+
         .booking-container {
             gap: 0px;
             display: flex;
@@ -25,10 +26,12 @@
             flex-direction: column;
             justify-content: flex-end;
         }
+
         .booking-details {
             padding: 30px;
             width: 100%;
         }
+
         .booking-date {
             padding: 20px 24px;
             font-size: 18px;
@@ -53,6 +56,7 @@
             padding: 20px 40px;
             border-bottom: 1px solid #f5f5f5;
         }
+
         .booking-box_top h3 {
             font-size: 18px;
         }
@@ -64,6 +68,23 @@
             flex-direction: column;
             gap: 6px;
         }
+        .bookingCard__buttons {
+            display: flex;
+            justify-content: end;
+            margin: 8px;
+            padding: 3px;
+        }
+
+        .booking_collectionDetails {
+            margin: 5px;
+        }
+
+        .collectionDetails_info {
+            display: flex;
+            letter-spacing: 3px;
+            font-size: 16px;
+        }
+
     </style>
 
     <section class="section blog-wrap">
@@ -77,67 +98,18 @@
 
                                 <div class="single-blog-item col-md-8">
                                     <div class="booking-container">
-
                                         <p class="booking-date">
-                                            Add Patient:
+                                            Family Members:
                                         </p>
 
-                                        <div class="booking-box">
+                                        @if (count($patients) > 0)
 
-                                            <form id="#" class="appoinment-form" method="post"
-                                                enctype="multipart/form-data" action="{{ route('prescription.submit') }}">
-                                                @csrf
-
-                                                <div class="booking-details">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <label class="form-label"
-                                                                    for="billing-address">Address</label>
-                                                                <textarea class="form-control" id="address" rows="3" placeholder="Enter full address" name="address"></textarea>
-
-                                                                @if ($errors->has('name'))
-                                                                    <strong style="color:red">
-                                                                        {{ $errors->first('name') }}</strong>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label class="form-label" for="billing-city">City</label>
-                                                                <input type="text" class="form-control" id="billing-city"
-                                                                    placeholder="Enter City" name="city">
-                                                                @if ($errors->has('phone'))
-                                                                    <strong style="color:red">
-                                                                        {{ $errors->first('phone') }}</strong>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-
-                                                                <label class="form-label" for="zip-code">Zip / Postal
-                                                                    code</label>
-                                                                <input type="text" class="form-control" id="zip-code"
-                                                                    placeholder="Enter Postal code" name="zip">
-                                                            </div>
-                                                            @if ($errors->has('report'))
-                                                                <strong style="color:red">
-                                                                    {{ $errors->first('report') }}</strong>
-                                                            @endif
-                                                        </div>
+                                            @include('Front-end.Profile.components.patient_card')
+                                        @else
+                                            @include('Front-end.Profile.components.patient_form')
 
 
-
-                                                    </div>
-                                                    <button type="submit" class="btn btn-main btn-round-full">Subbmit<i
-                                                            class="icofont-simple-right ml-2"></i></button>
-
-                                                </div>
-                                            </form>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -93,7 +93,7 @@
 
                                         <div class="booking-box">
 
-                                            <form id="#" class="prescrption-form" method="post"
+                                            <form id="prescrption-form" class="prescrption-form" method="post"
                                                 enctype="multipart/form-data" action="{{ route('prescription.submit') }}">
                                                 @csrf
                                                 <div class="booking-details">
@@ -145,7 +145,7 @@
 
 
                                                     </div>
-                                                    <button type="button"
+                                                    <button type="submit"
                                                         class="btn btn-main btn-round-full prescription-btn">Subbmit<i
                                                             class="icofont-simple-right ml-2"></i></button>
 

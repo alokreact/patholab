@@ -195,7 +195,8 @@
 
 		// ... (code for remove search item)
 	$(document).ready(function() {        
-        	$('.removeSelected').on("click",function() {
+        	
+		$('.removeSelected').on("click",function() {
 				//alert("Icon clicked!");
 				var removeUrl = "{{route('remove-test')}}";
             	var selectedValues = $(this).data("id");
@@ -215,147 +216,139 @@
         	});
     	
 			
-			var currentTab = 1;
-			var totalTabs = $(".tab-pane").length;
+		var currentTab = 1;
+		var nextTab = 0;
+		var totalTabs = $(".tab-pane").length;
+	
+		function showTab(tabNumber) {
+			console.log('tabNumber',tabNumber)
+			$(".tab-pane").removeClass("active");
+			$("#tab" + tabNumber).addClass("active");
+		}
 
-			function showTab(tabNumber) {
-				console.log('tabNumber',tabNumber)
-				$(".tab-pane").removeClass("active");
-				$("#tab" + tabNumber).addClass("active");
+		showTab(currentTab);
+
+		$("#nextTab").click(function(e) {
+			e.preventDefault();
+			console.log('currentTab',currentTab)
+			
+			if(currentTab === 1){
+				var errors = [];
+				var address = $('input[name="address"]:checked').val();
+
+				if(!address) {
+						errors.push('Please select an Address.');
+				}
+				
+				if(errors.length > 0) {
+					var errorHtml = '<ul>';
+					errors.forEach(function(error) {
+						errorHtml += '<li>' + error + '</li>';
+					});
+					errorHtml += '</ul>';
+					Swal.fire({
+						icon: 'error',
+						html: errorHtml,
+					});
+				} else {
+
+					var iconUrl = '<i class="icofont-spinner-alt-6" style="padding:2px"></i>';
+					nextTab = currentTab + 1;
+					$('.Stepper_step').css('background-color', '#ccc');
+					$('.Stepper_step').eq(currentTab-1).css('background-color','#28a745');
+					$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
+					showTab(nextTab);
+				}
 			}
-			showTab(currentTab);
+		});
 
-			$("#nextTab").click(function(e) {
-				e.preventDefault();
-				console.log('currentTab',currentTab)
-			        
-				if(currentTab === 1){
-					var name = $('input[name="name"]').val();
-					var email = $('input[name="email"]').val();
-					var phone = $('input[name="phone"]').val();
-					var address = $('[name="address"]').val();
-					var city = $('input[name="city"]').val();
-					var zip = $('input[name="zip"]').val();
 
-					var errors = [];
+		$('#pateint_tab_forward_btn').on('click', function(e){
+			e.preventDefault();
+			
+			if(nextTab === 2){
+				var errors =[];
+				var patient = $('input[name="patient[]"]:checked').val();
+				if(!patient) {
+						errors.push('Please select an Patient.');
+				}
+				if(errors.length > 0) {
+					var errorHtml = '<ul>';
+					errors.forEach(function(error) {
+						errorHtml += '<li>' + error + '</li>';
+					});
+					errorHtml += '</ul>';
 
-					if (name.trim() === '') {
-						errors.push('Name is required.');
-					}
+					Swal.fire({
+						icon: 'error',
+						html: errorHtml,
+					});
 
-					if (email.trim() === '') {
-						errors.push('Email is required.');
-					}
-					if (phone.trim() === '') {
-						errors.push('Phone is required.');
-					}
-					if($.isNumeric(phone.trim()) && phone.trim().length > 10){
-						errors.push('Phone No should be numeric and must be 10 digits.');
-					}
-					if (address.trim() === '') {
-						errors.push('Address is required.');
-					}
-					if (city.trim() === '') {
-						errors.push('City is required.');
-					}
-					if (zip.trim() === '') {
-						errors.push('Zipcode is required.');
-					}
-					if(zip.trim().length >6){
-						errors.push('Zip No should be numeric and must be 6 digits.');
-					}
+				} else {
+					nextTab =currentTab+2;
+					
+					$('.Stepper_step').css('background-color', '#ccc');
+					$('.Stepper_step').eq(currentTab-1).css('background-color','#1e7e34');
+					$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
+					$('.Stepper_step').eq(currentTab).css('background-color','#1e7e34');
+					$('.Stepper_step').eq(currentTab).html('<i class="icofont-tick-mark"></i>');
+					showTab(nextTab);
+				}
+			}
+
+		});
+		
+		
+		$('#slot_tab_forward_btn').on('click',function(e){
+			if(nextTab === 3){
+
+				var errors =[];
 				
-					if(errors.length > 0) {
-						var errorHtml = '<ul>';
-						errors.forEach(function(error) {
-							errorHtml += '<li>' + error + '</li>';
-						});
-						errorHtml += '</ul>';
-						Swal.fire({
-							icon: 'error',
-							html: errorHtml,
-						});
+				var slot_day = $('input[name="slot_day"]:checked').val();
+				var slot_time = $('input[name="slot_time"]:checked').val();
+				var pay_option = $('input[name="pay_option"]:checked').val();
+				
+				console.log('currentTab3', currentTab)
+				console.log('slot_day', slot_day)
+				console.log('slot_time', slot_time)
 
-					} else {
-						var iconUrl = '<i class="icofont-spinner-alt-6" style="padding:2px"></i>';
-						nextTab = currentTab + 1;
-						$('.Stepper_step').css('background-color', '#ccc');
-						$('.Stepper_step').eq(currentTab-1).css('background-color','#1e7e34');
-						$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
-						showTab(nextTab);
-					}
+				if(!slot_day) {
+						errors.push('Please select a Date.');
+				}
+				if(!slot_time) {
+						errors.push('Please select a Time.');
 				}
 
-				if(nextTab === 2){
-					var errors =[];
-					var patient = $('input[name="patient[]"]:checked').val();
-					if(!patient) {
-       				 	errors.push('Please select an Patient.');
-    				}
+				if(!pay_option) {
+						errors.push('Please select a Pay Option.');
+				}
+				
+				if(errors.length > 0) {
+					var errorHtml = '<ul>';
+					errors.forEach(function(error) {
+						errorHtml += '<li>' + error + '</li>';
+					});
+					errorHtml += '</ul>';
 
-					if(errors.length > 0) {
-						var errorHtml = '<ul>';
-						errors.forEach(function(error) {
-							errorHtml += '<li>' + error + '</li>';
-						});
-						errorHtml += '</ul>';
+					Swal.fire({
+						icon: 'error',
+						//title: 'Validation Errors',
+						html: errorHtml,
+					});
+				} 
+					else {
 
-						Swal.fire({
-							icon: 'error',
-							//title: 'Validation Errors',
-							html: errorHtml,
-						});
-    
-					} else {
-						nextTab =currentTab+2;
-						$('.Stepper_step').css('background-color', '#ccc');
-						$('.Stepper_step').eq(currentTab-1).css('background-color','#1e7e34');
-						$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
-					
-						$('.Stepper_step').eq(currentTab).css('background-color','#1e7e34');
-						$('.Stepper_step').eq(currentTab).html('<i class="icofont-tick-mark"></i>');
-					
-						showTab(nextTab);
-					}
-			
-				}	
-				if(currentTab === 3){
-
-					var errors =[];
-					var slot_day = $('#slot_day').val();
-					var slot_day = $('#slot_time').val();
-					
-					if(!slot_day) {
-       				 	errors.push('Please select an Patient.');
-    				}
-
-					if(errors.length > 0) {
-						var errorHtml = '<ul>';
-						errors.forEach(function(error) {
-							errorHtml += '<li>' + error + '</li>';
-						});
-						errorHtml += '</ul>';
-
-						Swal.fire({
-							icon: 'error',
-							//title: 'Validation Errors',
-							html: errorHtml,
-						});
-    
-					} else {
-						currentTab++;
-						showTab(currentTab);
-					}
-			
 					$('#checkout-form').off('submit').submit();
-  
-				}	
-				
-				if(currentTab > totalTabs) {
-					currentTab = 1;
 				}
+			}	
+		});	
+				
+				
+		if(currentTab > totalTabs) {
+			currentTab = 1;
+		}
 			
-			});
+		
 		});
 
 
@@ -471,78 +464,13 @@
 
 	
 	
-		$("#add_patient").on('click',function(event) {
-		
-			event.preventDefault(); // Prevent form submission
-			$(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
-
-			var name = $("#patient_name").val();
-			var age = $("#age").val();
-			var gender = $("#gender").val();		
-
-			var errors = [];
-			if (name.trim() === '') {
-				errors.push('Name is required.');
-			}
-			if(age.trim() === ''){
-				errors.push('Age is required.');
-
-			}
-			if(gender.trim() === ''){
-				errors.push('Gender is required.');
-			}
-
-			if(errors.length > 0) {
-				var errorHtml = '<ul>';
-				errors.forEach(function(error) {
-					errorHtml += '<li>' + error + '</li>';
-				});
-				errorHtml += '</ul>';
-
-				Swal.fire({
-					icon: 'error',
-					//title: 'Validation Errors',
-					html: errorHtml,
-				});
-				$(this).html('Save');	
-			} 
-
-			else{
-				$.ajax({
-					type: "POST",
-					url: "{{route('savepatient')}}", // Your backend processing script
-					data: {
-						name: name,
-						age: age,
-						gender:gender
-					},
-				success: function(response) {
-					if(response.status === 'success'){	
-						//console.log('>>msg',response.patient); return;
-						$('#patient-add').hide();
-
-						var patient_block = '<div class="col-lg-4 col-sm-6 mb-2"><div data-bs-toggle="collapse">'
-							patient_block +='<label class="card-radio-label mb-0"><input type="checkbox" name="patient[]" id="patient" class="card-radio-input" value="'+response.patient.id+'">'
-							patient_block +='<div class="card-radio text-truncate p-3"><span class="fs-14 mb-2 d-block">' + response.patient.name+ ' </span><span class="text-muted fw-normal text-wrap mb-1 d-block">Age - ' + response.patient.age+ '</span><span class="text-muted fw-normal text-wrap mb-1 d-block">' + response.patient.gender+ '</span></div></label>'
-							patient_block +='<div class="edit-btn bg-light  rounded">'
-							patient_block +='<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bx-pencil font-size-16"></i></a>'
-							patient_block += '<a href="#" data-bs-toggle="tooltip" data-placement="top" title="" data-bs-original-title="Edit"><i class="bx bxs-trash font-size-16"></i></a></div>'
-							patient_block +='</div>\r\n';
-						
-							$('#patient-list').append(patient_block);
-							$('#new_patient_textbox').val(response.patient.id);			
-					}
-				}
-			});
-		}
 	
-		});
 
 		$(document).on('click','.delete_patient',function(e){
 
 			e.preventDefault();
 			var id =$(this).data('id');
-			var itemDiv = $(this).closest('.patient-div');
+			var itemDiv = $(this).closest('.booking-container');
 			$.ajax({
 				method:'post',
 				url :"{{route('deletepatient')}}",

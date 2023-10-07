@@ -11,6 +11,7 @@ use App\Models\OrderItem;
 use App\Models\Patient;
 use App\Service\CartService;
 use App\Service\OrderService;
+use App\Models\Address;
 
 use Mail;
 use App\Mail\OrderEmail;
@@ -45,7 +46,7 @@ class CheckoutController extends Controller
         $res_patient = ['id'=>$new_patient['id'],'name'=> $new_patient['name'], 'age'=> $new_patient['age'],
                          'gender'=>$new_patient['gender'] == '1'?'Male':'female'];
  
-        return response()->json(['status'=>'success','patient'=>$res_patient]);
+        return response()->json(['message'=>'Patient Saved Successfully','patient'=>$res_patient],Response::HTTP_CREATED);
         //return view('layouts.frontend.user-details');
     }
 
@@ -74,7 +75,9 @@ class CheckoutController extends Controller
        try{
             $cartItems =  \Cart::content();              
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
-            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients'));
+            $addresses = Address::where('user_id', Auth::user()->id)->get();
+
+            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients','addresses'));
         }
 
         catch (Exception $e){
@@ -88,14 +91,17 @@ class CheckoutController extends Controller
     public function save_order(Request $request){
 
         $data = $request->all();
-        dd($request->all());
+        //dd($request->all());
+      
         if($data['pay_option'] === '2'){
 
             $recieptId = mt_rand(10000, 99999);
-            $items =  CartService::get_cart_items();
-            $itemsCollection = new Collection($items);
+            $items =  \Cart::content();
+            dd($items);
             $total = $itemsCollection->sum('price');
+           
             $data['total'] = $total;
+            
             $order_id = OrderService::save_order($data);
             
             $response = OrderService::save_order_items(

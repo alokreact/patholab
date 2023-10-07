@@ -73,6 +73,7 @@ Route::post('/package/add', [App\Http\Controllers\CartController::class,'addPack
 Route::get('cart', [App\Http\Controllers\CartController::class,'cart'])->name('cart');
 
 
+
 Route::get('session/remove', [App\Http\Controllers\CartController_new::class,'deleteSessionData'])->name('session');
 Route::post('/remove-selected', [App\Http\Controllers\HomeController::class,'removeSelectedTest'])->name('remove-test');
  
@@ -80,21 +81,28 @@ Route::post('/remove-selected', [App\Http\Controllers\HomeController::class,'rem
 
 Route::post('razorpay-payment', [App\Http\Controllers\CheckoutController::class, 'razorPayStore'])->name('razorpay.payment.store');
 Route::get('razorpay', [App\Http\Controllers\CheckoutController::class, 'razorpay']);
-
 Route::post('/payment/callback', [App\Http\Controllers\CheckoutController::class, 'handleCallback'])->name('payment.callback');
-
 Route::post('/pay_option/save', [App\Http\Controllers\CheckoutController::class,'save_pay_option'])->name('save_pay_option');
 
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
 Route::get('/create/prescription', [App\Http\Controllers\ProfileController::class,'prescription'])->name('upload-prescription');
-Route::get('/create/address', [App\Http\Controllers\ProfileController::class,'address'])->name('address');
-Route::get('/create/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');
+
+
+
+Route::get('/all/address', [App\Http\Controllers\ProfileController::class,'address'])->name('address');
+Route::get('/create/address', [App\Http\Controllers\AddressController::class,'create'])->name('address.create');
+Route::get('/edit/address/{id}', [App\Http\Controllers\AddressController::class,'edit'])->name('address.edit');
+Route::post('/update/address/{id}', [App\Http\Controllers\AddressController::class,'edit'])->name('address.update');
+
 
 Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
 
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
+
+Route::get('/all/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');
+Route::get('/create/patient', [App\Http\Controllers\ProfileController::class,'createPatient'])->name('patient.create');
 
 Route::post('/save/patient', [App\Http\Controllers\CheckoutController::class,'addPatient'])->name('savepatient');
 Route::post('/delete/patient', [App\Http\Controllers\PatientController::class,'delete'])->name('deletepatient');
