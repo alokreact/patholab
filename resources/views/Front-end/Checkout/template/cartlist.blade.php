@@ -8,6 +8,7 @@
         gap: 10px;
         padding-top: 20px
     }
+
     .PriceDetails_details {
         display: flex;
         padding: 25px;
@@ -20,6 +21,7 @@
         font-style: italic;
     }
 </style>
+
 <div class="col-xl-4">
     <div class="card checkout-order-summary">
         <div class="card-body">
@@ -39,10 +41,13 @@
                         @php $total = 0 @endphp
                         @foreach ($cartItems as $id => $details)
                             <tr>
-                                <td>
+                                <td style="max-width: 240px">
                                     <h5 class="font-size-16 text-truncate">
                                         <a href="#" class="text-dark">
-                                        
+
+                                            @foreach ($product_names as $name)
+                                                {{ $name }},
+                                            @endforeach
                                         </a>
                                     </h5>
                                     <p class="text-muted mb-0">
@@ -54,7 +59,6 @@
                                 <td>₹{{ $details->price }}/-</td>
                             </tr>
                         @endforeach
-
 
                         <tr>
                             <td colspan="1">
@@ -88,6 +92,12 @@
             </div>
 
 
+            <div class="p-3 bg-light mb-3 mt-4">
+                <h6 class="PriceDetails_head font-size-16 mb-0">Apply Coupon</h6>
+                <div class="PriceDetails_wrapper">
+                    <input type="text" name="apply_coupon" class="form-control" />
+                </div>
+            </div>
 
             <div class="p-3 bg-light mb-3 mt-4">
                 <h6 class="PriceDetails_head font-size-16 mb-0">Payment</h6>
@@ -118,7 +128,6 @@
                         </span>
                     </div>
 
-                    
                 </div>
             </div>
         </div>

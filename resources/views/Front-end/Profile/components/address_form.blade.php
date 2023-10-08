@@ -162,7 +162,7 @@
                                                             <div class="form-group">
                                                                 <label class="form-label" for="billing-city">Phone</label>
                                                                 <input type="text" class="form-control" id="phone"
-                                                                    placeholder="Enter Phone" name="phone">
+                                                                    placeholder="Enter Phone" name="phone" maxlength="10">
 
                                                                 @if ($errors->has('phone'))
                                                                     <strong style="color:red">
@@ -212,7 +212,8 @@
                                                                 <label class="form-label" for="zip-code">Zip / Postal
                                                                     code</label>
                                                                 <input type="text" class="form-control" id="zip"
-                                                                    placeholder="Enter Postal code" name="zip">
+                                                                    placeholder="Enter Postal code" name="zip"
+                                                                    maxlength="6">
 
                                                             </div>
                                                             @if ($errors->has('zip'))

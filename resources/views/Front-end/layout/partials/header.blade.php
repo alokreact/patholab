@@ -93,7 +93,7 @@
             <div class="signup">
                 @if (auth()->check())
                     @can('isUser')
-                        <a href="{{ route('profile') }}" type="button" class="btn">
+                        <a href="{{ route('address') }}" type="button" class="btn">
                             <button class="btn btn-signup">Profile</button>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -109,10 +109,7 @@
                         <button class="btn btn-signup">SignUp</button>
                     </a>
                 @endif
-
             </div>
-
-
         </nav>
 
 
@@ -135,7 +132,7 @@
                 <div class="mobile-signup">
                     @if (auth()->check())
                         @can('isUser')
-                            <a href="{{ route('profile') }}" type="button" class="btn">
+                            <a href="{{ route('address') }}" type="button" class="btn">
                                 <button class="btn btn-signup">Profile</button>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -155,5 +152,5 @@
                 </div>
             </div>
         </div>
-        <!-- /#sidebar-wrapper -->
+     
     </header>

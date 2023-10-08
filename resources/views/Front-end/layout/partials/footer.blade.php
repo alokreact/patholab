@@ -250,13 +250,16 @@
 						icon: 'error',
 						html: errorHtml,
 					});
-				} else {
-
+				} else 
+				{
 					var iconUrl = '<i class="icofont-spinner-alt-6" style="padding:2px"></i>';
 					nextTab = currentTab + 1;
 					$('.Stepper_step').css('background-color', '#ccc');
 					$('.Stepper_step').eq(currentTab-1).css('background-color','#28a745');
 					$('.Stepper_step').eq(currentTab-1).html('<i class="icofont-tick-mark"></i>');
+					//$('.Stepper_line').css('background','#28a745');
+					//$('.Stepper_line').css('background-position','50%')
+
 					showTab(nextTab);
 				}
 			}
@@ -318,11 +321,9 @@
 				if(!slot_time) {
 						errors.push('Please select a Time.');
 				}
-
 				if(!pay_option) {
 						errors.push('Please select a Pay Option.');
 				}
-				
 				if(errors.length > 0) {
 					var errorHtml = '<ul>';
 					errors.forEach(function(error) {

@@ -145,9 +145,8 @@ class CartController extends Controller{
 
 
     public function addToCart(Request $request){
- 
         \Cart::destroy();
-
+        
         $productId = $request->input('productId');
         $productId_arr = explode(',',$productId);
        
@@ -160,10 +159,9 @@ class CartController extends Controller{
        
         \Cart::add(['id' => $labId, 'name' => $lab->lab_name, 'qty' => 1, 'price' => $price, 'weight' =>2, 'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price)]]);
 
-         $cart = \Cart::count();
+        $cart = \Cart::count();
 
         return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
-       
     }
 
 

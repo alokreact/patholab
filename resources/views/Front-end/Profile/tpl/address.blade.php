@@ -80,15 +80,18 @@
             margin: 8px;
             padding: 3px;
         }
-
         .booking_collectionDetails {
             margin: 5px;
         }
-
         .collectionDetails_info {
             display: flex;
-            letter-spacing: 3px;
+            letter-spacing: 1px;
             font-size: 16px;
+        }
+        .btn-address{
+            display: flex;
+            justify-content: end;
+            margin: 3px;
         }
     </style>
 
@@ -102,10 +105,18 @@
                                 @include('Front-end.Profile.sidebar')
 
                                 <div class="single-blog-item col-md-8">
-                                    <div class="booking-container">
+                                    <div class="booking-container">   
+                                        <div class="btn-address">
+                                            <a href="{{route('address.create')}}">
+                                                <button class="btn btn-success">Add Address</button>
+                                            </a>
+                                        </div>
+
                                         <p class="booking-date">
                                             Address:
                                         </p>
+
+                                    
                                         @if (count($addresses) > 0)
                                             @include('Front-end.Profile.components.address_card')
                                         @else

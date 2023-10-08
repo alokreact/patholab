@@ -1,4 +1,4 @@
- $(document).on('click','.btn_add_to_cart_test',function () {
+$(document).on('click', '.btn_add_to_cart_test', function () {
 
     var button = $(this);
     $(button).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
@@ -21,20 +21,20 @@
         type: 'POST',
         data: formData,
         //url: APP_URL+'/add-to-cart',
-        url:APP_URL+'/test/add-to-cart',
+        url: APP_URL + '/test/add-to-cart',
 
         success: function (response, textStatus, xhr) {
-           // console.log('productId', response.cart)
+            // console.log('productId', response.cart)
             if (xhr.status === 200) {
                 const Toast = Swal.mixin({
-                    toast:true,
-                    position:'top-end',
-                    icon:'success',
-                    showConfirmbutton:false,
-                    timer:3000
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    showConfirmbutton: false,
+                    timer: 3000
                 })
                 Toast.fire({
-                    type:'success',
+                    type: 'success',
                     title: 'Test Added Successfully',
                     //html: errorHtml,
                 }).then((result) => {
@@ -58,67 +58,67 @@
     });
 });
 
-$('.prescrption-form').on('submit',function(e){
-        e.preventDefault();
-        console.log('working');
+$('.prescrption-form').on('submit', function (e) {
+    e.preventDefault();
+    console.log('working');
 
-        var formData = new formData(this);
+    var formData = new formData(this);
 
-        var valid = true;
-        var name = $('#name').val();
-        var phone = $('#phone').val();
-        var allowedExtensions = /(\.pdf|\.jpg|\.jpeg|\.png)$/i;
-        var fileName = $('#fileInput').val();
-        
-        if(name === ''){
-            $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required!');
-            valid = false;
-        }
-         
-        else if(!allowedExtensions.exec(fileName)){
-            $('.error_report').html('<i class=\"icofont-info-circle\"></i> &nbsp;Report is not selected!');
-            valid = false;
-        }
-        else if(phone ===''){
-            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
-            valid = false;
-        }
-        else{
-            console.log('>>>',valid)
-            valid = true;
-        }
+    var valid = true;
+    var name = $('#name').val();
+    var phone = $('#phone').val();
+    var allowedExtensions = /(\.pdf|\.jpg|\.jpeg|\.png)$/i;
+    var fileName = $('#fileInput').val();
 
-        if(valid){
-            // var formData = $('.prescrption-form').serialize();
-            // console.log('form',formData)
-            // $.ajax({
-            //         url:APP_URL+'/prescription/submit',
-            //         method:'post',
-            //         data:formData,
-            //         success:function(res,textStatus, xhr){
-            //             if (xhr.status === 200) {
-            //                 const Toast = Swal.mixin({
-            //                     toast:true,
-            //                     position:'top-end',
-            //                     icon:'success',
-            //                     showConfirmbutton:false,
-            //                     timer:3000
-            //                 })
-            //                 Toast.fire({
-            //                     type:'success',
-            //                     title: 'Report Uploaded Successfully',
-            //                     //html: errorHtml,
-            //                 })
-            //             }
+    if (name === '') {
+        $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required!');
+        valid = false;
+    }
 
-            //         }
-            // });
-            $('.prescrption-form').submit();
-        }
+    else if (!allowedExtensions.exec(fileName)) {
+        $('.error_report').html('<i class=\"icofont-info-circle\"></i> &nbsp;Report is not selected!');
+        valid = false;
+    }
+    else if (phone === '') {
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+    }
+    else {
+        console.log('>>>', valid)
+        valid = true;
+    }
+
+    if (valid) {
+        // var formData = $('.prescrption-form').serialize();
+        // console.log('form',formData)
+        // $.ajax({
+        //         url:APP_URL+'/prescription/submit',
+        //         method:'post',
+        //         data:formData,
+        //         success:function(res,textStatus, xhr){
+        //             if (xhr.status === 200) {
+        //                 const Toast = Swal.mixin({
+        //                     toast:true,
+        //                     position:'top-end',
+        //                     icon:'success',
+        //                     showConfirmbutton:false,
+        //                     timer:3000
+        //                 })
+        //                 Toast.fire({
+        //                     type:'success',
+        //                     title: 'Report Uploaded Successfully',
+        //                     //html: errorHtml,
+        //                 })
+        //             }
+
+        //         }
+        // });
+        $('.prescrption-form').submit();
+    }
 });
 
 
-$('.address-btn').on('click',function(e){
+$('.address-btn').on('click', function (e) {
     e.preventDefault();
     console.log('working');
     var valid = true;
@@ -128,121 +128,178 @@ $('.address-btn').on('click',function(e){
     var address1 = $('#address1').val();
     var state = $('#state').val();
     var city = $('#city').val();
-    var zip = $('#city').val();
-  
-    console.log('>>addr',address1)
+    var zip = $('#zip').val();
 
-    if(name === ''){
+    console.log('>>addr', address1)
+
+    if (name === '') {
         $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required!');
         valid = false;
-    } 
-    if(email ===''){
+    }
+    else {
+        $('.error_name').html('');
+    }
+    if (email === '') {
         $('.error_email').html('<i class=\"icofont-info-circle\"></i> &nbsp;Email is required.');
         valid = false;
-
     }
-    if(phone ===''){
+    if(email) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            $('.error_email').html('');
+        }
+        else {
+            $('.error_email').html('<i class=\"icofont-info-circle\"></i> &nbsp;Valid Email is required.');
+            valid = false;
+           
+        }
+    }
+    if (phone === '') {
         $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
         valid = false;
     }
-	// if(zip.trim().length >6){
-					// 	errors.push('Zip No should be numeric and must be 6 digits.');
-					// }
-				
-    	// if($.isNumeric(phone.trim()) && phone.trim().length > 10){
-					// 	errors.push('Phone No should be numeric and must be 10 digits.');
-					// }
-					// if (address.trim() === '') {
-					// 	errors.push('Address is required.');
-					// }
-				
 
-    if(address1 === ''){
+    if (phone) {
+        if (!$.isNumeric(phone)) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be numeric.');
+            valid = false;
+        }
+        else if (phone.trim().length > 10 || phone.trim().length < 10) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be at least 10 digits.');
+            valid = false;
+        }
+        else {
+            $('.error_phone').html('');
+
+        }
+    }
+
+    // if(zip.trim().length >6){
+    // 	errors.push('Zip No should be numeric and must be 6 digits.');
+    // }
+
+    // if($.isNumeric(phone.trim()) && phone.trim().length > 10){
+    // 	errors.push('Phone No should be numeric and must be 10 digits.');
+    // }
+    // if (address.trim() === '') {
+    // 	errors.push('Address is required.');
+    // }
+
+
+    if (address1.trim().length === 0) {
         $('.error_address1').html('<i class=\"icofont-info-circle\"></i> &nbsp;Address is required.');
         valid = false;
     }
-    
-    if(city ===''){
+    else {
+        $('.error_address1').html('');
+
+    }
+
+    if (city.trim().length === 0) {
         $('.error_city').html('<i class=\"icofont-info-circle\"></i> &nbsp;City is required.');
         valid = false;
     }
-    if(state ===''){
+    else {
+        $('.error_city').html('');
+
+    }
+    if (state === '') {
         $('.error_state').html('<i class=\"icofont-info-circle\"></i> &nbsp;State is required.');
         valid = false;
 
     }
-    if(zip ===''){
+
+    else {
+        $('.error_state').html('');
+
+    }
+    if (zip==='') {
         $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip is required.');
         valid = false;
     }
+     
+    if(zip){
+        if (!$.isNumeric(zip)) {
+            $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip code should be numeric and must be 6 digits.');
+            valid = false;
+        }   
+        else if (zip.trim().length > 6) {
+            $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip code should be 6 digits.');
+            valid = false;
+        }
+        else{
+            $('.error_zip').html('');
+        }
+    }
 
-    if(zip !=='' && state !=='' && city !=='' && phone !=='' && email !== '' && name !==''){
-        console.log('>>>',valid)
+    if (zip !== '' && state !== '' && city !== '' && phone !== '' && email !== '' && name !== '' &&
+        zip.trim().length === 6) {
+
+        console.log('>>>', valid)
         valid = true;
     }
 
-    
-    if(valid){
+
+    if (valid) {
 
         var formData = $('.address-form').serialize();
-        console.log('form',formData)
+        console.log('form', formData)
 
         $.ajax({
-                url:APP_URL+'/address/submit',
-                method:'post',
-                data:formData,
-                success:function(res,textStatus, xhr){
+            url: APP_URL + '/address/submit',
+            method: 'post',
+            data: formData,
+            success: function (res, textStatus, xhr) {
 
-                    console.log('res',res)
-                    if (xhr.status === 201) {
-                        const Toast = Swal.mixin({
-                            toast:true,
-                            position:'top-end',
-                            icon:'success',
-                            showConfirmbutton:false,
-                            timer:3000
-                        })
-                        Toast.fire({
-                            type:'success',
-                            title: res.message,
-                            //html: errorHtml,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload(); // Reload the page
-                            }
-                        });
-                    }
+                console.log('res', res)
+                if (xhr.status === 201) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmbutton: false,
+                        timer: 3000
+                    })
+                    Toast.fire({
+                        type: 'success',
+                        title: res.message,
+                        //html: errorHtml,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(); // Reload the page
+                        }
+                    });
                 }
+            }
         });
         //$('.prescrption-form').submit();
     }
 });
 
 
-$("#add_patient").on('click',function(event) {
-		
+$("#add_patient").on('click', function (event) {
+
     event.preventDefault(); // Prevent form submission
     $(this).html('<i class="icofont-spinner-alt-6" style="padding:2px"></i>');
 
     var name = $("#patient_name").val();
     var age = $("#age").val();
-    var gender = $("#gender").val();		
+    var gender = $("#gender").val();
 
     var errors = [];
     if (name.trim() === '') {
         errors.push('Name is required.');
     }
-    if(age.trim() === ''){
+    if (age.trim() === '') {
         errors.push('Age is required.');
 
     }
-    if(gender.trim() === ''){
+    if (gender.trim() === '') {
         errors.push('Gender is required.');
     }
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
         var errorHtml = '<ul>';
-        errors.forEach(function(error) {
+        errors.forEach(function (error) {
             errorHtml += '<li>' + error + '</li>';
         });
         errorHtml += '</ul>';
@@ -252,41 +309,99 @@ $("#add_patient").on('click',function(event) {
             //title: 'Validation Errors',
             html: errorHtml,
         });
-        $(this).html('Save');	
-    } 
-    else{
+        $(this).html('Save');
+    }
+    else {
         $.ajax({
             type: "POST",
-            url: APP_URL+'/save/patient', // Your backend processing script
+            url: APP_URL + '/save/patient', // Your backend processing script
             data: {
                 name: name,
                 age: age,
-                gender:gender
+                gender: gender
             },
-        success: function(response,textStatus,xhr) {
-            if (xhr.status === 201) {
-                const Toast = Swal.mixin({
-                    toast:true,
-                    position:'top-end',
-                    icon:'success',
-                    showConfirmbutton:false,
-                    timer:3000
-                })
-                Toast.fire({
-                    type:'success',
-                    title: response.message,
-                    //html: errorHtml,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.reload(); // Reload the page
-                    }
-                });
+            success: function (response, textStatus, xhr) {
+                if (xhr.status === 201) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmbutton: false,
+                        timer: 3000
+                    })
+                    Toast.fire({
+                        type: 'success',
+                        title: response.message,
+                        //html: errorHtml,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(); // Reload the page
+                        }
+                    });
+                }
             }
-        }
-    });
-}
+        });
+    }
 
 });
 
 
+$('.number_only').on('input', function () {
+    if (this.value.length > 1) {
+        this.value = this.value.slice(0, 1); // Allow only single digit
+    }
+
+    // Move focus to the next input field
+    var index = $('.single-digit-input').index(this);
+    if (index < $('.single-digit-input').length - 1) {
+        $('.single-digit-input').eq(index + 1).focus();
+    }
+});
+
+$('.remove_address_btn').on('click', function (e) {
+
+    e.preventDefault();
+
+    var id = $(this).val();
+
+    Swal.fire({
+        title: 'Success!',
+        text: 'Do you really want to remove?',
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+
+                url:APP_URL+'/delete/address/'+id,
+                method:'DELETE',
+                success:function(response,textStatus,xhr){
+                    console.log(response)
+                
+                    if (xhr.status === 200) {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            showConfirmbutton: false,
+                            timer: 3000
+                        })
+                        Toast.fire({
+                            type: 'success',
+                            title: response.message,
+                            //html: errorHtml,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload(); // Reload the page
+                            }
+                        });
+                    }
+                }
+            })
+        }
+    })
+})
 

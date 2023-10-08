@@ -8,11 +8,11 @@
     <div class="feed-item-list">
         <div>
             <h5 class="font-size-16 mb-1">Select Address:</h5>
-  
-                <a href="{{route('address.create')}}">
-                    <input type="button" class="btn btn-success" value="+" style="float: right" />
-                </a>
-          
+
+            <a href="{{ route('address.create') }}">
+                <input type="button" class="btn btn-success" value="+" style="float: right" />
+            </a>
+
             <div class="mb-3">
                 @if (count($addresses) > 0)
                     <div class="row" id="address-list">
@@ -26,30 +26,27 @@
 
                                         <div class="card-radio text-truncate p-3">
                                             <span class="fs-14 mb-2 d-block">Name - {{ ucfirst($address->name) }}</span>
-                                        
+
                                             <span class="text-muted fw-normal text-wrap mb-1 d-block">Email -
                                                 {{ $address->email }}</span>
-
                                             <span class="text-muted fw-normal text-wrap mb-1 d-block">Phone -
-                                                    {{ $address->phone }}</span>
-    
-                                            <span
-                                                class="text-muted fw-normal d-block">
-                                                    Address:
+                                                {{ $address->phone }}</span>
+
+                                            <span class="text-muted fw-normal d-block">
+                                                Address:
                                                 <Address>{{ ucfirst($address->address1) }}</Address>
-                                                <Address>{{ ucfirst($address->city),ucfirst($address->zip) }}</Address>
-                                            
+                                                <Address>{{ ucfirst($address->city), ucfirst($address->zip) }}</Address>
+
                                             </span>
-                                        
-                                            </div>
-
+                                        </div>
                                     </label>
-                                    <div class="action_box">
 
+                                    <div class="action_box">
                                         <div class="edit-btn bg-light  rounded">
 
-                                            <a href="#" class="delete_patient" data-id="{{ $address->id }}">
-                                                <i class="bx bxs-trash font-size-16"></i>
+                                            <a href="{{ route('address.edit', [$address->id]) }}" class=""
+                                                data-id="{{ $address->id }}">
+                                                <i class="bx bxs-edit font-size-16"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -58,16 +55,16 @@
                             </div>
                         @endforeach
 
-                        <div class="col" style="display: flex;place-content: end">
-                            <div class="text-end mt-2 mt-sm-0">
-                                <input type="submit" id="nextTab" class="btn btn-success" value="Proceed">
-                            </div>
-                        </div>
+                     
                     </div>
                 @else
-                
                 @endif
 
+                <div class="col" style="display: flex;place-content: end">
+                    <div class="text-end mt-2 mt-sm-0">
+                        <input type="submit" id="nextTab" class="btn btn-success" value="Proceed">
+                    </div>
+                </div>
             </div>
         </div>
 </li>

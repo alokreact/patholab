@@ -11,6 +11,8 @@ use App\Models\OrderItem;
 use App\Models\Patient;
 use App\Service\CartService;
 use App\Service\OrderService;
+use App\Service\SmsService;
+
 use App\Models\Address;
 
 use Mail;
@@ -77,7 +79,9 @@ class CheckoutController extends Controller
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
             $addresses = Address::where('user_id', Auth::user()->id)->get();
 
-            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients','addresses'));
+            $product_names = OrderService::getProductnames($cartItems);
+
+            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients','addresses','product_names'));
         }
 
         catch (Exception $e){
@@ -91,57 +95,57 @@ class CheckoutController extends Controller
     public function save_order(Request $request){
 
         $data = $request->all();
-        //dd($request->all());
-      
-        if($data['pay_option'] === '2'){
 
+        if($data['pay_option'] === '2'){
+        
             $recieptId = mt_rand(10000, 99999);
             $items =  \Cart::content();
-            dd($items);
-            $total = $itemsCollection->sum('price');
-           
+            $total=  OrderService::total($items);
             $data['total'] = $total;
-            
             $order_id = OrderService::save_order($data);
-            
-            $response = OrderService::save_order_items(
-                    isset($data['patient'])? $data['patient']: $data['new_patient'], $order_id,$items);
-            
+        
+            $response = OrderService::save_order_items($order_id,$items);
+        
             if(count($response) >0){
-
+                $patients = Patient::find($data['patient']);
+                $address = Address::find($data['address']);
+                $data['product_names'] = OrderService::getProductnames($items);
                 $data['items'] = $items;
+
                 $data['date'] = now();
                 $data['order_id'] = $recieptId;
-                
+                $data['address'] = $address;
+                $data['patients'] = $patients;
+               //dd($data);
                 
                     $pdfService = new PdfService();
-                    //dd($data['email']);
                     $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
                     //Send email with PDF attachment
+                    
                     $pdfFileName = 'order.pdf';
-                    $email = $data['email'];
+                    $email = $data['address']->email;
+
                     Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName,$email) {
                         $message->to($email)
                             ->subject('Order Confirmation')
                             ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
                     });
+
+                    SmsService::sendConfirmationmsg('9989734924',$recieptId);            
                     $request->session()->forget('cart');
                     //Mail::to($data['email'])->send(new OrderEmail($items));
-                    return redirect()->route('confirmation');
-                
-                
+                    return redirect()->route('confirmation');  
             }
         }
-
         else{    
+
             $recieptId = mt_rand(10000, 99999);
-            $items =  CartService::get_cart_items();
-            $itemsCollection = new Collection($items);
-            $total = $itemsCollection->sum('price');
+            $items =  \Cart::content();
+            $total=  OrderService::total($items);
             $data['total'] = $total;
-            //dd($this->razorpayId);
             $api = new Api($this->razorpayKey, $this->razorpayId);
            // dd($api);
+
             $order = [
                 'receipt'         => 'order_'.$recieptId,
                 'amount'          => $total * 100, // 39900 rupees in paise
@@ -149,11 +153,11 @@ class CheckoutController extends Controller
             ];
 
             $razorpayOrder = $api->order->create($order);
-            //dd($razorpayOrder);
             $data['razorpayId'] = $razorpayOrder['id'];
             
             $response = OrderService::save_order($data);
-            $data['items'] = $items;
+           
+            $address =Address::find($data['address']);
             $data['date'] = now();
             $data['order_id'] = $recieptId;
       
@@ -161,10 +165,10 @@ class CheckoutController extends Controller
                 $response = [
                     'orderId' => $razorpayOrder['id'],
                     'razorpayId' => $this->razorpayId,
-                    'user_name' => $data['name'],
+                    'user_name' => $address->name,
                     'currency' => 'INR',
-                    'user_email' => $data['email'],
-                    'user_phone' => $data['phone'],
+                    'user_email' => $address->email,
+                    'user_phone' => $address->phone,
                     'user_address' => $data['address'],
                     'description' => 'New Test',
                     'pay_option' => 1,
@@ -176,16 +180,15 @@ class CheckoutController extends Controller
                 ];
 
             return view('Front-end.Cart.payment-page', compact('response'));
-            //return view('Front-end.Checkout.rzp_checkout', compact('response'));
         }
     }
-        //return response()->json( ['status'=>'success','msg'=>'Order Created Succesfully'],200,);
+        
     }
 
     public function razorpay(){        
         return view('Front-end.Checkout.razorpay');
     }
-
+    
     public function handleCallback(Request $request){
         
         $api = new Api($this->razorpayKey, $this->razorpayId);

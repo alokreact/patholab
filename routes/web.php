@@ -73,7 +73,6 @@ Route::post('/package/add', [App\Http\Controllers\CartController::class,'addPack
 Route::get('cart', [App\Http\Controllers\CartController::class,'cart'])->name('cart');
 
 
-
 Route::get('session/remove', [App\Http\Controllers\CartController_new::class,'deleteSessionData'])->name('session');
 Route::post('/remove-selected', [App\Http\Controllers\HomeController::class,'removeSelectedTest'])->name('remove-test');
  
@@ -87,6 +86,7 @@ Route::post('/pay_option/save', [App\Http\Controllers\CheckoutController::class,
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
+
 Route::get('/create/prescription', [App\Http\Controllers\ProfileController::class,'prescription'])->name('upload-prescription');
 
 
@@ -94,11 +94,12 @@ Route::get('/create/prescription', [App\Http\Controllers\ProfileController::clas
 Route::get('/all/address', [App\Http\Controllers\ProfileController::class,'address'])->name('address');
 Route::get('/create/address', [App\Http\Controllers\AddressController::class,'create'])->name('address.create');
 Route::get('/edit/address/{id}', [App\Http\Controllers\AddressController::class,'edit'])->name('address.edit');
-Route::post('/update/address/{id}', [App\Http\Controllers\AddressController::class,'edit'])->name('address.update');
+Route::put('/update/address/{id}', [App\Http\Controllers\AddressController::class,'update'])->name('address.update');
+Route::delete('/delete/address/{id}', [App\Http\Controllers\AddressController::class,'destroy'])->name('address.delete');
+
 
 
 Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
-
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
 
 Route::get('/all/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');

@@ -1,3 +1,4 @@
+
 @foreach ($addresses as $address)
 <div class="booking-container">
     <div class="booking-box">
@@ -30,8 +31,10 @@
                 type="button">Edit</button>
             </a>
 
-                <button class="btn btn-main-2 btn-full-round"
-                type="button">Delete</button>
+         
+                <button class="btn btn-main-2 btn-full-round remove_address_btn"
+                type="button" value="{{ $address->id}}">Delete</button>
+            
         </div>
     </div>
 </div>

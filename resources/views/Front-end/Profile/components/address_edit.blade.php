@@ -109,10 +109,13 @@
 
 
                                         <div class="booking-box">
-                                            <form id="#" class="address-edit-form"
-                                                acttion="{{ route('address.update', [$address->id]) }}" method="post"
+                                            <form class="address-edit-form"
+                                                action="{{route('address.update',[$address->id]) }}" method="post"
                                                 enctype="multipart/form-data">
+                                                
                                                 @csrf
+                                                @method('put')
+
                                                 <div class="booking-details">
                                                     <div class="row">
                                                         <div class="col-lg-6">
@@ -233,7 +236,7 @@
                                                         </div>
                                                     </div>
                                                     <button type="submit"
-                                                        class="btn btn-main btn-round-full address-btn">Update<i
+                                                        class="btn btn-main btn-round-full">Update<i
                                                             class="icofont-simple-right ml-2"></i></button>
 
                                                 </div>

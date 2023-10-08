@@ -15,20 +15,7 @@ class CartService{
         $cart = session()->get('cart', []);
      
       
-        // foreach((array)session('cart') as $items){
-
-        //     if ($items['type'] === 'test'){
-        //         $tests = SubTest::whereIn('id', collect(session('cart'))->pluck('test_id'))->get()->toArray();  
-        //     }
-        //     else{
-        //         $packages = Package::whereIn('id',collect(session('cart'))->pluck('package_id'))->get()->toArray();
-        //         foreach($packages as $key => $row){
-        //             $packages[$key]['sub_test_name']="";
-        //           }
-        //     } 
-        // }
-        //dd($items);
-        
+         
         return $cart;
 
         //return $items;
