@@ -9,7 +9,7 @@
 
 .four_zero_four_bg{
  
- 	background-image: url('images/404.jpg');
+ 	background-image: url('../images/404.jpg');
     height: 500px;
     background-position: center;
  }

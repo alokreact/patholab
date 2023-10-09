@@ -380,7 +380,6 @@ $('.remove_address_btn').on('click', function (e) {
                 method:'DELETE',
                 success:function(response,textStatus,xhr){
                     console.log(response)
-                
                     if (xhr.status === 200) {
                         const Toast = Swal.mixin({
                             toast: true,

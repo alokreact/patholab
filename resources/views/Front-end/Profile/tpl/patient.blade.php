@@ -85,6 +85,11 @@
             font-size: 16px;
         }
 
+        .btn-address{
+            display: flex;
+            justify-content: end;
+            margin: 3px;
+        }
     </style>
 
     <section class="section blog-wrap">
@@ -98,6 +103,13 @@
 
                                 <div class="single-blog-item col-md-8">
                                     <div class="booking-container">
+
+                                        <div class="btn-address">
+                                            <a href="{{route('patient.create')}}">
+                                                <button class="btn btn-success">Add patient</button>
+                                            </a>
+                                        </div>
+
                                         <p class="booking-date">
                                             Family Members:
                                         </p>

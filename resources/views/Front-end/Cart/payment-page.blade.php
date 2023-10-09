@@ -1,66 +1,68 @@
-<form action="{{route('payment.callback')}}" method="POST" id="payment-form">
+<form action="{{ route('payment.callback') }}" method="POST" id="payment-form">
     @csrf
     <input type="hidden" name="razorpay_order_id" value="{{ $response['orderId'] }}">
-    <input type="hidden" id="razorpay_payment_id" name="razorpay_payment_id" >
-    <input type="hidden" id="razorpay_signature" name="razorpay_signature" >
+    <input type="hidden" id="razorpay_payment_id" name="razorpay_payment_id">
+    <input type="hidden" id="razorpay_signature" name="razorpay_signature">
+    <input type="hidden" id="address" name="address" value="{{$response['user_address'] }}">
+    
+    <input type="hidden" id="patient" name="patient" value="{{$response['patient'] }}">
+    <input type="hidden" id="recieptId" name="recieptId" value="{{$response['recieptId'] }}">
 
-    <button type="submit" id="pay-button">Pay Now</button>
+    <input type="hidden" id="slot_day" name="slot_day" value="{{$response['order_date'] }}">
+    <input type="hidden" id="slot_time" name="slot_time" value="{{$response['collection_time'] }}">
+
+    <button type="submit" id="pay-button" style="display: none">Pay Now</button>
 </form>
 
 
-<button id="rzp-button1" style="display:none">Pay</button>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-    // console.log('response',response)
     var options = {
-        "key": "{{env('RAZORPAY_KEY')}}", // Enter the Key ID generated from the Dashboard
-        "amount": "{{$response['total']}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "key": "{{ env('RAZORPAY_KEY') }}", // Enter the Key ID generated from the Dashboard
+        "amount": "{{ $response['total'] }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         "currency": "INR",
-        "name": "{{$response['user_name']}}",
+        "name": "CALL LABS",
         "description": "Test Transaction",
-        "image": "https://example.com/your_logo",
-        "order_id": "{{$response['orderId']}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "callback_url": "{{route('confirmation')}}",
+        "image": "http://calllabs.in/images/Logo-removebg.png",
+        "order_id": "{{ $response['orderId'] }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "callback_url": "{{ route('confirmation') }}",
         "handler": function(response) {
-           // alert(response.razorpay_payment_id);
-           // alert(response.razorpay_signature);
+            alert(response);
+            // alert(response.razorpay_signature);
 
             document.getElementById('razorpay_signature').value = response.razorpay_signature;
-
             document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
-
             document.getElementById('payment-form').submit();
             console.log(response)
         },
         "prefill": {
-            "name": "{{$response['user_name']}}",
-            "email": "{{$response['user_email']}}",
-            "contact": "{{$response['user_phone']}}"
+            "name": "{{ $response['user_name'] }}",
+            "email": "{{ $response['user_email'] }}",
+            "contact": "{{ $response['user_phone'] }}"
         },
         "notes": {
-            "address": "{{$response['user_address']}}"
+            "address": "{{ $response['user_address'] }}"
         },
         "theme": {
             "color": "#3399cc"
+        },
+        "modal": {
+            ondismiss: function() {
+                window.location.href = "{{ route('payment.failed') }}";
+                // Handle payment window closure here, e.g., show an error message to the user
+                alert('Payment window closed. Please try again to complete the payment.');
+            }
         }
     };
 
 
-    window.onload = function() {
-
-        document.getElementById('rzp-button1').click();
-        console.log('click')
-    }
-
     var rzp1 = new Razorpay(options);
+    rzp1.open();
 
-    document.getElementById('rzp-button1').onclick = function(e) {
-        rzp1.open();
-        //e.preventDefault();
-    }
     rzp1.on('payment.failed', function(response) {
+        console.log('trrrw', response)
         alert(response.error.code);
         alert(response.error.description);
         alert(response.error.source);

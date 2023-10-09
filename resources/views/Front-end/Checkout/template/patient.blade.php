@@ -36,9 +36,11 @@
 
                                          <div class="edit-btn bg-light  rounded">
 
-                                             <a href="#" class="delete_patient" data-id="{{ $patient->id }}">
-                                                 <i class="bx bxs-trash font-size-16"></i>
-                                             </a>
+                                            <a href="{{ route('patient.edit', [$patient->id]) }}" class=""
+                                                >
+                                                <i class="bx bxs-edit font-size-16"></i>
+                                            </a>
+                                       
                                          </div>
                                      </div>
 

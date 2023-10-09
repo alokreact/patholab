@@ -125,6 +125,13 @@ class ProfileController extends Controller{
 
     public function createPatient(){
         return view('Front-end.Profile.components.patient_form');
+    }
+
+
+    public function profile($id){
+
+        $profile = User::find($id);
+        return view('Front-end.Profile.profile',compact('profile'));
 
     }
 

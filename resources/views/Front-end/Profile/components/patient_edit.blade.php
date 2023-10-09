@@ -7,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="block text-center">
                         <h1 class="text-capitalize mb-5 text-lg">My Profile</h1>
-                        <span class="text-white">Patient</span>
+                        <span class="text-white">Address</span>
                     </div>
                 </div>
             </div>
@@ -104,61 +104,81 @@
                                 <div class="single-blog-item col-md-8">
                                     <div class="booking-container">
                                         <p class="booking-date">
-                                            Add Patient:
+                                            Edit Member:
                                         </p>
 
-                                        <div class="booking-box">
 
-                                            <form id="#" class="appoinment-form" method="post"
-                                                enctype="multipart/form-data" action="{{ route('prescription.submit') }}">
+                                        <div class="booking-box">
+                                            <form class="address-edit-form"
+                                                action="{{ route('patient.update', [$patient->id]) }}" method="post"
+                                                enctype="multipart/form-data">
+
                                                 @csrf
+                                                @method('put')
 
                                                 <div class="booking-details">
                                                     <div class="row">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label class="form-label" for="billing-name">Name</label>
-                                                                <input type="text" name="patient_name" id="patient_name"
-                                                                    class="form-control" placeholder="Enter name">
+                                                                <label class="form-label" for="billing-city">Name</label>
+                                                                <input type="text" class="form-control" id="name"
+                                                                    placeholder="Enter Name" name="name"
+                                                                    value="{{ $patient->name }}">
+                                                                @if ($errors->has('name'))
+                                                                    <strong style="color:red">
+                                                                        {{ $errors->first('name') }}</strong>
+                                                                @endif
+                                                                <span class="error_name" style="color:red"></span>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <label class="form-label"
-                                                                    for="billing-email-address">Age</label>
-                                                                <input type="number" id="age" class="form-control"
-                                                                    name="age" placeholder="Enter age">
+                                                                <label class="form-label" for="billing-city">Age</label>
+                                                                <input type="text" class="form-control" id="age"
+                                                                    placeholder="Enter age" name="age"
+                                                                    value="{{ $patient->age }}">
+
+                                                                @if ($errors->has('age'))
+                                                                    <strong style="color:red">
+                                                                        {{ $errors->first('age') }}</strong>
+                                                                @endif
+                                                                <span class="error_age" style="color:red"></span>
 
                                                             </div>
                                                         </div>
 
+
+
+
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-
-                                                                <label class="form-label" for="billing-phone">Gender</label>
+                                                                <label class="form-label" for="billing-city">Gender</label>
                                                                 <select name="gender" id="gender" class="form-control">
                                                                     <option value="1">Male</option>
                                                                     <option value="2">Female</option>
                                                                 </select>
 
+                                                                @if ($errors->has('gender'))
+                                                                    <strong style="color:red">
+                                                                        {{ $errors->first('gender') }}</strong>
+                                                                @endif
+
+                                                                <span class="error_phone" style="color:red"></span>
+
                                                             </div>
-                                                            @if ($errors->has('gender'))
-                                                                <strong style="color:red">
-                                                                    {{ $errors->first('gender') }}</strong>
-                                                            @endif
                                                         </div>
+
                                                     </div>
 
-                                                    <button type="button" id="add_patient"
-                                                        class="btn btn-main btn-round-full">Submit<i
-                                                            class="icofont-simple-right ml-2"></i></button>
 
-                                                </div>
+
+                                                        <button type="submit" class="btn btn-main btn-round-full">Update<i
+                                                                class="icofont-simple-right ml-2"></i></button>
+
+                                                    </div>
                                             </form>
                                         </div>
-
-
 
                                     </div>
                                 </div>

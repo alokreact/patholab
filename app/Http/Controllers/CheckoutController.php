@@ -21,16 +21,15 @@ use Illuminate\Support\Collection;
 use App\Service\PdfService;
 
 use Razorpay\Api\Api;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
-    //private $razorpayId = "DLDiT3zaLoZI9ZsN27Yd7dJ0";
-    // private  $razorpayKey = "rzp_test_BqPPqd2H5aA49G";
+    private $razorpayId = "DLDiT3zaLoZI9ZsN27Yd7dJ0";
+    private  $razorpayKey = "rzp_test_BqPPqd2H5aA49G";
 
-    private $razorpayId = "rHIkpFOzmESeLw2IpNbhyI99";
-    private $razorpayKey = "rzp_live_Sov1SDDvaLh47j";
+    // private $razorpayId = "rHIkpFOzmESeLw2IpNbhyI99";
+    // private $razorpayKey = "rzp_live_Sov1SDDvaLh47j";
 
     public function addPatient(Request $request){
         
@@ -71,6 +70,11 @@ class CheckoutController extends Controller
     public function success(){
         $user_id = Auth::user()->id;        
         return view('Front-end.checkout.confirmation');
+    }
+
+    public function handlePaymentfailed(){
+
+        abort(404);
     }
 
     public function checkout(){
@@ -137,6 +141,7 @@ class CheckoutController extends Controller
                     return redirect()->route('confirmation');  
             }
         }
+
         else{    
 
             $recieptId = mt_rand(10000, 99999);
@@ -170,6 +175,7 @@ class CheckoutController extends Controller
                     'user_email' => $address->email,
                     'user_phone' => $address->phone,
                     'user_address' => $data['address'],
+                    'patient' => implode(',',$data['patient']),
                     'description' => 'New Test',
                     'pay_option' => 1,
                     'recieptId' => $recieptId,
@@ -190,13 +196,23 @@ class CheckoutController extends Controller
     }
     
     public function handleCallback(Request $request){
-        
+
+        //dd($request->all());
+
+        $data =[];
         $api = new Api($this->razorpayKey, $this->razorpayId);
         
         $razorpay_order_id = $request->input('razorpay_order_id');
         $razorpay_payment_id = $request->input('razorpay_payment_id');
         $razorpay_signature = $request->input('razorpay_signature');
 
+        $patient = $request->input('patient');
+        $address = $request->input('address');
+        $recieptId = $request->input('recieptId');
+        
+        $slot_day = $request->input('recieptId');
+        $slot_time = $request->input('recieptId');
+        
         // Verify the payment
         $attributes = array(
             'razorpay_order_id' => $razorpay_order_id,
@@ -206,11 +222,19 @@ class CheckoutController extends Controller
         //dd($attributes);
         try{
 
-            //$api->payment->fetch($razorpay_payment_id)->capture(array('amount' => 1000)); // Replace 1000 with your actual amount
-
             $res= $api->utility->verifyPaymentSignature($attributes);
-            
+    
             $order = Order::where('razorpayId',$razorpay_order_id)->get();
+    
+            //dd($order[0]->id);
+            $items =\Cart::content();
+          
+            $patients = Patient::find(explode(',',$patient));
+            $address = Address::find($address);
+
+            $response = OrderService::save_order_items($order[0]->id,$items);
+          
+            //dd($order);
 
             foreach ($order as $record) {
                 $record->update([
@@ -219,24 +243,40 @@ class CheckoutController extends Controller
                 ]);
             }
         
-                //dd($res);
-                //     $pdfService = new PdfService();
-                //     //dd($data['email']);
-                //     $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
-                //     //Send email with PDF attachment
-                //     $pdfFileName = 'order.pdf';
-            
-                //     $email = $data['email'];
-                //     Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName,$email) {
-                //         $message->to($email)
-                //             ->subject('Order Confirmation')
-                //             ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
-                //     });
+            $total=  OrderService::total($items);
+            $data['total'] = $total;
+          
+            $data['product_names'] = OrderService::getProductnames($items);
+
+            $data['items'] = $items;
+
+            $data['date'] = now();
+            $data['order_id'] = $recieptId;
+            $data['address'] = $address;
+            $data['patients'] = $patients;
+            $data['slot_day'] = $slot_day;
+            $data['slot_time'] = $slot_time;
+
+            $pdfService = new PdfService();
+                //dd($data['email']);
+                $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
+                //Send email with PDF attachment
+                $pdfFileName = 'order.pdf';
+        
+                $email = $address->email;
+
+                Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName,$email) {
+                    $message->to($email)
+                        ->subject('Order Confirmation')
+                        ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
+                });
+                
+                SmsService::sendConfirmationmsg($address->phone,$recieptId);            
+                 
 
                 $request->session()->forget('cart');
             // Payment is successful, you can update your database here or perform any other actions.
         } catch (\Exception $e) {
-            
             // Payment failed, handle the failure here.
             //return view('payment.failed');
             dd($e->getMessage());
@@ -245,9 +285,4 @@ class CheckoutController extends Controller
         return redirect()->route('confirmation'); 
 }
  
-
-
-
-
-
 }

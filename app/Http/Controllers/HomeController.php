@@ -145,7 +145,9 @@ class HomeController extends Controller
         Session::put('selectedProducts', $previousValues);
 
         $combinedResults = [];
-        
+     
+       // dd($labs);
+
         foreach ($labs as $test) {
             foreach ($test->getLab as $lab) {
                 $labName = $lab->lab_name;

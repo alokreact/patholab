@@ -72,29 +72,36 @@ class CartController extends Controller{
     }
 
     public function addPackage(Request $request){
+       
         $productId = $request->input('productId');
         $product = Package::findOrFail($productId);
         $labName = $request->input('labId');
         $price = $request->input('price');
-        $cart = session()->get('cart', []);
-       // dd($product->sub_test_name);
+        
+        //$cart = session()->get('cart', []);
+        //dd($product->sub_test_name);
        
-        if ($this->packageExistsInCart($productId, $cart)) {
-            // Item exists in the cart
-            return response()->json(['status' => 200, 'message' => 'This package is already added with Lab'], Response::HTTP_OK);
-        } else {
-            // Item doesn't exist in the cart, add it as a new item
-            $cart[] = [
-                'id' => $productId,
-                'lab_name' => $product->getLab->lab_name,
-                'price' => $product->price,
-                'quantity' => 1,
-                'name'=>$product->package_name,
-                'type'=>'package'
-            ];
-        }
+        // if ($this->packageExistsInCart($productId, $cart)) {
+        //     // Item exists in the cart
+        //     return response()->json(['status' => 200, 'message' => 'This package is already added with Lab'], Response::HTTP_OK);
+        // } else {
+        //     // Item doesn't exist in the cart, add it as a new item
+        //     $cart[] = [
+        //         'id' => $productId,
+        //         'lab_name' => $product->getLab->lab_name,
+        //         'price' => $product->price,
+        //         'quantity' => 1,
+        //         'name'=>$product->package_name,
+        //         'type'=>'package'
+        //     ];
+        // }
         // Add the cart item to the 'cart' session
-        \Session::put('cart', $cart);
+
+        \Cart::add(['id' => $productId, 'name' => $product->package_name, 'qty' => 1, 'price' => $product->price,
+             'weight' =>2, 'lab_name' => $product->getLab->lab_name,'type'=>'package']);
+
+
+        //\Session::put('cart', $cart);
         return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 

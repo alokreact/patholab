@@ -22,8 +22,6 @@ class ContactController extends Controller
 
     public function store_appointment(Request $request)
     {
-
-
         $data = $request->all();
 
 
@@ -32,9 +30,7 @@ class ContactController extends Controller
             'option' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'pin' => 'required',
-            'city' => 'required',
-
+     
         ]);
 
         if ($validate) {
@@ -54,7 +50,6 @@ class ContactController extends Controller
 
     public function prescription()
     {
-
         return view('Front-end.Appointment.upload-prescription');
     }
 

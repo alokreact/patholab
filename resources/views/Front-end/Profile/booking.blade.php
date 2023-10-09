@@ -31,6 +31,8 @@
             font-size: 14px;
             line-height: 21px;
             background: #f5f5f5;
+            display: flex;
+            justify-content: space-between;
         }
 
         .booking-box {
@@ -95,7 +97,12 @@
                                         <div class="booking-container">
                                             <p class="booking-date">
                                                 Order Date: {{ date('d-m-Y',strtotime($items->created_at)) }}
+                                               
+                                               <span> Status : Pending</span>
+                                            
                                             </p>
+
+                                       
                                             <div class="booking-box">
                                                 <div class="booking-box_top">
                                                     <h3>Booking ID: <span>{{ $items->recieptId }}</span></h3>

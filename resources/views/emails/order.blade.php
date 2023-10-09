@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -123,7 +124,8 @@
                                                 Subtotal </th>
                                             <th
                                                 style="text-align:right;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:1px solid #eee;border-top:0;font-family:Verdana, Geneva, Tahoma, sans-serif;">
-                                                <span>{{ $data['total'] }}/-</span></th>
+                                                <span>{{ $data['total'] }}/-</span>
+                                            </th>
                                         </tr>
 
                                         <tr>
@@ -132,7 +134,8 @@
                                                 Order Total</th>
                                             <td
                                                 style="background:#efefef;text-align:right;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:1px solid #eee;border-top:0;color:#7db701;font-weight:bold">
-                                                <span>Rs.{{ $data['total'] }}/-</span></td>
+                                                <span>Rs.{{ $data['total'] }}/-</span>
+                                            </td>
                                         </tr>
 
                                     </tfoot>
@@ -152,11 +155,13 @@
                                                 <p style="margin:0;margin-bottom:10px;padding:0;"><strong>Name:</strong>
                                                     {{ $data['address']['name'] }}</p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                    <strong>Email:</strong> {{ $data['address']['email'] }}</p>
+                                                    <strong>Email:</strong> {{ $data['address']['email'] }}
+                                                </p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;"><strong>Tel:</strong>
                                                     {{ $data['address']['phone'] }}</p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                    <strong>Address:</strong> {{ $data['address']['address1'] }}</p>
+                                                    <strong>Address:</strong> {{ $data['address']['address1'] }}
+                                                </p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;">
                                                     {{ $data['address']['city'] }}, {{ $data['address']['zip'] }} </p>
 
@@ -181,9 +186,11 @@
 
                                                 @foreach ($data['patients'] as $patient)
                                                     <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                        <strong>Name:</strong> {{ $patient->name }}</p>
+                                                        <strong>Name:</strong> {{ $patient->name }}
+                                                    </p>
                                                     <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                        <strong>Age:</strong> {{ $patient->age }}</p>
+                                                        <strong>Age:</strong> {{ $patient->age }}
+                                                    </p>
                                                 @endforeach
 
                                             </td>
@@ -249,15 +256,13 @@
                                                             <td width="60%">Download the App: </td>
                                                             <td width="5%"> </td>
                                                             <td width="15%">
-                                                                <a href="#"
-                                                                    target="_blank">
+                                                                <a href="#" target="_blank">
                                                                     <img style="max-height:20px;width:auto"
                                                                         src="https://res.cloudinary.com/swiggy/image/upload/v1447855172/Android_qt1acy.png"></a>
                                                             </td>
                                                             <td width="5%"> </td>
                                                             <td width="15%">
-                                                                <a href="#"
-                                                                    target="_blank">
+                                                                <a href="#" target="_blank">
                                                                     <img style="max-height:20px;width:auto"
                                                                         src="https://res.cloudinary.com/swiggy/image/upload/v1447855170/Apple_e7lnfc.png"></a>
                                                             </td>

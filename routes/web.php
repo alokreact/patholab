@@ -82,6 +82,7 @@ Route::post('razorpay-payment', [App\Http\Controllers\CheckoutController::class,
 Route::get('razorpay', [App\Http\Controllers\CheckoutController::class, 'razorpay']);
 Route::post('/payment/callback', [App\Http\Controllers\CheckoutController::class, 'handleCallback'])->name('payment.callback');
 Route::post('/pay_option/save', [App\Http\Controllers\CheckoutController::class,'save_pay_option'])->name('save_pay_option');
+Route::get('/payment/failed', [App\Http\Controllers\CheckoutController::class, 'handlePaymentfailed'])->name('payment.failed');
 
 
 
@@ -102,11 +103,15 @@ Route::delete('/delete/address/{id}', [App\Http\Controllers\AddressController::c
 Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
 
+
 Route::get('/all/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');
 Route::get('/create/patient', [App\Http\Controllers\ProfileController::class,'createPatient'])->name('patient.create');
-
 Route::post('/save/patient', [App\Http\Controllers\CheckoutController::class,'addPatient'])->name('savepatient');
+
 Route::post('/delete/patient', [App\Http\Controllers\PatientController::class,'delete'])->name('deletepatient');
+Route::get('/edit/patient/{id}', [App\Http\Controllers\PatientController::class,'edit'])->name('patient.edit');
+Route::put('/update/patient/{id}', [App\Http\Controllers\PatientController::class,'update'])->name('patient.update');
+
 
 Route::get('/email-template', [App\Http\Controllers\ProfileController::class,'emailTemplate'])->name('email-template');
 Route::get('/email-send', [App\Http\Controllers\ProfileController::class,'send_email'])->name('send-email');
