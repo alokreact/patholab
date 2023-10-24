@@ -43,19 +43,17 @@
 
 
     <section class="section contact-info pb-0">
+
         <div class="flex  flex-wrap justify-between p-4 3/4">
-
-            <div class="w-full mb-4 text-md font-semibold">
-                Showing 12 results
+            <div class="w-full mb-4 text-xl font-semibold">
+                Showing {{count($allorgans)}} results
             </div>
+
+
             <div class="flex flex-wrap mb-4">
-
-
                 @forelse ($allorgans as $organ)
                     <div class="w-1/4 flex flex-col items-center">
-
                         <div class="product-bg bg-cover p-5">
-
                             <img src="{{ asset('Image/' . $organ->image) }}" alt="{{ $organ->name }}"
                                 class="w-56 h-56 object-cover" />
                         </div>
@@ -67,14 +65,11 @@
                         </div>
                     </div>
                 @empty
-
                     <p> No Results Found!</p>
                 @endforelse
-
             </div>
 
         </div>
     </section>
-
-
+    
     @endsection

@@ -139,7 +139,6 @@
                         <div class="block text-center">
                             <span class="text-white"></span>
                             <h1 class="text-capitalize mb-5 text-lg">Select Lab for Home Sample Collection</h1>
-
                             @forelse($labs as $lab)
                                 <div class="chip">
                                     {{ $lab->sub_test_name }}
@@ -154,8 +153,9 @@
             </div>
         </section>
 
-        <div class="container mt-4">
-            <div class="row">
+        <div class="mt-4">
+
+            {{-- <div class="row">
                 @include('Front-end.Search.template.sidebar')
 
                 <main class="col-md-9 test-search">
@@ -217,12 +217,62 @@
 
 
                 </main>
+            </div> --}}
+
+
+            <div class="container mx-auto">
+                <div class="flex">
+
+                    <div class="w-2/3 p-4">
+
+                        <div class="w-full mb-4 text-xl font-semibold">
+                            Showing {{ count($combinedResults) }} results
+                           
+                        </div>
+
+                        <div class="flex flex-wrap mx-2">
+                            @forelse ($combinedResults as $lab)
+                                <div class="w-[31%] mb-4 border mx-2">
+                                    <div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">
+                                        <img src="{{ asset('Image/' . $lab['image']) }}" class="" />
+                                    </div>
+
+
+                                    <div class="p-4 mt-2 items-center flex justify-between">
+                                        <h6 class="text-black text-basic font-semibold mb-2">
+
+                                            <i class="icofont-google-map" style="font-size:16px;color:#000"></i>Hyderabad
+                                        </h6>
+
+                                        <button
+                                            class="w-[120px]  border-green-500 
+                                            text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white">
+                                            Add To Cart</button>
+                                    </div>
+
+                                    <div
+                                        class="p-3 mt-1 mb-1 items-center bg-gray-100 flex 
+                                        justify-between my-1 mx-1 rounded-full text-black">
+
+                                        <del>₹<span>460/-</span></del>
+                                        <span> ₹230/-</span>
+
+                                        <div class="sm">50% discount </div>
+
+                                    </div>
+
+                                </div>
+
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
 
-@push('after-scripts')
-    <script></script>
-@endpush
+    @push('after-scripts')
+        <script></script>
+    @endpush
