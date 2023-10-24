@@ -54,7 +54,7 @@
 
     @include('Front-end.Components.package')
 
-    <section class="section about gray-bg">
+    {{-- <section class="section about gray-bg">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-4 col-sm-6">
@@ -80,76 +80,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
-    <section class="section service">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-7 text-center">
-                    <div class="section-title">
-                        <h2>Our Services</h2>
-                        <div class="divider mx-auto my-4"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-3">
-                    <a href="{{ route('appointment') }}">
-                        <div class="icon-circle">
-                            <img src="images/about/home-workout.png" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Lab Test at Home</h5>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-3">
-                    <a href="{{ route('appointment')}}">
-                        <div class="icon-circle">
-                            {{-- <i class="fa fa-star"></i> --}}
-                            <img src="images/about/physio.png" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Physiotherapist at Home</h5>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-3">
-                    <a href="{{ route('appointment') }}">
-
-                        <div class="icon-circle">
-                            {{-- <i class="fa fa-star"></i> --}}
-                            <img src="images/about/mri.png" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">MRI, CT SCAN</h5>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ route('appointment') }}">
-
-                        <div class="icon-circle">
-                            {{-- <i class="fa fa-star"></i> --}}
-                            <img src="images/about/home-xray.png" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">X-Ray ECG at Home</h5>
-                        </div>
-                    </a>
-                </div>
-
-
-                 
-            </div>
-        </div>
-    </section>
-
-
+    @include('Front-end.Components.why');   
+   
+    @include('Front-end.Components.services');   
     @include('Front-end.Components.labs');
 @endsection

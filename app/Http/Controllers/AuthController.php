@@ -135,11 +135,11 @@ class AuthController extends Controller{
 
              Auth::login($user);
              \DB::table('otps')->where('id', $otpRecord->id)->delete();
-              return response()->json(['status'=>'success','message' => 'OTP verified successfully','redirectTo' => route('home')]);
-            
+              return response()->json(['status'=>'success','message' => 'OTP verified successfully','redirectTo' => route('home')]);            
         }
         else{
-            return response()->json(['status'=>'error','message' => 'Invalid OTP'], 400);
+            
+            return response()->json(['status'=>'error','message' => 'Invalid OTP']);
          }
     }
 

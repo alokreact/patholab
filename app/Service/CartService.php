@@ -43,6 +43,24 @@ class CartService{
 
         return $checkout_items;
     }
+    public static function getType($items){
+
+        $type = $items->pluck('options')->pluck('type');
+
+         return $type;
+    }
+
+    public static function flatten_ar($arr){
+        $temp =[];
+
+        foreach($arr as $val){
+                if(is_array($val)){
+                    $temp =$val;
+                }
+        }
+        return $temp;
+    }
+
 }
 
 ?>

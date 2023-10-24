@@ -24,10 +24,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        //
+    public function boot(){
+
         Paginator::useBootstrap();
+
+       
+
         Gate::define('isUser', function(User $user) {
             return $user->role == 2;
         });

@@ -48,6 +48,10 @@ Route::post('/save/coupon', [App\Http\Controllers\Admin\CouponController::class,
 
 Route::get('/get/coupon', [App\Http\Controllers\Admin\CouponController::class, 'index'])->name('coupon.index');
 
+Route::get('/get/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
+Route::get('/edit/user/{id}', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user.edit');
+Route::get('/post/user/{id}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('user.update');
+
 
 Route::group(['middleware' => ['auth']], function () {   
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');

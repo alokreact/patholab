@@ -36,7 +36,7 @@
 
                         <span style="color:red"> Fields marked with * are mandatory.</span>
                     </p>
-                    <form id="#" class="prescrption-form" method="post" enctype="multipart/form-data" action="{{route('prescription.submit')}}">
+                    <form id="prescrption-form" class="prescrption-form" method="post" enctype="multipart/form-data" action="{{route('prescription.submit')}}">
 
                         @csrf
                         <div class="row">
@@ -66,7 +66,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
 
-                                    <input type="file" name="report" id="fileInput" class="form-control" />
+                                    <input type="file" name="report" id="report" class="form-control" />
 
                                 </div>
                                 @if($errors->has('report'))

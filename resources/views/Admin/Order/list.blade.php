@@ -21,6 +21,8 @@
                                         <th>Amount</th>
                                         <th scope="col">Order Date</th>
                                         <th scope="col">Payment Status</th>
+                                        <th scope="col"> Status</th>
+                                       
                                         <th scope="col">Action</th>
                                         <th scope="col">View</th>
                                     </tr>
@@ -33,11 +35,31 @@
                                                 <td>{{ $order->pay_option === '2' ? 'COD' : 'RAZORPAY' }}</td>
                                                 <td>{{ $order->total }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($order->created_at)->forMat('d-m-Y') }}</td>
-                                                <td>{{ $order->status ==='1'?'COMPLETE ONLINE':'PENDING' }}</td>
+                                                <td> 
+                                                
+                                                @if($order->status ==='1')
+                                                
+                                                <span class="badge bg-success">COMPLETE ONLINE</span>
+
+                                                        @else
+                                                            
+                                                        <span class="badge bg-warning">PENDING</span>
+                                                        
+                                                            @endif
+                                                </td>
+                                                
+
+                                                <td><select name="status" class="form-control">
+                                                        <option>Pending</option>
+                                                        <option>Sample Collected</option>
+                                                        <option>Sample Processing</option>
+                                                        <option>Completed</option>
+                                                    </select>
+                                                </td>
                                                 
                                                 <td>
                                                     <a href="{{ route('order.download', [$order->id]) }}">
-                                                        <button type="button" class="btn btn-success">Download</button>
+                                                        <span class="badge bg-success">Download</span>
                                                     </a>
                                                 </td>
                                                 <td>
@@ -50,6 +72,8 @@
 
                                                     </form>
                                                 </td>
+
+
                                             </tr>
                                             <!-- View Modal -->
                                         @endforeach

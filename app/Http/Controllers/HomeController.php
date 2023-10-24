@@ -28,23 +28,25 @@ class HomeController extends Controller
     public function index()
     {
         $labs = Lab::orderBy('created_at', 'desc')->get();
-        $organs = Organ::take(12)->get();
-        $packages = Package::with('grouptest.subtest')->withCount("grouptest")->get();
-
+        $organs = Organ::take(12)->get();    
         $banners = Slider::all();
         $subtest = GroupTest::with('subtest')->find(8);
-    
+
+        $packages = Package::with('grouptest.subtest')->withCount("grouptest")->get();
         
         foreach ($packages as $package) {
             foreach ($package->grouptest as $grouptest) {
-            
                 $subtest = GroupTest::withCount('subtest')->find($grouptest->pivot->parent_test_id);
-                //$subtes = GroupTest::with('subtest')->find($subtest->parent_test_id);
-                //dd($subtest);
             }
         }
+        $cartCount = 1;
+        
+       // dd(\Cart::content());
+
+        \View::share('cartCount', $cartCount);
+
         $categories = Category::with('package')->inRandomOrder()->take(6)->get();
-        return view('Front-end.Home', compact('labs', 'organs', 'packages', 'categories','banners'));
+        return view('Front-end.Home', compact('labs', 'organs', 'packages', 'categories','banners','cartCount'));
     }
 
 
@@ -145,9 +147,7 @@ class HomeController extends Controller
         Session::put('selectedProducts', $previousValues);
 
         $combinedResults = [];
-     
-       // dd($labs);
-
+    
         foreach ($labs as $test) {
             foreach ($test->getLab as $lab) {
                 $labName = $lab->lab_name;

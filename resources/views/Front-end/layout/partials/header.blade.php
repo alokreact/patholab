@@ -47,12 +47,10 @@
 
                     <a href="{{ route('cart') }}" class="call-us-desk">
                         <i class="icofont-cart"></i>
-                        {{-- @php
+                        @php
                             $cart_count = 0;
-                            foreach ($carts as $key => $cart) {
-                                $cart_count = $cart->cartItems->count();
-                            }          
-                        @endphp --}}
+                             
+                        @endphp
                         <span
                             class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                     </a>

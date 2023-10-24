@@ -27,7 +27,7 @@
                                     @if (count($data) > 0)
                                     @foreach ($data['subtest'] as $test)
                                         <tr>  
-                                                <td>{{ $test['lab_id'] }}</td>
+                                                <td></td>
                                                 <td>{{ $test['subtest'][0]['sub_test_name'] }}</td> 
                                                  <td>{{ $test['price'] }}/-</td>
                                                 <td>

@@ -78,30 +78,14 @@ class CartController extends Controller{
         $labName = $request->input('labId');
         $price = $request->input('price');
         
-        //$cart = session()->get('cart', []);
-        //dd($product->sub_test_name);
-       
-        // if ($this->packageExistsInCart($productId, $cart)) {
-        //     // Item exists in the cart
-        //     return response()->json(['status' => 200, 'message' => 'This package is already added with Lab'], Response::HTTP_OK);
-        // } else {
-        //     // Item doesn't exist in the cart, add it as a new item
-        //     $cart[] = [
-        //         'id' => $productId,
-        //         'lab_name' => $product->getLab->lab_name,
-        //         'price' => $product->price,
-        //         'quantity' => 1,
-        //         'name'=>$product->package_name,
-        //         'type'=>'package'
-        //     ];
-        // }
-        // Add the cart item to the 'cart' session
-
-        \Cart::add(['id' => $productId, 'name' => $product->package_name, 'qty' => 1, 'price' => $product->price,
-             'weight' =>2, 'lab_name' => $product->getLab->lab_name,'type'=>'package']);
+        \Cart::add(['id' => $productId, 'name' => $product->getLab->lab_name, 
+                    'qty' => 1, 
+                    'price' => $product->price,
+                    'weight' =>2, 
+                    'options' => ['product_id' => $productId,'type'=>'package']
+                  ]);
 
 
-        //\Session::put('cart', $cart);
         return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
@@ -113,12 +97,27 @@ class CartController extends Controller{
             $carts =[];
             $carts = \Cart::content();
             $product_names =[];
-            //dd($carts);
-            if(count($carts)>0){
+            
+            if( \Cart::count() > 0){
+
+                //dd($carts);
+                $type = CartService::getType($carts);
+                //dd($type);
+
+                if($type[0] === 'package'){
+                    $product_id=$carts->pluck('options')[0]['product_id'];
+               
+                    $products = Package::find($product_id);
+                   //dd($products);
+
+                    return view('Front-end.PackageCart.index',compact('carts','products'));
+                }
+
                 $product_id=$carts->pluck('options')[0]['product_id'];
                 $products = SubTest::find($product_id);
                 $product_names = $products->pluck('sub_test_name');
             }
+
             return view('Front-end.Cart.index',compact('carts','product_names'));
         } 
         else {
@@ -164,7 +163,9 @@ class CartController extends Controller{
         $lab = Lab::find($labId);
 
        
-        \Cart::add(['id' => $labId, 'name' => $lab->lab_name, 'qty' => 1, 'price' => $price, 'weight' =>2, 'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price)]]);
+        \Cart::add(['id' => $labId, 'name' => $lab->lab_name, 
+        'qty' => 1, 'price' => $price, 'weight' =>2, 
+        'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price),'type'=>'test']]);
 
         $cart = \Cart::count();
 

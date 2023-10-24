@@ -227,5 +227,19 @@
                 </li>
             </ul>
         </li><!-- End Forms Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="user-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                 <li>
+                    <a href="{{route('user.index')}}">
+                        <i class="bi bi-circle"></i><span>All</span>
+                    </a>
+                </li>
+            </ul>
+        </li><!-- End Forms Nav -->
+
     </ul>
 </aside><!-- End Sidebar-->

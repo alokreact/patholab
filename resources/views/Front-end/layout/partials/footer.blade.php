@@ -545,6 +545,8 @@
                          startTimer();
                      } else {
 
+                         console.log('errr')
+
                          Swal.fire({
                              icon: 'error',
                              title: 'Login Error',
@@ -587,9 +589,6 @@
 
          var otps = $('input[type="number"][name="otp[]"]');
          var phone = $('#mobile').val();
-
-         console.log('>>', otps);
-
          var dataToSend = {};
 
          // Convert the serialized data to an object
@@ -606,7 +605,6 @@
                  dataToSend[element.name] = element.value;
              }
          });
-
          dataToSend['phone'] = phone;
 
          $.ajax({
@@ -614,8 +612,12 @@
              url: "{{ route('otp.verify') }}",
              data: dataToSend,
              method: 'post',
-             success: function(response) {
-                 if (response.status === 'success') {
+             success: function(response,textStatus,xhr) {
+
+                console.log('xhr',xhr)
+                console.log('xhr',response)
+                
+                 if (response.status === 200) {
                      Swal.fire({
                          icon: 'success',
                          //title: 'Login Error',
@@ -626,13 +628,13 @@
                          }
                      })
                  } else {
+
+                     console.log('eerrr')   
                      Swal.fire({
                          icon: 'error',
-                         //title: 'Login Error',
                          html: response.message,
                      })
                  }
-                 //console.log(response);
              }
          })
 
@@ -643,3 +645,14 @@
      APP_URL = '{{ url('/') }}';
  </script>
  @yield('page_specific_js')
+
+
+ {{-- https://tezo.com/wp-content/uploads/2023/10/MicrosoftTeams-image.png
+
+<?php //echo get_template_directory_uri()
+?>/TezoLogo.svg
+
+
+https://tezo.com/wp-content/uploads/2023/10/Comp-1-5.mp4
+
+https://tezo.com/wp-content/uploads/2023/10/tezo_logo.png --}}

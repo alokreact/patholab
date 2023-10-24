@@ -57,6 +57,8 @@ class ContactController extends Controller
 
         $data = $request->all();
 
+        //dd($data);
+
         $validate= $request->validate([
             'name' => 'required',
             'phone' => 'required',
@@ -68,8 +70,7 @@ class ContactController extends Controller
             if($request->file('report')) {
 
                 $file = $request->file('report');
-                $filename = date('YmdHi') . $file->getClientOriginalName();
-                             
+                $filename = date('YmdHi') . $file->getClientOriginalName();                             
                 $file->move(public_path('images/reports'), $filename);
                 //$data['report'] = $filename;
             

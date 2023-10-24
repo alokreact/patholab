@@ -58,62 +58,103 @@ $(document).on('click', '.btn_add_to_cart_test', function () {
     });
 });
 
-$('.prescrption-form').on('submit', function (e) {
+$('.prescription-btn').on('click', function (e) {
     e.preventDefault();
     console.log('working');
 
-    var formData = new formData(this);
 
     var valid = true;
     var name = $('#name').val();
     var phone = $('#phone').val();
     var allowedExtensions = /(\.pdf|\.jpg|\.jpeg|\.png)$/i;
-    var fileName = $('#fileInput').val();
+    var fileName = $('#report').val();
 
     if (name === '') {
         $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required!');
         valid = false;
     }
+    else {
 
-    else if (!allowedExtensions.exec(fileName)) {
+        $('.error_name').html('');
+    }
+
+    if (!allowedExtensions.exec(fileName)) {
         $('.error_report').html('<i class=\"icofont-info-circle\"></i> &nbsp;Report is not selected!');
         valid = false;
     }
-    else if (phone === '') {
+    else {
+
+        $('.error_report').html('');
+    }
+
+    if (phone === '') {
         $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
         valid = false;
     }
-    else {
-        console.log('>>>', valid)
+
+    if (phone) {
+        if (!$.isNumeric(phone)) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be numeric.');
+            valid = false;
+        }
+        else if (phone.trim().length > 10 || phone.trim().length < 10) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be at least 10 digits.');
+            valid = false;
+        }
+        else {
+            $('.error_phone').html('');
+
+        }
+    }
+
+    if (name !== '' && phone !== '') {
         valid = true;
     }
 
     if (valid) {
-        // var formData = $('.prescrption-form').serialize();
-        // console.log('form',formData)
-        // $.ajax({
-        //         url:APP_URL+'/prescription/submit',
-        //         method:'post',
-        //         data:formData,
-        //         success:function(res,textStatus, xhr){
-        //             if (xhr.status === 200) {
-        //                 const Toast = Swal.mixin({
-        //                     toast:true,
-        //                     position:'top-end',
-        //                     icon:'success',
-        //                     showConfirmbutton:false,
-        //                     timer:3000
-        //                 })
-        //                 Toast.fire({
-        //                     type:'success',
-        //                     title: 'Report Uploaded Successfully',
-        //                     //html: errorHtml,
-        //                 })
-        //             }
 
-        //         }
-        // });
-        $('.prescrption-form').submit();
+        var name = $('#name').val();
+        var phone = $('#phone').val();
+
+        var report = $('#report')[0].files[0];
+
+        var reportData = new FormData();
+        reportData.append('phone', phone);
+        reportData.append('report', report);
+        reportData.append('name', name);
+
+        //
+        //console.log(reportData)
+
+        $.ajax({
+            url: APP_URL + '/prescription/submit',
+            method: 'POST',
+            data: reportData,
+            processData: false,
+            contentType: false,
+            success: function (res, textStatus, xhr) {
+                if (xhr.status === 200) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        showConfirmbutton: false,
+                        timer: 3000
+                    })
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Report Uploaded Successfully',
+                        //html: errorHtml,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(); // Reload the page
+                        }
+                    });
+                }
+
+            }
+        });
+        //$('.prescrption-form').submit();
     }
 });
 
@@ -143,14 +184,14 @@ $('.address-btn').on('click', function (e) {
         $('.error_email').html('<i class=\"icofont-info-circle\"></i> &nbsp;Email is required.');
         valid = false;
     }
-    if(email) {
+    if (email) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
             $('.error_email').html('');
         }
         else {
             $('.error_email').html('<i class=\"icofont-info-circle\"></i> &nbsp;Valid Email is required.');
             valid = false;
-           
+
         }
     }
     if (phone === '') {
@@ -212,21 +253,21 @@ $('.address-btn').on('click', function (e) {
         $('.error_state').html('');
 
     }
-    if (zip==='') {
+    if (zip === '') {
         $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip is required.');
         valid = false;
     }
-     
-    if(zip){
+
+    if (zip) {
         if (!$.isNumeric(zip)) {
             $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip code should be numeric and must be 6 digits.');
             valid = false;
-        }   
+        }
         else if (zip.trim().length > 6) {
             $('.error_zip').html('<i class=\"icofont-info-circle\"></i> &nbsp;Zip code should be 6 digits.');
             valid = false;
         }
-        else{
+        else {
             $('.error_zip').html('');
         }
     }
@@ -376,9 +417,9 @@ $('.remove_address_btn').on('click', function (e) {
 
             $.ajax({
 
-                url:APP_URL+'/delete/address/'+id,
-                method:'DELETE',
-                success:function(response,textStatus,xhr){
+                url: APP_URL + '/delete/address/' + id,
+                method: 'DELETE',
+                success: function (response, textStatus, xhr) {
                     console.log(response)
                     if (xhr.status === 200) {
                         const Toast = Swal.mixin({
@@ -402,5 +443,55 @@ $('.remove_address_btn').on('click', function (e) {
             })
         }
     })
+})
+
+
+$('.appointment-btn').on ('click', function(){
+    var reason =$('#reason').val();
+    var name =$('#name').val();
+    var phone =$('#phone').val();
+    var valid = true;
+
+    if(reason === ''){
+        $('.error_reason').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
+        valid = false;
+    }
+    if(name === ''){
+        $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required.');
+        valid = false;
+    }
+    if(phone ===''){
+        $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+        valid = false;
+    }
+    if (phone) {
+        if (!$.isNumeric(phone)) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be numeric.');
+            valid = false;
+        }
+        else if (phone.trim().length > 10 || phone.trim().length < 10) {
+            $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be at least 10 digits.');
+            valid = false;
+        }
+        else {
+            $('.error_phone').html('');
+        }
+    }
+    if(error !=='' && name!=='' && phone!=='' && reason !==''){
+        valid = true;
+    }
+
+    if(valid){
+        $.ajax({
+            url :"{{route('appointment.submit')}}",
+            method:"post",
+            data:{name,reason,phone},
+            success:function(res,textStatus, xhr){
+                    if(xhr.status === 201){
+                        console.log('created');
+                }
+            }
+        })
+    }
 })
 

@@ -30,18 +30,19 @@
                             </thead>
 
                             <tbody>
-                                @if (count($sliders) > 0)
-                                    @foreach ($sliders as $slider)
+                                @if (count($users) > 0)
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $slider->position }}</td>
-                                            <td>{{ $slider->url }}</td>
-                                            <td> <img src="{{asset('images/bg/'.$slider->image)}}"  class="img-responsive" height="100px" width="100px"/></td>
-                                           
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->phone }}</td>
+                                            <td> {{ $user->email }}</td>
+                                         
+                                            {{--    {{ route('user.destroy', [$user->id]) }}--}}
                                             <td>
-                                                <a href="{{route('slider.edit',[$slider->id])}}"
+                                                <a href="{{route('user.edit',[$user->id])}}"
                                                     class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
 
-                                                <form action="{{ route('slider.destroy', [$slider->id]) }}"
+                                                <form action="#"
                                                     method="post" style="display:inline">
                                                     @csrf
                                                     @method('DELETE')

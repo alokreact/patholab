@@ -97,14 +97,14 @@
 
 
 
-                    <div class="appoinment-wrap mt-2 pl-lg-5">
+                    <div class="appoinment-wrap pl-lg-5">
                         {{-- <h2>OR </h2> --}}
                         <div class="row mt-5">
                             <div class="col-lg-8" id="send-otp">
                                 <div class="form-group">
                                     <label for="name">Phone No:</label>
                                     <input name="mobile" id="mobile" type="text" class="form-control"
-                                        placeholder="Mobile" autocomplete="off">
+                                        placeholder="Mobile" autocomplete="off" maxlength="10">
                                     @if ($errors->has('mobile'))
                                         <strong style="color:red"> {{ $errors->first('mobile') }}</strong>
                                     @endif
@@ -120,7 +120,7 @@
                     </div>
 
 
-                    <div class="appoinment-wrap mt-5 pl-lg-5" id="verify-otp" style="display: none">
+                    <div class="appoinment-wrap pl-lg-5" id="verify-otp" style="display: none">
                         <p>Enter the 4 digit OTP sent to Mobile No.</a></p>
                         <form action="#"  id="verify-otp-form" method="post" accept-charset="utf-8">
                             @csrf

@@ -11,7 +11,7 @@
                 <div class="collectionDetails_info">
                     <div class="collectionDetails_info_dateTime">
                         <p> Age - {{ $patient->age }}</p>
-                        <span>Gender - {{ $patient->gender }}
+                        <span>Gender - {{ $patient->gender ===1?'Male':'Female' }}
                         </span>
 
                     </div>

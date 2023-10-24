@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Organ;
 use App\Models\Category;
-
+use Session;
 
 class OrganController extends Controller{
 
+    public $cartCount;
+
+     
     public function index(){
+        $cartCount = \Cart::count();
+      
         $allorgans = Organ::paginate(30);
         //dd($allorgans);
-        return view('Front-end.Organs.index',compact('allorgans'));
+        return view('Front-end.Organs.index',compact('allorgans','cartCount'));
     }
     public function findTestbyOrgan($id){
         $testsbyOrgan = Organ::find($id);

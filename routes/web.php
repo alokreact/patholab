@@ -19,7 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::any('/signin', [App\Http\Controllers\AuthController::class, 'login'])->name('signin');
 Route::any('/signup', [App\Http\Controllers\AuthController::class, 'register'])->name('signup');
 
