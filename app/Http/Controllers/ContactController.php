@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Appointment;
 use App\Models\Prescription;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
@@ -24,11 +25,9 @@ class ContactController extends Controller
     {
         $data = $request->all();
 
-
         $validate = $request->validate([
             'name' => 'required',
-            'option' => 'required',
-            'address' => 'required',
+            'reason' => 'required',
             'phone' => 'required',
      
         ]);
@@ -37,14 +36,14 @@ class ContactController extends Controller
 
             $appointment = new Appointment;
             $appointment->name = $request->name;
-            $appointment->address = $request->address;
             $appointment->phone = $request->phone;
-            $appointment->city = $request->city;
-            $appointment->pin = $request->pin;
+            $appointment->pin = $request->reason;
             $appointment->save();
             //Appointment::create($data);
 
-            return  redirect()->back()->with('message', 'Successfully Placed');
+            // return  redirect()->back()->with('message', 'Successfully Placed');
+
+            return response()->json(['message'=>'Submitted Succesfully'],Response::HTTP_CREATED);
         }
     }
 

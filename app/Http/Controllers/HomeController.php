@@ -215,8 +215,7 @@ class HomeController extends Controller
     }
 
 
-    public function about(){
-        
+    public function about(){        
         return view('Front-end.About.index');
     }
 }

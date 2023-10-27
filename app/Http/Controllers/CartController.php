@@ -91,33 +91,25 @@ class CartController extends Controller{
 
     public function cart(){
 
-        $user = Auth::user();
-        
+        $user = Auth::user();        
         if($user && Auth::user()->role == '2') {
             $carts =[];
             $carts = \Cart::content();
             $product_names =[];
-            
             if( \Cart::count() > 0){
 
-                //dd($carts);
                 $type = CartService::getType($carts);
                 //dd($type);
-
                 if($type[0] === 'package'){
                     $product_id=$carts->pluck('options')[0]['product_id'];
-               
                     $products = Package::find($product_id);
                    //dd($products);
-
                     return view('Front-end.PackageCart.index',compact('carts','products'));
                 }
-
                 $product_id=$carts->pluck('options')[0]['product_id'];
                 $products = SubTest::find($product_id);
                 $product_names = $products->pluck('sub_test_name');
             }
-
             return view('Front-end.Cart.index',compact('carts','product_names'));
         } 
         else {
@@ -136,7 +128,10 @@ class CartController extends Controller{
                 session()->put('cart', $cart);
             }
             session()->flash('success', 'Product successfully removed!');
-        //}
+        
+            //$rowId = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
+
+            //Cart::remove($rowId);
     }
 
     public function update_product(Request $request)
@@ -152,7 +147,6 @@ class CartController extends Controller{
 
     public function addToCart(Request $request){
         \Cart::destroy();
-        
         $productId = $request->input('productId');
         $productId_arr = explode(',',$productId);
        
@@ -168,7 +162,6 @@ class CartController extends Controller{
         'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price),'type'=>'test']]);
 
         $cart = \Cart::count();
-
         return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 

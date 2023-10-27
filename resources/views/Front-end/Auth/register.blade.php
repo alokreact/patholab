@@ -15,9 +15,8 @@
   </div>
 </section>
 
-<section class="appoinment section">
+{{-- <section class="appoinment section">
   <div class="side-overlay"></div>
- 
   <div class="container">
     <div class="row">
       <div class="col-lg-5">
@@ -101,6 +100,84 @@
     </div>
   </div>
   </div>
-</section>
+</section> --}}
+
+
+
+<div class="conatiner">
+  <div class="flex flex-col lg:w-[32%] md:w-full p-4 shadow-lg mx-auto mt-4">
+
+      <div class="mt-2 border p-4">
+          <h4 class="text-xl text-green font-semibold text-center">Register</h4>
+      </div>
+
+      <div class="lg:w-full md:w-full p-4">
+        <form id="#" class="appoinment-form" method="post" action="{{route('signup')}}" autocomplete="off">
+          @csrf
+            <div class="flex mb-4">
+                  <div class="w-full mr-4">
+                    <label for="name">Name:</label>
+
+                    <input name="name" id="name" type="text" class="form-control" placeholder="Name" autocomplete="off">
+
+                    @if($errors->has('name'))
+                    <strong style="color:red"> {{ $errors->first('name') }}</strong>
+                    @endif
+   </div>
+              </div>
+
+              <div class="flex mt-4">
+                  <div class="w-full mr-4">
+               
+
+                    <label for="name">Email:</label>
+
+                    <input name="email" id="email" type="email" class="form-control" placeholder="Email" autocomplete="off">
+  
+                    @if($errors->has('email'))
+                    <strong style="color:red"> {{ $errors->first('email') }}</strong>
+                    @endif
+
+                    </div>
+              </div>
+
+              <div class="flex mb-4 mt-3">
+                  <div class="w-full mr-4">
+                 
+
+                    <label for="name">Phone:</label>
+
+                    <input name="phone" id="phone" type="text" class="form-control" placeholder="Phone" maxlength="10" autocomplete="off">
+  
+                    @if($errors->has('phone'))
+                    <strong style="color:red"> {{ $errors->first('phone') }}</strong>
+                    @endif
+  
+              </div>
+              </div>
+
+              <div class="flex justify-between mt-4">
+                  <div class="w-full mr-4">
+
+                      <input type="checkbox" name="check" class="mr-2" />
+                      <span>Are you agree to  Terms of Condition and Privacy Policy.</span>
+
+                  </div>
+              </div>
+
+
+              <div class="flex mt-4">
+                  <div class="w-full mr-4 flex flex-around">
+                      <button class="border w-full p-3  border-green-500 text-base 
+                      text-black hover:bg-green-400 hover:text-white" type="submit">
+                          Register
+                      </button>
+
+                  </div>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
 
 @endsection

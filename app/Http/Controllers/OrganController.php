@@ -19,11 +19,14 @@ class OrganController extends Controller{
         return view('Front-end.Organs.index',compact('allorgans','cartCount'));
     }
     public function findTestbyOrgan($id){
+
         $testsbyOrgan = Organ::find($id);
         $subtests= $testsbyOrgan->subtest;
         $organs = Organ::take(12)->get();
         $categories = Category::take(12)->get();
+        
         //dd($testsbyOrgan);
+        
         return view('Front-end.Organs.testbyorgan',compact('testsbyOrgan','subtests','organs','categories'));
     }
 }

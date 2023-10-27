@@ -3,7 +3,6 @@
 @section('content')
     <section class="page-title bg-1">
         <div class="overlay"></div>
-
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -42,34 +41,49 @@
 </section> --}}
 
 
+
+
     <section class="section contact-info pb-0">
 
-        <div class="flex  flex-wrap justify-between p-4 3/4">
-            <div class="w-full mb-4 text-xl font-semibold">
-                Showing {{count($allorgans)}} results
-            </div>
+        <div class="container mx-auto">
+            <div class="flex">
 
+                @include('Front-end.Components.sidebar')
+             
 
-            <div class="flex flex-wrap mb-4">
-                @forelse ($allorgans as $organ)
-                    <div class="w-1/4 flex flex-col items-center">
-                        <div class="product-bg bg-cover p-5">
-                            <img src="{{ asset('Image/' . $organ->image) }}" alt="{{ $organ->name }}"
-                                class="w-56 h-56 object-cover" />
-                        </div>
+                <div class="w-2/3 p-4">
 
-                        <div class="p-4 mt-2 items-center flex flex-col">
-                            <h2 class="text-black font-medium font-semibold mb-2">{{ $organ->name }}</h2>
-                            <button
-                                class="w-[120px] btn border-green-500 text-green-500 rounded-full border px-4 py-2 rounded hover:bg-green-500 hover:text-white">View</button>
-                        </div>
+                    <div class="w-full mb-4 text-xl font-semibold">
+                        Showing {{count($allorgans)}} results
                     </div>
-                @empty
-                    <p> No Results Found!</p>
-                @endforelse
-            </div>
+
+
+                    <div class="flex flex-wrap mx-2">
+                        @forelse ($allorgans as $organ)
+
+                        <div class="w-[31%] flex flex-col items-center mx-2">
+
+                            <div class="product-bg bg-cover p-2">
+                                <img src="{{ asset('Image/' . $organ->image) }}" alt="{{ $organ->name }}"
+                                class="w-56 h-56 object-cover" />
+                            </div>
+
+                            <div class="p-4 mt-2 items-center flex flex-col">
+                                <h2 class="text-black text-xl font-semibold mb-2">{{ $organ->name }}</h2>
+                                <a href="{{route('testbyorgan',$organ->id)}}"> <button
+                                class="w-[120px] btn border-green-500 text-green-500 rounded-full border px-4 py-2  hover:bg-green-500 hover:text-white">View</button>
+                                </a>
+                            </div>
+                        </div>
+                    @empty
+                        <p> No Results Found!</p>
+                    @endforelse
+                </div>
 
         </div>
-    </section>
+
+    </div>
+</div>
+</section>
     
     @endsection

@@ -15,11 +15,13 @@
             font-size: 10px;
             margin-top: 5px;
         }
-        .resend-otp{
+
+        .resend-otp {
             font-size: 14px;
 
         }
-        .resend-otp span{
+
+        .resend-otp span {
             font-size: 14px;
         }
     </style>
@@ -39,10 +41,52 @@
         </div>
     </section>
 
-    <section class="appoinment section" style="position: relative">
+
+
+    <div class="conatiner">
+        <div class="flex flex-col lg:w-[35%] md:w-full p-4 shadow-lg mx-auto mt-4 mb-4" id="send-otp">
+            <div class="mt-2 border p-4">
+                <h4 class="text-xl text-green font-semibold text-center">LOGIN</h4>
+            </div>
+
+            <div class="lg:w-full md:w-full p-4">
+                <form>
+                    <div class="flex mb-4">
+                        <div class="w-full mr-4 p-4">
+                            <label for="name">Phone No:</label>
+                            <input name="mobile" id="mobile" type="text" class="form-control" placeholder="Mobile"
+                                autocomplete="off" maxlength="10">
+                            @if ($errors->has('mobile'))
+                                <strong style="color:red"> {{ $errors->first('mobile') }}</strong>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="flex mt-4">
+                        <div class="w-full mr-4 flex flex-around">
+                            <button
+                                class="border w-full p-3  border-green-500 
+                            text-base text-black hover:bg-green-400 
+                            hover:text-white otp-btn">
+                                Log In
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="appoinment section" id="verify-otp" style="display:none">
         <div class="side-overlay"></div>
+
+
+
         <div class="container img-signin">
             @include('Front-end.layout.partials.alert')
+
             <div class="row">
                 <div class="col-lg-5">
                     <div class="mt-3">
@@ -56,15 +100,8 @@
                 </div>
 
 
-                <div class="col-lg-7">
-                    <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
-                        <h2 class="mb-2 title-color">Login</h2>
-                        <p class="mb-4">Get medicine information, order medicines, book lab tests and consult online from
-                            the comfort of your home.</p>
-                        <form id="#" class="appoinment-form" method="post" action="{{ route('signin') }}">
-                            @csrf
-                            <div class="row">
-                                {{-- <div class="col-lg-6">
+
+                {{-- <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="name">Email:</label>
                                         <input name="email" id="email" type="text" class="form-control"
@@ -87,18 +124,17 @@
                                             <strong style="color:red"> {{ $errors->first('password') }}</strong>
                                         @endif
                                     </div>
-                                </div> --}}
+                                </div> 
                             </div>
 
-                            {{-- <button class="btn btn-main btn-round-full" type="submit">Sign In
-                                <i class="icofont-simple-right ml-2"></i> --}}
-                        </form>
-                    </div>
+                             <button class="btn btn-main btn-round-full" type="submit">Sign In
+                                <i class="icofont-simple-right ml-2"></i> 
+                        </form> 
+            </div> --}}
 
 
 
-                    <div class="appoinment-wrap pl-lg-5">
-                        {{-- <h2>OR </h2> --}}
+                {{-- <div class="appoinment-wrap pl-lg-5">
                         <div class="row mt-5">
                             <div class="col-lg-8" id="send-otp">
                                 <div class="form-group">
@@ -117,48 +153,65 @@
                             </div>
                         </div>
                    
-                    </div>
+                    </div> --}}
 
 
-                    <div class="appoinment-wrap pl-lg-5" id="verify-otp" style="display: none">
-                        <p>Enter the 4 digit OTP sent to Mobile No.</a></p>
-                        <form action="#"  id="verify-otp-form" method="post" accept-charset="utf-8">
+
+
+
+
+                <div class="col-lg-7">
+
+                    <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
+                        <h2 class="mb-2 title-color">Login</h2>
+
+                        <p class="mb-4">Get medicine information, order medicines, book lab tests and consult online from
+                            the comfort of your home.</p>
+                        <form id="#" class="appoinment-form" method="post" action="{{ route('signin') }}">
                             @csrf
-                             <div class="form-group">
-                                <div class="form-group otp-fields">
-                                     <input class="otp-block otp-block-3 number_only" name="otp[]" id="otp"
-                                        data-key="3" type="number" maxlength="1">
-                                    <input class="otp-block otp-block-4 number_only" name="otp[]" id="otp"
-                                        data-key="4" type="number" maxlength="1">
-                                    <input class="otp-block otp-block-5 number_only" name="otp[]" id="otp"
-                                        data-key="5" type="number" maxlength="1">
-                                    <input class="otp-block otp-block-6 number_only" name="otp[]" id="otp"
-                                        data-key="6" type="number" maxlength="1">
+                            <div class="row">
+                                <div class="appoinment-wrap pl-lg-5">
+                                    <p>Enter the 4 digit OTP sent to Mobile No.</a></p>
+                                    <form action="#" id="verify-otp-form" method="post" accept-charset="utf-8">
+                                        @csrf
+                                        <div class="form-group">
+                                            <div class="form-group otp-fields">
+                                                <input class="otp-block otp-block-3 number_only" name="otp[]"
+                                                    id="otp" data-key="3" type="number" maxlength="1">
+                                                <input class="otp-block otp-block-4 number_only" name="otp[]"
+                                                    id="otp" data-key="4" type="number" maxlength="1">
+                                                <input class="otp-block otp-block-5 number_only" name="otp[]"
+                                                    id="otp" data-key="5" type="number" maxlength="1">
+                                                <input class="otp-block otp-block-6 number_only" name="otp[]"
+                                                    id="otp" data-key="6" type="number" maxlength="1">
+                                            </div>
+                                            <div class="form-error" style="width:100%"></div>
+                                        </div>
+
+                                        <p class="resend-otp">
+                                            <a href="#" id="resend-link" style="display: none;">Resend OTP</a>
+
+                                            Timer: <span id="minutes">10</span>:<span id="seconds">00</span>
+                                        </p>
+
+
+                                        <button type="button" class="btn btn-success border text-black" 
+                                        id="btn-verify-otp">Verify</button>
+                                    
+                                    
+                                    </form>
+                                    <span>
+                                        By logging in, you agree to our Terms and Conditions & Privacy Policy</span>
+
                                 </div>
-                                <div class="form-error" style="width:100%"></div>
+
+                                <p style="margin: 40px">New on CALL LABS? <a href="{{ route('signup') }}"
+                                        style="color:coral;font-weight:700"> Sign Up</a></p>
+
+
                             </div>
-                            
-                            <p class="resend-otp">
-                                <a href="#" id="resend-link" style="display: none;">Resend OTP</a>
-                            
-                                Timer: <span id="minutes">10</span>:<span id="seconds">00</span>
-                            </p>
-
-                            <button type="button" class="btn btn-success" id="btn-verify-otp">Verify</button>
-                        </form>
-                        <span>
-                            By logging in, you agree to our Terms and Conditions & Privacy Policy</span>
-
                     </div>
-
-                    <p style="margin: 40px">New on CALL LABS? <a href="{{ route('signup') }}"
-                            style="color:coral;font-weight:700"> Sign Up</a></p>
-
-               
                 </div>
             </div>
-
-            </div>
-        </div>
     </section>
 @endsection

@@ -40,12 +40,12 @@
 
                 <div class="right-head-desk">
 
-                    <a class="call-us-desk" href="#" title="call us">
+                    <a class="call-us-desk mr-4" href="#" title="call us">
                         <i class="icofont-ui-call"></i> <span>
-                            CALL US NOW 7893762020</span>
+                            7893762020</span>
                     </a>
 
-                    <a href="{{ route('cart') }}" class="call-us-desk">
+                    <a href="{{route('cart')}}" class="call-us-desk mr-2">
                         <i class="icofont-cart"></i>
                         @php
                             $cart_count = 0;

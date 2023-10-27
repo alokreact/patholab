@@ -354,7 +354,7 @@
                                                 <div class="col" style="display: flex;place-content: end">
                                                     <div class="text-end mt-2 mt-sm-0">
                                                         <input type="button" id="slot_tab_forward_btn"
-                                                            class="btn btn-success" value="Proceed">
+                                                            class="btn btn-success border text-black border-green-500" value="Proceed">
                                                     </div>
                                                 </div>
 

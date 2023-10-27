@@ -59,7 +59,7 @@
 
                  <div class="col" style="display: flex;place-content: end">
                     <div class="text-end mt-2">
-                        <input type="submit" id="pateint_tab_forward_btn" class="btn btn-success" value="Proceed">
+                        <input type="submit" id="pateint_tab_forward_btn" class="btn btn-success border border-grenn-500 text-black" value="Proceed">
                     </div>
                 </div>
 

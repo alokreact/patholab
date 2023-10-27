@@ -608,17 +608,15 @@
          dataToSend['phone'] = phone;
 
          $.ajax({
-
              url: "{{ route('otp.verify') }}",
              data: dataToSend,
              method: 'post',
              success: function(response,textStatus,xhr) {
-
                 console.log('xhr',xhr)
                 console.log('xhr',response)
                 
-                 if (response.status === 200) {
-                     Swal.fire({
+                if(response.status === 'success') {   
+                    Swal.fire({
                          icon: 'success',
                          //title: 'Login Error',
                          html: response.message,
@@ -627,14 +625,13 @@
                              window.location.href = response.redirectTo;
                          }
                      })
-                 } else {
-
+                } else {
                      console.log('eerrr')   
                      Swal.fire({
                          icon: 'error',
                          html: response.message,
                      })
-                 }
+                }
              }
          })
 

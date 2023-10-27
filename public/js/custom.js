@@ -460,6 +460,10 @@ $('.appointment-btn').on ('click', function(){
         $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required.');
         valid = false;
     }
+    else {
+        $('.error_name').html('');
+    }
+
     if(phone ===''){
         $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
         valid = false;
@@ -469,6 +473,7 @@ $('.appointment-btn').on ('click', function(){
             $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be numeric.');
             valid = false;
         }
+
         else if (phone.trim().length > 10 || phone.trim().length < 10) {
             $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be at least 10 digits.');
             valid = false;
@@ -477,18 +482,34 @@ $('.appointment-btn').on ('click', function(){
             $('.error_phone').html('');
         }
     }
-    if(error !=='' && name!=='' && phone!=='' && reason !==''){
+
+    if(name !=='' && phone!=='' && reason !==''){
         valid = true;
     }
 
     if(valid){
         $.ajax({
-            url :"{{route('appointment.submit')}}",
+            url :APP_URL + '/appointment/submit',
             method:"post",
             data:{name,reason,phone},
             success:function(res,textStatus, xhr){
                     if(xhr.status === 201){
-                        console.log('created');
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'center',
+                            icon: 'success',
+                            showConfirmbutton: false,
+                            timer: 3000
+                        })
+                        Toast.fire({
+                            type: 'success',
+                            title: res.message,
+                            //html: errorHtml,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.reload(); // Reload the page
+                            }
+                        });
                 }
             }
         })

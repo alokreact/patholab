@@ -153,8 +153,7 @@
             </div>
         </section>
 
-        <div class="mt-4">
-
+        <div class="mt-1">
             {{-- <div class="row">
                 @include('Front-end.Search.template.sidebar')
 
@@ -223,11 +222,14 @@
             <div class="container mx-auto">
                 <div class="flex">
 
+                    @include('Front-end.Components.sidebar')
+
+
                     <div class="w-2/3 p-4">
 
                         <div class="w-full mb-4 text-xl font-semibold">
                             Showing {{ count($combinedResults) }} results
-                           
+
                         </div>
 
                         <div class="flex flex-wrap mx-2">
@@ -246,7 +248,11 @@
 
                                         <button
                                             class="w-[120px]  border-green-500 
-                                            text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white">
+                                            text-green-500 rounded-full border p-2 hover:bg-green-500 
+                                            hover:text-white btn_add_to_cart_test"
+                                            value="{{ $lab['id'] }}" data-type="test" data-lab="{{ $lab['lab_id'] }}"
+                                            data-price="{{ $lab['total_price'] }}"
+                                            data-singleprice="{{ $lab['single_price'] }}">
                                             Add To Cart</button>
                                     </div>
 
@@ -254,8 +260,8 @@
                                         class="p-3 mt-1 mb-1 items-center bg-gray-100 flex 
                                         justify-between my-1 mx-1 rounded-full text-black">
 
-                                        <del>₹<span>460/-</span></del>
-                                        <span> ₹230/-</span>
+                                        <del>₹<span>{{ $lab['total_price'] * 2 }}/-</span></del>
+                                        <span> ₹{{ $lab['total_price'] }}/-</span>
 
                                         <div class="sm">50% discount </div>
 

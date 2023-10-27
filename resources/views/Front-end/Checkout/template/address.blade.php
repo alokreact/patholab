@@ -10,7 +10,7 @@
             <h5 class="font-size-16 mb-1">Select Address:</h5>
 
             <a href="{{ route('address.create') }}">
-                <input type="button" class="btn btn-success" value="+" style="float: right" />
+                <input type="button" class="btn btn-success border text-black border-green" value="+" style="float: right" />
             </a>
 
             <div class="mb-3">
@@ -62,7 +62,7 @@
 
                 <div class="col" style="display: flex;place-content: end">
                     <div class="text-end mt-2 mt-sm-0">
-                        <input type="submit" id="nextTab" class="btn btn-success" value="Proceed">
+                        <input type="submit" id="nextTab" class="btn btn-success border border-green-500 text-black" value="Proceed">
                     </div>
                 </div>
             </div>

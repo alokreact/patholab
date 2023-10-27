@@ -42,9 +42,9 @@
             </div>
         </div> --}}
 
-         
 
-        {{-- <div class="feature-block d-lg-flex">
+
+{{-- <div class="feature-block d-lg-flex">
             <div class="container">
                 <div class="row package" style="justify-content: space-between">
                     @forelse($packages as $package)
@@ -108,94 +108,101 @@
             </div>
 
             <div class="flex">
-            @forelse($categories as $index=>$category)
-                <div class="flex items-center space-x-1 cursor-pointer mx-2" id="{{ $category->id }}" >
-                        <div class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 hover:text-white">
-                            {{$category->category_name}}
+                @forelse($categories as $index=>$category)
+                    <div class="flex items-center space-x-1 cursor-pointer mx-2" id="{{ $category->id }}">
+                        <div
+                            class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 hover:text-white">
+                            {{ $category->category_name }}
                         </div>
-                </div>
-             @empty
-
-             @endforelse   
+                    </div>
+                @empty
+                @endforelse
             </div>
-            
-            
-             <div class="space-x-4 lg:mt-0 mt-2">
-                <button class="border border-green-500 w-[120px]  rounded-full p-2 text-black hover:scale-110 hover:bg-green-500 hover:text-white">View All</button>
+
+
+            <div class="space-x-4 lg:mt-0 mt-2">
+                <a href="{{ route('category.all') }}">
+                    <button
+                    class="border border-green-500 w-[120px]  rounded-full p-2 text-black hover:scale-110 hover:bg-green-500 hover:text-white">View
+                    All</button></a>
             </div>
         </div>
     </div>
 
     <div class="container mx-auto">
 
-    <div class="flex">
-        <div class="w-2/3 flex justify-between flex-wrap package">     
-            @forelse($packages as $package)
-                <div class="w-1/3 p-4">
-                    <div class="w-full  max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
-                        <a href="#">
-                            <img class="p-2 rounded-t-lg" src="{{ $package->image ? asset('images/bg/' . $package->image) : asset('images/team/2.jpg') }}" alt="product image" />
-                        </a>
-                      
-                        <div class="p-2 pb-1">
+        <div class="flex">
+            <div class="w-2/3 flex justify-between flex-wrap package">
+                @forelse($packages as $package)
+                    <div class="w-1/3 p-4">
+                        <div
+                            class="w-full  max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
                             <a href="#">
-                                <h5 class="text-base text-center font-semibold tracking-tight text-gray-900 dark:text-white">{{$package->package_name}}</h5>
+                                <img class="p-2 rounded-t-lg"
+                                    src="{{ $package->image ? asset('images/bg/' . $package->image) : asset('images/team/2.jpg') }}"
+                                    alt="product image" />
                             </a>
-                            @php
-                                $count = 0;
-                            @endphp
-                        
-                        @foreach ($package->grouptest as $grouptest)
-                            @php
-                                $value = category_count($grouptest->pivot->parent_test_id);
-                                $count += $value;
-                            @endphp
-                        @endforeach
-                        
-                        <div class="flex items-center justify-between mt-2">
-                        
-                        <h5 class="parameter mt-2 text-base">
-                            {{ $count }} Parameters
 
-                        </h5>
+                            <div class="p-2 pb-1">
+                                <a href="#">
+                                    <h5
+                                        class="text-base text-center font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        {{ $package->package_name }}</h5>
+                                </a>
+                                @php
+                                    $count = 0;
+                                @endphp
 
-                            <h6 class="mt-2 text-base font-bold">{{ $package->getLab->lab_name }}</h6>
-                        
-                        </div>
+                                @foreach ($package->grouptest as $grouptest)
+                                    @php
+                                        $value = category_count($grouptest->pivot->parent_test_id);
+                                        $count += $value;
+                                    @endphp
+                                @endforeach
 
-                        <div class="flex  justify-between mt-2">
-                                <span class="text-base font-bold text-gray-700 dark:text-white">$599</span>
-                                
-                                <a href="#" class="w-[140px] ml-4 text-black border 
+                                <div class="flex items-center justify-between mt-2">
+
+                                    <h5 class="parameter mt-2 text-base">
+                                        {{ $count }} Parameters
+
+                                    </h5>
+
+                                    <h6 class="mt-2 text-base font-bold">{{ $package->getLab->lab_name }}</h6>
+
+                                </div>
+
+                                <div class="flex  justify-between mt-2">
+                                    <span
+                                        class="text-base font-bold text-gray-700 dark:text-white">₹{{ $package->price }}/-</span>
+
+                                    <a href="{{route('package-details',[$package->id])}}"
+                                        class="w-[140px] ml-4 text-black border 
                                 border-bg-green  font-medium rounded-full text-base 
-                                p-2 text-center hover:bg-green-500 hover:text-white">Add to cart</a>                                
+                                p-2 text-center hover:bg-green-500 hover:text-white">VIEW
+                                        </a>
+
+                                </div>
+
 
                             </div>
-
-                            
                         </div>
-                    </div>        
-                </div>
+                    </div>
                 @empty
 
                 @endforelse
-        </div>
-
-    
-        <div class="w-1/3 px-16">
-            
-        <div class="rounded p-8">
-                <img src="{{asset('images/about/PBanner.png')}}" alt="Ad Banner" class="w-full h-auto" />
             </div>
-            {{-- <div class="rounded p-8">
+
+
+            <div class="w-1/3 px-16">
+
+                <div class="rounded p-8">
+                    <img src="{{ asset('images/about/PBanner.png') }}" alt="Ad Banner" class="w-full h-auto" />
+                </div>
+                {{-- <div class="rounded p-8">
                 <img src="{{asset('images/about/Banner.png')}}" alt="Ad Banner" class="w-full h-auto" />
             </div> --}}
 
+            </div>
         </div>
     </div>
-
-    
-    </div>
-
-
 </section>
