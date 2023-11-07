@@ -169,9 +169,7 @@
 @push('after-scripts')
 <script>
     var selectvalues = <?php echo $selectedValues; ?>;
-    
     $('.js-grouptest').val(selectvalues).trigger('change');
-
-    console.log('>>>',selectvalues);
+    //console.log('>>>',selectvalues);
 </script>
 @endpush

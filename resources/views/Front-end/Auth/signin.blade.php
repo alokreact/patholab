@@ -54,32 +54,92 @@
                     <div class="flex mb-4">
                         <div class="w-full mr-4 p-4">
                             <label for="name">Phone No:</label>
-                            <input name="mobile" id="mobile" type="text" class="form-control" placeholder="Mobile"
+                            <input name="mobile" id="mobile" type="text" class="form-control" 
+                            placeholder="Phone"
                                 autocomplete="off" maxlength="10">
                             @if ($errors->has('mobile'))
-                                <strong style="color:red"> {{ $errors->first('mobile') }}</strong>
+                                <strong style="color:red">{{ $errors->first('mobile') }}</strong>
                             @endif
                         </div>
                     </div>
 
-                    <div class="flex mt-4">
-                        <div class="w-full mr-4 flex flex-around">
+                    <div class="flex mt-4 justify-center">
+                        <div
+                            class="w-[70%] mr-4 flex items-center 
+                            hover:text-white justify-center border hover:bg-green-400 cursor-pointer">
                             <button
-                                class="border w-full p-3  border-green-500 
-                            text-base text-black hover:bg-green-400 
-                            hover:text-white otp-btn">
-                                Log In
-                            </button>
+                                class=" p-3   
+                            text-base text-black  
+                             otp-btn">
+                                LOGIN
 
+                            </button>
+                            <img src="{{ asset('images/about/ArrowRight.png') }}"class="ml-2" />
                         </div>
                     </div>
+
+
+                    <p class="mt-8 text-base font-semibold">
+                        New on CALL LABS? 
+                        <a href="{{ route('signup') }}" style="color:coral;font-weight:700"> SIGN UP</a>
+                    
+                    </p>
+
                 </form>
             </div>
         </div>
     </div>
 
-
     <section class="appoinment section" id="verify-otp" style="display:none">
+
+        <div class="container mx-auto">      
+            <div class="flex flex-col lg:w-[35%] md:w-full p-4 shadow-lg mx-auto mt-4 mb-4" id="send-otp">
+                <div class="mt-2 border p-4">
+                    <h4 class="text-xl text-green font-semibold text-center">VERIFY OTP</h4>
+                </div>
+    
+
+                    <div class="row">
+                        <div class="appoinment-wrap pl-lg-5 mt-4 p-2">
+                            <p class="p-2 mb-2">Enter the 4 digit OTP sent to Mobile No:</p>
+
+                            <form action="#" id="verify-otp-form" method="post" accept-charset="utf-8">
+                                @csrf
+                                <div class="form-group">
+                                    <div class="form-group otp-fields">
+                                        <input class="otp-block otp-block-3 number_only" name="otp[]"
+                                            id="otp" data-key="3" type="number" maxlength="1">
+                                        <input class="otp-block otp-block-4 number_only" name="otp[]"
+                                            id="otp" data-key="4" type="number" maxlength="1">
+                                        <input class="otp-block otp-block-5 number_only" name="otp[]"
+                                            id="otp" data-key="5" type="number" maxlength="1">
+                                        <input class="otp-block otp-block-6 number_only" name="otp[]"
+                                            id="otp" data-key="6" type="number" maxlength="1">
+                                    </div>
+                                    <div class="form-error" style="width:100%"></div>
+                                </div>
+
+                                <p class="resend-otp">
+                                    <a href="#" id="resend-link" style="display: none;">Resend OTP</a>
+                                    Timer: <span id="minutes">10</span>:<span id="seconds">00</span>
+                                </p>
+                                <button type="button" class="btn btn-success border text-black"
+                                    id="btn-verify-otp">Verify</button>
+
+                            </form>
+                            
+                            <span class="mt-2">
+                                By logging in, you agree to our Terms and Conditions & Privacy Policy
+                            </span>
+                        </div>    
+                    </div>  
+        
+        </div>
+        
+    </section>   
+
+
+    {{-- <section class="appoinment section" id="verify-otp" style="display:none">
         <div class="side-overlay"></div>
 
 
@@ -153,7 +213,7 @@
                             </div>
                         </div>
                    
-                    </div> --}}
+                    </div> 
 
 
 
@@ -195,23 +255,21 @@
                                         </p>
 
 
-                                        <button type="button" class="btn btn-success border text-black" 
-                                        id="btn-verify-otp">Verify</button>
-                                    
-                                    
+                                        <button type="button" class="btn btn-success border text-black"
+                                            id="btn-verify-otp">Verify</button>
+
+
                                     </form>
                                     <span>
                                         By logging in, you agree to our Terms and Conditions & Privacy Policy</span>
 
                                 </div>
 
-                                <p style="margin: 40px">New on CALL LABS? <a href="{{ route('signup') }}"
-                                        style="color:coral;font-weight:700"> Sign Up</a></p>
 
 
                             </div>
                     </div>
                 </div>
             </div>
-    </section>
+    </section> --}}
 @endsection

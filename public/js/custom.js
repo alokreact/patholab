@@ -446,17 +446,17 @@ $('.remove_address_btn').on('click', function (e) {
 })
 
 
-$('.appointment-btn').on ('click', function(){
-    var reason =$('#reason').val();
-    var name =$('#name').val();
-    var phone =$('#phone').val();
+$('.appointment-btn').on('click', function () {
+    var reason = $('#reason').val();
+    var name = $('#name').val();
+    var phone = $('#phone').val();
     var valid = true;
 
-    if(reason === ''){
+    if (reason === '') {
         $('.error_reason').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
         valid = false;
     }
-    if(name === ''){
+    if (name === '') {
         $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required.');
         valid = false;
     }
@@ -464,7 +464,7 @@ $('.appointment-btn').on ('click', function(){
         $('.error_name').html('');
     }
 
-    if(phone ===''){
+    if (phone === '') {
         $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
         valid = false;
     }
@@ -483,36 +483,44 @@ $('.appointment-btn').on ('click', function(){
         }
     }
 
-    if(name !=='' && phone!=='' && reason !==''){
+    if (name !== '' && phone !== '' && reason !== '') {
         valid = true;
     }
 
-    if(valid){
+    if (valid) {
         $.ajax({
-            url :APP_URL + '/appointment/submit',
-            method:"post",
-            data:{name,reason,phone},
-            success:function(res,textStatus, xhr){
-                    if(xhr.status === 201){
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'center',
-                            icon: 'success',
-                            showConfirmbutton: false,
-                            timer: 3000
-                        })
-                        Toast.fire({
-                            type: 'success',
-                            title: res.message,
-                            //html: errorHtml,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.reload(); // Reload the page
-                            }
-                        });
+            url: APP_URL + '/appointment/submit',
+            method: "post",
+            data: { name, reason, phone },
+            success: function (res, textStatus, xhr) {
+                if (xhr.status === 201) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        icon: 'success',
+                        showConfirmbutton: false,
+                        timer: 3000
+                    })
+                    Toast.fire({
+                        type: 'success',
+                        title: res.message,
+                        //html: errorHtml,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(); // Reload the page
+                        }
+                    });
                 }
             }
         })
     }
 })
 
+$('.sidebar_toggle').on('click',function(){
+    console.log('err');
+    $('#mobile-menu').hide();
+})
+
+$(document).on('click', '.menu_toggle',function(){
+    $('#mobile-menu').show();
+})

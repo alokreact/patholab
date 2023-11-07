@@ -71,6 +71,10 @@ class  OrderService{
     public static function save_order_items($order_id, $items){
 
             $insertedIds =[];
+            $lab_id = $items->pluck('id');
+
+            //dd($lab_id[0]);
+            
             $product_ids = $items->pluck('options')->pluck('product_id');
             $prices = $items->pluck('options')->pluck('single_price');
             $pr = self::flatten_ar($prices);
@@ -84,6 +88,8 @@ class  OrderService{
                     $order_item->order_id= $order_id;
                     $order_item->price= $pr[$key];
                     $order_item->qty= 1;
+                    $order_item->lab_id= $lab_id[0];
+               
                     $order_item->save();
                     $insertedIds[] = $order_item->id;        
                 }

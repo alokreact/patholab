@@ -1,5 +1,4 @@
 @extends('Front-end.layout.mainlayout')
-
 @section('content')
 <section class="page-title bg-1">
     <div class="overlay"></div>
@@ -70,16 +69,16 @@
                                             @empty
                                                 No Records
                                             @endforelse
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
 @endsection

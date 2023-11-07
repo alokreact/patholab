@@ -31,6 +31,8 @@
 
             <div class="table-responsive">
                 <table class="table table-centered mb-0 table-nowrap">
+                    
+                    
                     <thead>
                         <tr>
                             <th class="border-top-0" style="width: 330px;" scope="col">Test/Package</th>

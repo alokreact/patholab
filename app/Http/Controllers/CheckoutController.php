@@ -80,14 +80,12 @@ class CheckoutController extends Controller
     public function checkout(){
        try{
             $cartItems =  \Cart::content();              
+            //dd($cartItems);
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
             $addresses = Address::where('user_id', Auth::user()->id)->get();
-
             $product_names = OrderService::getProductnames($cartItems);
-
             return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients','addresses','product_names'));
         }
-
         catch (Exception $e){
             \DB::rollback();
             return  response()->json(['data'=>[],'message'=>'Some Error, Please try again!'],400);
@@ -104,6 +102,7 @@ class CheckoutController extends Controller
         
             $recieptId = mt_rand(10000, 99999);
             $items =  \Cart::content();
+            //dd($items);
             $total=  OrderService::total($items);
             $data['total'] = $total;
             $order_id = OrderService::save_order($data);

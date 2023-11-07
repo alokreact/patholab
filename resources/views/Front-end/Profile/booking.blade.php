@@ -13,11 +13,12 @@
             </div>
         </div>
     </section>
-    
+
     <style>
         .booking-section {
             width: 100%;
         }
+
         .booking-container {
             gap: 20px;
             display: flex;
@@ -88,21 +89,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <div class="booking-section">     
+                        <div class="booking-section">
                             <div class="row" style="display: flex;justify-content:space-between">
                                 @include('Front-end.Profile.sidebar')
 
-                                    <div class="single-blog-item col-md-8">
-                                        @foreach ($order_items as $items)
+                                <div class="single-blog-item col-md-8">
+                                    @foreach ($order_items as $items)
                                         <div class="booking-container">
                                             <p class="booking-date">
-                                                Order Date: {{ date('d-m-Y',strtotime($items->created_at)) }}
-                                               
-                                               <span> Status : Pending</span>
-                                            
-                                            </p>
+                                                Order Date: {{ date('d-m-Y', strtotime($items->created_at)) }}
 
-                                       
+                                                <span> Status :  @if ($items->order_status === '5')
+                                                        Completed
+                                                    @elseif($items->order_status === '3')
+                                                        Sample Collection
+                                                    @elseif($items->order_status === '4')
+                                                        Sample Processing
+                                                    @else
+                                                        Pending
+                                                    @endif
+
+                                                </span>
+                                            </p>
                                             <div class="booking-box">
                                                 <div class="booking-box_top">
                                                     <h3>Booking ID: <span>{{ $items->recieptId }}</span></h3>
@@ -112,10 +120,26 @@
                                                     <h3>Collection date &amp; time</h3>
                                                     <div class="collectionDetails_info">
                                                         <div class="collectionDetails_info_dateTime">
-                                                            <p>{{date('d-m-Y', strtotime($items->order_date)) }}<sup></sup>
+                                                            <p>{{ date('d-m-Y', strtotime($items->order_date)) }}<sup></sup>
                                                                 | {{ $items->collection_time }}</p>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                            
+                                                <div class="bookingCard__buttons">
+         
+                                                    @if($items->order_status === '5')
+                                                    <a href="{{ route('download.reports', [$items->id]) }}">
+                                                        <button class="btn btn-main-2 btn-full-round"
+                                                            type="button">Download
+                                                            Reports</button>
+                                                    </a>
+                                                    @else
+                                                    <button class="btn btn-main-2 btn-full-round" type="button">
+                                                    
+                                                        Reports Not Ready</button>
+                                                    @endif  
                                                 </div>
 
                                                 <div class="bookingCard__family">
@@ -129,16 +153,13 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-
-                                                <div class="bookingCard__buttons">
-                                                    <button class="btn btn-main-2 btn-full-round" type="button">Download Reports</button>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>

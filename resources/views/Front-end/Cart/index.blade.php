@@ -7,7 +7,6 @@
                 <div class="col-md-12">
                     <div class="block text-center">
                         <h1 class="text-capitalize mb-5 text-lg">My Cart</h1>
-
                         <span class="text-white">Order Overview</span>
                     </div>
                 </div>
@@ -45,10 +44,9 @@
                                                             <div class="col-sm-9">
                                                                 <h6 class="nomargin">
                                                                     @forelse($product_names as $name)
-                                                                    {{ $name }}, 
-                                                                @empty
-        
-                                                                @endforelse
+                                                                        {{ $name }},
+                                                                    @empty
+                                                                    @endforelse
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -72,8 +70,9 @@
 
 
                                                     <td class="actions">
-                                                        <button class="btn btn-danger btn-sm cart_remove"><i
-                                                                class="fa fa-trash-o"></i> Delete</button>
+                                                        <button class="btn btn-danger btn-sm cart_remove"
+                                                            value="{{ $details->id }}"><i class="fa fa-trash-o"></i>
+                                                            Delete</button>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -81,7 +80,6 @@
                                         <tfoot>
                                             <tr>
                                                 <td colspan="5" class="text-right">
-
                                                 </td>
                                             </tr>
                                             <tr>

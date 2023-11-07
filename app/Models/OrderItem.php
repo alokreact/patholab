@@ -9,6 +9,7 @@ use App\Models\SubTest;
 use App\Models\Package;
 use App\Models\Order;
 use App\Models\Patient;
+use App\Models\Lab;
 
 class OrderItem extends Model
 {
@@ -32,9 +33,13 @@ class OrderItem extends Model
 
         return $this->hasOne(Order::class,'id','order_id');   
     }
-
     public function patient(){
         return $this->hasMany(Patient::class,'id','patient_id');
+    }
+
+    public function lab(){
+
+        return $this->hasOne(Lab::class,'id','lab_id');
     }
 
 }

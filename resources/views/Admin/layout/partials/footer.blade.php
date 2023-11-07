@@ -26,20 +26,18 @@
 
 @stack('after-scripts')
 @stack('after-lab-scripts')
-
 @stack('after-order-scripts')
 
 <script></script>
 
 <script type="text/javascript">
-
     $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-    $(document).ready(function(){
+    $(document).ready(function() {
 
         $(".js-example-basic-single").select2();
         $(".js-example-tags").select2({
@@ -55,35 +53,38 @@
     });
 
     $(document).ready(function() {
-            $(".js-labs").select2({
-                tags: true
-            });
-            $('.js-labs').on('select2:selecting', function(e) {
-                var data = e.params.args.data;
-                //console.log('data',data.id);
+        $(".js-labs").select2({
+            tags: true
+        });
+        $('.js-labs').on('select2:selecting', function(e) {
+            var data = e.params.args.data;
+            //console.log('data',data.id);
 
-                $.ajax({
-                    method:'POST',
-                    url:"{{route('subtestprice')}}",
-                    data:{id: data.id},
-                    success:function(res){
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('subtestprice') }}",
+                data: {
+                    id: data.id
+                },
+                success: function(res) {
 
-                        //console.log('ress>>',res)
-                var dummy =
-                '<label for="inputEmail3" class="col-sm-2 col-form-label mt-3">Details</label><div class="col-sm-5 "><input type="text" class="form-control" id="inputText" name="subtest_id[]" value="' +
-                data.text +
-                '"></div><div class="col-sm-5"><input type="text" class="form-control" id="inputText" name="price[' +
-                data.id + ']" placeholder="Price" value="' + res.price + '"></div>\r\n';
-                $('#details').append(dummy);
-                    }
+                    //console.log('ress>>',res)
+                    var dummy =
+                        '<label for="inputEmail3" class="col-sm-2 col-form-label mt-3">Details</label><div class="col-sm-5 "><input type="text" class="form-control" id="inputText" name="subtest_id[]" value="' +
+                        data.text +
+                        '"></div><div class="col-sm-5"><input type="text" class="form-control" id="inputText" name="price[' +
+                        data.id + ']" placeholder="Price" value="' + res.price +
+                        '"></div>\r\n';
+                    $('#details').append(dummy);
+                }
 
-                })
-                //var price = $(this).find(":selected").data("price");
-            });
+            })
+            //var price = $(this).find(":selected").data("price");
+        });
 
-            $('.js-labs').on('select2:unselecting', function(e) {
-                console.log('removing: ', e.params.args.data);
-            });
+        $('.js-labs').on('select2:unselecting', function(e) {
+            console.log('removing: ', e.params.args.data);
+        });
     });
 
 
@@ -124,7 +125,7 @@
     $(document).ready(function() {
 
         console.log($('.upload-file-preview').length)
-         
+
         // if ($('.upload-file-preview').length > 0) {
         //     fileUrl = $('.upload-file-preview').attr('href');
         //     $('#fileInput').hide();
@@ -133,17 +134,17 @@
 
         $('.custom-file-input').on('change', function() {
             var fileInput = $(this)[0].files[0];
-            console.log('fileInput',fileInput)
+            console.log('fileInput', fileInput)
 
             var orderId = $(this).data('orderid');
             var testId = $(this).data('testid');
             var user_id = $(this).data('user_id');
 
-            if(fileInput){
+            if (fileInput) {
                 var spinner = $(this).find('.upload-spinner');
 
-                console.log('orderId',orderId)
-                console.log('testId',testId)
+                console.log('orderId', orderId)
+                console.log('testId', testId)
 
                 $(spinner).removeClass('d-none');
                 var formData = new FormData();
@@ -197,11 +198,11 @@
             var recordId = $(this).data('record-id');
             var formData = {
                 recordId: recordId,
-        };
+            };
             $.ajax({
                 type: 'GET',
-                url: "{{route('get-report')}}",
-                data:formData, // Define a route to fetch the record details
+                url: "{{ route('get-report') }}",
+                data: formData, // Define a route to fetch the record details
                 success: function(response) {
                     console.log(response)
                     $('#itemModal .modal-body').html(response.html);
@@ -210,24 +211,21 @@
             });
         });
 
-        $('#itemModal .modal-body').on('click','#uploadButton', function(){
+        $('#itemModal .modal-body').on('click', '#uploadButton', function() {
             console.log('>>>>')
             $('#report').show();
         });
 
-
-        $('#itemModal .modal-body').on('change','#newReport', function() {
+        $('#itemModal .modal-body').on('change', '#newReport', function() {
             var fileInput = $(this)[0].files[0];
-            console.log('fileInput',fileInput)
+            console.log('fileInput', fileInput)
             var id = $(this).data('id');
 
+            if (fileInput) {
 
-             
-            if(fileInput){
-            
                 var formData = new FormData();
                 formData.append('file', fileInput);
-                 formData.append('id', id);
+                formData.append('id', id);
 
                 $.ajax({
                     url: '{{ route('upload.newreport') }}',
@@ -241,14 +239,34 @@
                         // Handle the response from the server
                         //$('.upload-spinner').addClass('d-none');
 
- 
+
                     },
                 })
             }
-        })    
+        })
 
+        $('.status').on('change', function() {
+            var order_status = $(this).val();
+            var order_id = $(this).data('orderid');
+            console.log(order_id);
+
+            $.ajax({
+                url: "{{ route('orderstatus.update') }}",
+                method: 'post',
+                data: {
+                    order_status,
+                    order_id
+                },
+                success: function(response, textStatus, xhr) {
+                    if (xhr.status === 200) {
+                        alert(response.message)
+                    } else {
+                        console.log(response)
+                    }
+                }
+            })
+        })
     });
- 
 </script>
 </body>
 

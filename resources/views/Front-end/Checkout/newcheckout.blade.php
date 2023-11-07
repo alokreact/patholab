@@ -289,7 +289,7 @@
         background-position: 100% 0;
         transition: all .25s linear;
         position: absolute;
-        top: 44px;
+        top: 58px;
         left: 36px;
     }
 

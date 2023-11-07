@@ -168,7 +168,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('prescription.download') }}">
+                    <a href="{{ route('prescription.all') }}">
                         <i class="bi bi-circle"></i><span>Prescription</span>
                     </a>
                 </li>

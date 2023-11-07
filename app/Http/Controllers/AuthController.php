@@ -54,14 +54,14 @@ class AuthController extends Controller{
             $this->validate($request,[
                 'email'=>'required|unique:users,email',
                 'name'=>'required',
-                'password'=>'required',
+                //'password'=>'required',
                 'phone'=>'required|numeric|min:10|unique:users,phone',
                 
               ]);          
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                //'password' => Hash::make($request->password),
                 'phone'=>$request->phone,
                 'role'=>2
             ]);
@@ -72,7 +72,6 @@ class AuthController extends Controller{
                     Mail::to($request->email)->send(new WelcomeEmail($emaildata));  
                     return redirect()->route('signin')->with('message','Registered Succesully. Pleas login into your account.');
                 }
-
             }
         else{
             return view('Front-end.Auth.register');

@@ -220,12 +220,12 @@
 
 
             <div class="container mx-auto">
-                <div class="flex">
+                <div class="flex md:flex-row flex-col">
 
                     @include('Front-end.Components.sidebar')
 
 
-                    <div class="w-2/3 p-4">
+                    <div class="w-full md:w-3/4 p-4">
 
                         <div class="w-full mb-4 text-xl font-semibold">
                             Showing {{ count($combinedResults) }} results
@@ -234,7 +234,7 @@
 
                         <div class="flex flex-wrap mx-2">
                             @forelse ($combinedResults as $lab)
-                                <div class="w-[31%] mb-4 border mx-2">
+                                <div class="w-full md:w-[31%] mb-4 border mx-2">
                                     <div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">
                                         <img src="{{ asset('Image/' . $lab['image']) }}" class="" />
                                     </div>

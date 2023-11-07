@@ -25,48 +25,45 @@
                                 <tbody>
 
                                     @if (count($data) > 0)
-                                    @foreach ($data['subtest'] as $test)
-                                        <tr>  
-                                                <td></td>
-                                                <td>{{ $test['subtest'][0]['sub_test_name'] }}</td> 
-                                                 <td>{{ $test['price'] }}/-</td>
+                                        @foreach ($data['subtest'] as $test)
+                                            <tr>
+                                                <td>{{$test['lab']['lab_name']}}</td>
+                                                <td>{{ $test['subtest'][0]['sub_test_name'] }}</td>
+                                                <td>{{ $test['price'] }}/-</td>
                                                 <td>
 
-                                                    @if(isset($test['report_url']))
-
-                                                    <div class="upload-file-preview">
-                                                        {{-- <a href="{{ asset('/public/Image/'.$test['report_url'])}}"
+                                                    @if (isset($test['report_url']))
+                                                        <div class="upload-file-preview">
+                                                            {{-- <a href="{{ asset('/public/Image/'.$test['report_url'])}}"
                                                             download><i class="bi bi-download"></i></a> &nbsp;
                                                             <i class="bi bi-trash"></i> --}}
 
-                                                            <i class="bi-file-earmark-plus open-report" data-record-id="{{ $test['id'] }}" style="cursor: :pointer"></i>
-                                                            
-                                                        {{-- <button type="button" id="removeFileBtn">Remove</button> --}}
-                                                    
-                                                    </div>
+                                                            <i class="bi-file-earmark-plus open-report"
+                                                                data-record-id="{{ $test['id'] }}"
+                                                                style="cursor: :pointer"></i>
+
+                                                            {{-- <button type="button" id="removeFileBtn">Remove</button> --}}
+
+                                                        </div>
                                                     @else
+                                                        <div id="">
+                                                            <input type="file" class="custom-file-input" id="fileInput"
+                                                                data-orderId="{{ $test['order_id'] }}"
+                                                                data-testId="{{ $test['id'] }}"
+                                                                data-user_id="{{ $test['user_id'] }}">
 
-                                                    <div id="">    
-                                                        <input type="file" class="custom-file-input" id="fileInput" data-orderId="{{$test['order_id']}}"
-                                                        
-                                                        data-testId="{{$test['id']}}" data-user_id="{{$test['user_id']}}">
-                                                  
 
-                                                        <div class="upload-spinner d-none">
-                                                            <div class="spinner-border text-primary" role="status">
-                                                                <span class="sr-only">...</span>
+                                                            <div class="upload-spinner d-none">
+                                                                <div class="spinner-border text-primary" role="status">
+                                                                    <span class="sr-only">...</span>
+                                                                </div>
                                                             </div>
                                                         </div>
-
-                                                    </div>
                                                     @endif
-                                                
-                                                   
-                                                </td>                                        
-                                             </tr>
+                                                </td>
+                                            </tr>
                                             <!-- View Modal -->
                                             @include('Admin.Order.modal')
-
                                         @endforeach
                                     @else
                                         <td>No Test to display</td>
@@ -81,10 +78,7 @@
             </div>
         </section>
     </main>
-    
-
 @endsection
-
 @push('after-order-scripts')
     <script></script>
 @endpush

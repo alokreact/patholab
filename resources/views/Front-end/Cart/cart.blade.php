@@ -70,8 +70,10 @@
 
 
                                             @if(count($cart_test_items)>0)
+
                                             @foreach ($cart_test_items as $id => $details)
                                                 @php $cti_total += $details['price'] * $details['qty'] @endphp
+                                                
                                                 <tr data-id="{{ $id }}">
                                                     <td data-th="Product">
                                                         <div class="row">
@@ -90,9 +92,13 @@
                                                     </td>
                                                     <td data-th="Subtotal" class="text-center">
                                                         ₹{{ $details['price'] * $details['qty'] }}</td>
-                                                    <td class="actions" data-th="">
-                                                        <button class="btn btn-danger btn-sm cart_remove"><i
-                                                                class="fa fa-trash-o"></i> Delete</button>
+                                                
+                                                        <td class="actions" data-th="">
+                                                
+                                                            <button class="btn btn-danger btn-sm cart_remove" value="{{$details->id}}">
+                                                                <i class="fa fa-trash-o"></i> 
+                                                                Delete
+                                                            </button>
                                                     </td>
                                                 </tr>
                                             @endforeach

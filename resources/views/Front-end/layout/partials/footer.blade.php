@@ -424,7 +424,7 @@
 
      $(".cart_remove").click(function(e) {
          e.preventDefault();
-         var ele = $(this);
+         var ele = $(this).val();
          Swal.fire({
              title: 'Success!',
              text: 'Do you really want to remove?',
@@ -439,9 +439,10 @@
                      method: "DELETE",
                      data: {
                          _token: '{{ csrf_token() }}',
-                         id: ele.parents("tr").attr("data-id")
+                         id: ele
                      },
                      success: function(response) {
+                        
                          window.location.reload();
                      }
                  });

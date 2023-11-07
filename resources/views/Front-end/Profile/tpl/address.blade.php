@@ -104,6 +104,8 @@
                             <div class="row" style="display: flex;justify-content:space-between">
                                 @include('Front-end.Profile.sidebar')
 
+
+                                
                                 <div class="single-blog-item col-md-8">
                                     <div class="booking-container">   
                                         <div class="btn-address">
@@ -120,7 +122,7 @@
                                         @if (count($addresses) > 0)
                                             @include('Front-end.Profile.components.address_card')
                                         @else
-                                            <a href="{{route('address.create')}}">
+                                            <a href="{{route('address.create')}}" class="mx-auto mt-4">
                                                 <button class="btn btn-success">Add Address</button>
                                             </a>
                                         @endif

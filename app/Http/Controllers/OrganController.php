@@ -15,8 +15,10 @@ class OrganController extends Controller{
         $cartCount = \Cart::count();
       
         $allorgans = Organ::paginate(30);
+        $organs = Organ::take(12)->get();
+     
         //dd($allorgans);
-        return view('Front-end.Organs.index',compact('allorgans','cartCount'));
+        return view('Front-end.Organs.index',compact('allorgans','organs','cartCount'));
     }
     public function findTestbyOrgan($id){
 

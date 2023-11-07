@@ -107,12 +107,12 @@
                 <h2 class="font-mediom text-2xl underline">Top Wellness Packages</h2>
             </div>
 
-            <div class="flex">
+            <div class="flex category-header">
                 @forelse($categories as $index=>$category)
                     <div class="flex items-center space-x-1 cursor-pointer mx-2" id="{{ $category->id }}">
                         <div
                             class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 hover:text-white">
-                            {{ $category->category_name }}
+                            {{$category->category_name }}
                         </div>
                     </div>
                 @empty
@@ -130,16 +130,15 @@
     </div>
 
     <div class="container mx-auto">
-
         <div class="flex">
-            <div class="w-2/3 flex justify-between flex-wrap package">
+            <div class="w-full md:w-2/3 flex justify-between flex-wrap package">
                 @forelse($packages as $package)
-                    <div class="w-1/3 p-4">
+                    <div class="w-full md:w-1/3 p-4">
                         <div
                             class="w-full  max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
                             <a href="#">
                                 <img class="p-2 rounded-t-lg"
-                                    src="{{ $package->image ? asset('images/bg/' . $package->image) : asset('images/team/2.jpg') }}"
+                                    src="{{ $package->image? asset('images/bg/'.$package->image) : asset('images/team/2.jpg') }}"
                                     alt="product image" />
                             </a>
 
@@ -178,7 +177,7 @@
                                     <a href="{{route('package-details',[$package->id])}}"
                                         class="w-[140px] ml-4 text-black border 
                                 border-bg-green  font-medium rounded-full text-base 
-                                p-2 text-center hover:bg-green-500 hover:text-white">VIEW
+                                p-2 text-center hover:bg-green-500 hover:text-white">Know More
                                         </a>
 
                                 </div>
@@ -196,7 +195,30 @@
             <div class="w-1/3 px-16">
 
                 <div class="rounded p-8">
-                    <img src="{{ asset('images/about/PBanner.png') }}" alt="Ad Banner" class="w-full h-auto" />
+
+                    <div class="flex border flex-col" style="background-color: #f7e99e">
+
+                            <div class="flex justify-center">
+
+                                    <img src="{{asset('Image/202309191851kidney.png')}}" class="w-[245px]"/>
+                            </div>
+
+                            <div class="btn view-more flex flex-col mt-2">
+                              
+                                <p class="text-basic text-black text-xs mt-1 p-2 line-height-26">  
+                                    Offer - Upto 30% OFF on single package & upto 40% OFF on 
+                                    double packages</p>
+                                <h4 class="text-xl text-black mt-1 p-2"> Only For -  599/-</h4>
+
+                                <button class="border bg-yellow-500 border-yellow-400 p-2 text-black text-xl mt-1 bg-red-500 hover:text-white">
+                                    Check Now
+                                </button>
+
+                            </div>
+
+                    </div>
+
+                    {{-- <img src="{{ asset('images/about/PBanner.png') }}" alt="Ad Banner" class="w-full h-auto" /> --}}
                 </div>
                 {{-- <div class="rounded p-8">
                 <img src="{{asset('images/about/Banner.png')}}" alt="Ad Banner" class="w-full h-auto" />

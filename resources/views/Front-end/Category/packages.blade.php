@@ -136,11 +136,11 @@
 
     <section class="section contact-info pb-0">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 @include('Front-end.Search.template.sidebar')
                 <main class="col-md-9">
-                    @forelse($packages as $package)
-                        {{-- <div class="col-lg-4 col-sm-6 col-md-6" style="margin-bottom:3px">
+                    @forelse($packages as $package) --}}
+            {{-- <div class="col-lg-4 col-sm-6 col-md-6" style="margin-bottom:3px">
                         <div class="contact-block mb-4 mb-lg-0">
                             <img src="{{asset('Image/'.$package->getLab->image)}}"  class="img-fluid"
                                 style="height:90px; width:180px">
@@ -191,13 +191,14 @@
                             </div>
                         </div>
                     </div> --}}
-
+            {{-- 
                         <div class="card bg-light-subtle mt-4">
                             <img src="{{ asset('Image/' . $package->getLab->image) }}">
                             <div class="testcard-body">
                                 <div class="text-section">
 
-                                    <h5 class="fw-bold" style="font-size: 14px">{{ ucfirst($package->package_name) }}</h5>
+                                    <h5 class="fw-bold" style="font-size: 14px">
+                                        {{ ucfirst($package->package_name) }}</h5>
 
                                     @php
                                         $count = 0;
@@ -243,7 +244,66 @@
                         <p>No Records</p>
                     @endforelse
                 </main>
+            </div> --}}
+
+
+
+            <div class="container mx-auto">
+                <div class="flex md:flex-row flex-col">
+                    @include('Front-end.Components.sidebar')
+                    <div class="w-full md:w-3/4 p-4">
+                        <div class="w-full mb-4 text-xl font-semibold">
+                            Showing {{ count($packages) }} results
+                        </div>
+
+                        <div class="flex flex-wrap mx-2">
+                            @forelse($packages as $package)
+                                <div class="w-full md:w-[31%] mb-4 border mx-2">
+                                    <div class="border-b-2 rounded w-[260px]  p-1 mx-auto">
+                                        <img src="{{ asset('images/bg/' . $package->image) }}" class="" />
+                                    </div>
+
+                                    <div class="p-4 mt-1 items-center flex justify-center">
+                                        <h6 class="text-black text-basic font-semibold mb-2">
+                                            {{ ucfirst($package->package_name) }}
+                                        </h6>
+                                    </div>
+                                    <div class="p-1 mt-1 items-center flex justify-between">
+
+                                        <h6 class="text-black text-xs font-semibold mb-2">
+                                            <i class="icofont-google-map" style="font-size:16px;color:#000">
+                                            </i>
+                                            {{ ucfirst($package->getlab->city) }}
+                                        </h6>
+                                        <h6 class="text-black text-xs font-semibold mb-2">
+
+                                            {{ $package->getLab->lab_name }}
+                                        </h6>
+                                    </div>
+                                    <div
+                                        class="p-3 mt-1 mb-1 items-center bg-gray-100 flex 
+                                        justify-between my-1 mx-1 rounded-full text-black">
+                                        <del>₹<span>{{ $package->price * 2 }}/-</span></del>
+                                        <span> ₹{{ $package->price }}/-</span>
+
+                                        <div class="sm">50% discount </div>
+                                    </div>
+
+                                    <div class="btn-view flex justify-end m-1">
+                                        <a href="{{ route('package-details', [$package->id]) }}"
+                                            class="border border-green-500 rounded-full p-2 hover:text-white hover:bg-green-400">Know
+                                            More</a>
+                                    </div>
+                                </div>
+
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </section>
 @endsection

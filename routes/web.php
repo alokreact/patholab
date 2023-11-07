@@ -48,10 +48,7 @@ Route::post('/appointment/submit', [App\Http\Controllers\ContactController::clas
 Route::get('/prescription', [App\Http\Controllers\ContactController::class, 'prescription'])->name('prescription');
 Route::post('/prescription/submit', [App\Http\Controllers\ContactController::class, 'store_prescription'])->name('prescription.submit');
 
-
 Route::post('/address/submit', [App\Http\Controllers\AddressController::class, 'store']);
-
-
 
 //Route::post('/checkout/submit', [App\Http\Controllers\CheckoutController::class,'iniitiate'])->name('checkout.submit');
 Route::get('/confirmation', [App\Http\Controllers\CheckoutController::class,'confirmation'])->name('confirmation');
@@ -67,7 +64,7 @@ Route::post('/checkout/submit', [App\Http\Controllers\CheckoutController::class,
 
 
 
-Route::get('/cart', [App\Http\Controllers\CartController_new::class,'index'])->name('cart.index');
+//Route::get('/cart', [App\Http\Controllers\CartController_new::class,'index'])->name('cart.index');
 
 Route::post('/add-to-cart', [App\Http\Controllers\CartController::class,'addProduct'])->name('add_to_cart');
 Route::post('/package/add', [App\Http\Controllers\CartController::class,'addPackage'])->name('add_to_package');
@@ -88,7 +85,6 @@ Route::get('/payment/failed', [App\Http\Controllers\CheckoutController::class, '
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class,'index'])->name('profile');
-
 Route::get('/create/prescription', [App\Http\Controllers\ProfileController::class,'prescription'])->name('upload-prescription');
 
 
@@ -120,7 +116,9 @@ Route::get('/email-send', [App\Http\Controllers\ProfileController::class,'send_e
 Route::post('/create/otp', [App\Http\Controllers\AuthController::class,'generateOTP'])->name('otp.create');
 Route::post('/verify/otp', [App\Http\Controllers\AuthController::class,'verifyOTP'])->name('otp.verify');
 
-
 Route::post('/test/add-to-cart', [App\Http\Controllers\CartController::class,'addToCart']);
+
+
+Route::get('/download/reports/{id}', [App\Http\Controllers\ProfileController::class,'downloadReports'])->name('download.reports');
 
 include"admin.php";

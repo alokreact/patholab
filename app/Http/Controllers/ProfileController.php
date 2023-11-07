@@ -14,6 +14,9 @@ use App\Mail\OrderEmail;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\Patient;
+use ZipArchive;
+use File;
+
 
 class ProfileController extends Controller{
 
@@ -70,7 +73,6 @@ class ProfileController extends Controller{
     }
 
     public function send_email(){
-
         $data= [
             'date'=>now(),
             'order_id'=>'123456',
@@ -98,7 +100,9 @@ class ProfileController extends Controller{
 
         return "Email sent with PDF attachment!";
     }
+
     public function product(){
+
         return view('Front-end.Profile.booking');
     }
 
@@ -125,13 +129,44 @@ class ProfileController extends Controller{
     public function createPatient(){
         return view('Front-end.Profile.components.patient_form');
     }
-
-
     public function profile($id){
-
         $profile = User::find($id);
         return view('Front-end.Profile.profile',compact('profile'));
+    }
 
+    public function downloadReports($id){
+        $order_items = OrderItem::where('order_id',$id)->get();   
+        $images = $order_items->pluck('report_url');
+       // dd($images);
+        $temp = '';
+        foreach($images as $image){
+            $temp .=$image.',';
+        }
+        //dd($temp);
+        $image_arr = explode(',', $temp);
+        $images =[];
+
+        for($i=0 ; $i< count($image_arr)-1; $i++){
+            if(!in_array($image_arr[$i],$images)){
+                $images[] = public_path('images/reports/'.$image_arr[$i]);
+            }
+        }
+        // $images = [
+        //     public_path('images/image1.jpg'),
+        //     public_path('images/image2.jpg'),
+        //     public_path('images/image3.jpg'),
+        // ];
+        $zipFileName = 'reports.zip';
+        $zip = new ZipArchive;
+        $zip->open(public_path($zipFileName), ZipArchive::CREATE);
+
+        foreach ($images as $image) {
+            if (File::exists($image)) {
+                $zip->addFile($image, basename($image));
+            }
+        }
+        $zip->close();
+        return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
     }
 
 }

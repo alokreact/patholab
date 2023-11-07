@@ -71,41 +71,51 @@ class CartController extends Controller{
          return response()->json(['cart' =>$cart, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
-    public function addPackage(Request $request){
-       
+    public function addPackage(Request $request){       
         $productId = $request->input('productId');
         $product = Package::findOrFail($productId);
-        $labName = $request->input('labId');
-        $price = $request->input('price');
-        
-        \Cart::add(['id' => $productId, 'name' => $product->getLab->lab_name, 
+      //  $labName = $product->getLab->lab_name;
+      //  $price = $request->input('price');
+
+      //  dd($product);
+
+
+        \Cart::add(['id' => $product->lab_name, 'name' => $product->package_name, 
                     'qty' => 1, 
                     'price' => $product->price,
                     'weight' =>2, 
                     'options' => ['product_id' => $productId,'type'=>'package']
                   ]);
 
+        $cart = \Cart::count();
+        //dd($cart);
 
-        return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
+        return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
+       // return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
     public function cart(){
-
         $user = Auth::user();        
         if($user && Auth::user()->role == '2') {
             $carts =[];
             $carts = \Cart::content();
+            //dd($carts);
+
             $product_names =[];
             if( \Cart::count() > 0){
 
                 $type = CartService::getType($carts);
                 //dd($type);
+                
                 if($type[0] === 'package'){
-                    $product_id=$carts->pluck('options')[0]['product_id'];
-                    $products = Package::find($product_id);
-                   //dd($products);
+                    $product_id=$carts->pluck('options')->pluck('product_id');
+                   // dd($product_id);
+                    $products = Package::find($product_id);    
+                    //dd($products);
+                  
                     return view('Front-end.PackageCart.index',compact('carts','products'));
                 }
+                
                 $product_id=$carts->pluck('options')[0]['product_id'];
                 $products = SubTest::find($product_id);
                 $product_names = $products->pluck('sub_test_name');
@@ -120,18 +130,24 @@ class CartController extends Controller{
 
     public function remove_product(Request $request)
     {
-       // if ($request->id) {
-            $cart = session()->get('cart');
-         
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
+       // dd($request->all());
+
+        $productId = $request->input('id');
+    
+       // dd($productId);
+
+            //Check if the product is already in the cart
+            $cartItem = \Cart::search(function ($cartItem, $rowId) use ($productId) {
+                return $cartItem->id == $productId;
+            })->first();
+    
+           // dd($cartItem);
+            if($cartItem){
+                \Cart::remove($cartItem->rowId);
             }
+
             session()->flash('success', 'Product successfully removed!');
         
-            //$rowId = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-
-            //Cart::remove($rowId);
     }
 
     public function update_product(Request $request)

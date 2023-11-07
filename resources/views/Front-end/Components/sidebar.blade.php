@@ -1,4 +1,4 @@
-<div class="w-1/4 p-4 bg-gray-100 h-full">
+<div class="w-full md:w-1/4 p-4 bg-gray-100 h-full">
     <div class="mb-4 border-b-2 pb-4">
       <img
         src="{{asset('images/about/Banner.png')}}"
@@ -10,10 +10,12 @@
     <div class="mb-4 border-b-2 pb-4">
       <h3 class="text-xl font-semibold mb-2">Tags</h3>
       <div class="flex flex-wrap mb-2">
+        @foreach($organs as $organ)
         <div class="bg-white-500  border text-black px-2 py-1 rounded mr-2 mb-2">
-          Heart
+            {{$organ->name}}
         </div>
-        <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
+        @endforeach
+        {{-- <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Liver
         </div>
         <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
@@ -22,9 +24,9 @@
 
         <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Kidney
-        </div>
+        </div> --}}
 
-        <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
+        {{-- <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Kidney
         </div>
         <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
@@ -32,11 +34,11 @@
         </div>
         <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Kidney
-        </div>
+        </div> --}}
 
-        <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
+        {{-- <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Kidney
-        </div>
+        </div> --}}
         <div class="bg-white-500 border text-black px-2 py-1 rounded mr-2 mb-2">
           Kidney
         </div>

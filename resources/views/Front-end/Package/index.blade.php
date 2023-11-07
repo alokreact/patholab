@@ -32,8 +32,6 @@
                         <h3 class="text-md">{{ ucfirst($package['package_name']) }}</h3>
                         <div class="divider my-4"></div>
                         <p class="lead">{{ $package['package_desc'] }}</p>
-
-
                         <h3 class="mt-5 mb-4">Tests</h3>
                         <div class="divider my-4"></div>
 
@@ -97,11 +95,11 @@
                                     $cart = session('cart', []);
                                 @endphp
 
-                                    {{-- <button type="button" class="btn btn-main-2 btn-round-full btn_add_to_cart"
+                                <button type="button" class="btn btn-main-2 btn-round-full btn_add_to_cart"
                                         value="{{ $package['id'] }}" data-type="package">
                                         Add To Cart
-                                    </button> --}}
-                                
+                                    </button>
+
                             </p>
 
                         </div>
@@ -132,8 +130,8 @@
                 type: "POST",
                 data: formData,
                 url: addToCarturl,
-                success: function(response) {
-                    if (response.status === 200) {
+                success: function(response,textStatus,xhr) {
+                    if (xhr.status === 200) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Added Successfully',

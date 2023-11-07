@@ -21,9 +21,13 @@
 			@php  $i=0;  @endphp
 			@forelse ($organs as $organ)
 			<a href="{{route('testbyorgan',$organ->id)}}">
-				<div class="flex justify-around p-4 mt-2">
+				<div class="flex justify-around p-4 mt-2 flex-col">
 					<div class="flex w-32 h-32 bg-cover rounded-full items-center p-6 hover:scale-105 organ">
-					<img src="{{asset('Image/'.$organ->image)}}"class='w-24 h-24 object-cover'/>
+						<img src="{{asset('Image/'.$organ->image)}}"class='w-24 h-24 object-cover'/>
+					</div>
+
+					<div class="flex justify-center mt-1 mr-16">
+						<h4 class="text-xs text-black">{{$organ->name}}</h4>
 					</div>
 
 				 </div>	   

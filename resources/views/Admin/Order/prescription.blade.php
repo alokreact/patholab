@@ -9,13 +9,11 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">List</h5>
-
                         <!-- Default Table -->
-                        <table class="table">
+                        <table class="table datatable">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -31,7 +29,9 @@
                                 <tr>
                                     <td>{{ $prescription->name }}</td>
                                     <td>{{ $prescription->phone }}</td>
-                                    <td> <a href="{{asset('Image/' . $prescription->report) }}" download>Download</a></td>
+                                    <td> 
+                                        <a href="{{route('prescription.download',[$prescription->id])}}">Download</a>
+                                    </td>
 
                                     <td>{{ date('Y-m-d H:i:s', strtotime($prescription->created_at)) }}</td>
 

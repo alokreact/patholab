@@ -15,6 +15,8 @@ use App\Models\Report;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Arr;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class OrderController extends Controller
 {
     public function index(){
@@ -43,7 +45,6 @@ class OrderController extends Controller
 
         foreach($tests as $test){
             if($test ['type'] ==='package'){
-
                 $packages = OrderItem::with('package.getLab')->where('order_id', $request->itemId)->get();
                 //dd($packages);
                 //$packages = $tests->pluck('package')->toArray();
@@ -54,8 +55,10 @@ class OrderController extends Controller
             else{
                 //$test_id = explode(',',$tests[0]['product_id']);
                 //$subtests =  SubTest::find($test_id);
-                $order_items = OrderItem::with('subtest')->where('order_id',$request->itemId)->get();
+                $order_items = OrderItem::with('subtest','lab')->where('order_id',$request->itemId)->get();
                 $subtests = $order_items->toArray();
+             
+                 //dd($subtests);   
                 $data = [
                     'subtest' => $subtests,
                     'order_items'=>$tests,
@@ -65,22 +68,29 @@ class OrderController extends Controller
         }
         
         //dd($data['packages']);
-
         if(count($data['packages']) >0){
             return view('Admin.Order.packagedetails',compact('data'));
         }
         else{
             return view('Admin.Order.testdetails',compact('data'));
         }
-       
         //dd($data);
-        
     }
 
     public function prescription_show(){
         $prescriptions =  Prescription::all();
         return view('Admin.Order.prescription', compact('prescriptions'));
     }
+
+    public function download_prescription($id){
+        $prescription =  Prescription::find($id);
+        
+        $path =  public_path('images/reports/'.$prescription->report);
+
+        return response()->download($path, $prescription->report);
+        //return view('Admin.Order.prescription', compact('prescriptions'));
+    }
+
 
     public function uploadReport(Request $request){
 
@@ -115,7 +125,7 @@ class OrderController extends Controller
         if($request->hasFile('file')) {   
             $file=  $request->file('file');
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('Image'), $filename);
+            $file->move(public_path('images/reports/'), $filename);
 
             $OrderItem = OrderItem::find($request->input('id')); // Replace OrderItem with your actual model name
             
@@ -124,5 +134,17 @@ class OrderController extends Controller
             return response()->json(['success' => true, 'message' => 'File uploaded successfully']);
         }
         return response()->json(['success' => false, 'message' => 'No file found']);
+    }
+
+    public function changeOrderStatus(Request $request){
+
+        //dd($request->all());
+
+        $order = Order::find($request->input('order_id'));
+        $order->order_status = $request->input('order_status');
+        $order->update();
+
+        return response()->json(['message'=>'Order Status Changed Successfully'], Response::HTTP_OK);
+
     }
 }

@@ -85,29 +85,36 @@ class LabController extends Controller
     public function update(Request $request, $id)
     {
         $lab = Lab::find($id);   
+        
+        //dd($request->input('lab_name'));
+       
         if($request->file('image')) {
             if(file_exists(public_path('Image/'.$lab->image))){
                 //Storage::delete(public_path('Image/').$lab->image);
                 \File::delete(public_path('Image/'.$lab->image));
             }
-
             $file = $request->file('image');
             $filename = date('Ymd').$file->getClientOriginalName();
             $file->move(public_path('Image'), $filename);
-            //$data['image'] = $filename;
-        
-        $data = [
-                  'lab_name'=>$request->lab_name, 
-                  'state'=>$request->state, 
-                  'city'=>$request->city, 
-                  'pin'=>$request->pin, 
-                  'adddress1'=>$request->address1,
-                  'image' => $filename
-                ];
-               // dd($data);
-        $lab->update($data);
+       
+           // $data['image'] = $filename;
+        }
+
+       // $data['image'] = $lab->image;
+       
+                 $lab->lab_name=$request->input('lab_name');
+                 $lab->state=$request->input('state');
+                 $lab->city=$request->input('city'); 
+                 $lab->pin=$request->input('pin'); 
+                 $lab->address1=$request->input('address1');
+                 $lab->image=$request->file('image')?$filename:$lab->image;
+                
+                 $lab->save();
+
+                //dd($data);
+      //  $lab->update($data);
         return redirect()->back()->with('message','Updated Succesfully');
-    }
+        
     }
 
     /**

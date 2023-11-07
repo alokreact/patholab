@@ -36,45 +36,53 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $total = 0 @endphp
 
-                                            @foreach ($products as $id => $package)
-                                               
-                                            <tr data-id="{{ $id }}">
-                                                    <td data-th="Product">
-                                                        <div class="row">
-                                                            <div class="col-sm-9">
-                                                                <h6 class="nomargin">
-                                                                    {{$package['package_name']}}
-                                                                </h6>
+                                            @if ($products->count() > 0)
+                                                @foreach ($products as $id => $package)
+                                                    <tr data-id="{{ $id }}">
+                                                        <td data-th="Product">
+                                                            <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <h6 class="nomargin">
+                                                                        {{ $package->package_name }}
+                                                                    </h6>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                        </td>
 
 
-                                                    <td data-th="Price">
-                                                        <h4>{{ $package['price'] }}</h4>
-                                                    </td>
+                                                        <td data-th="Price">
+                                                            <h4>{{ $package->getLab->lab_name }}</h4>
+                                                        </td>
 
 
 
-                                                    <td data-th="Price">₹{{ $package['price'] }}/-</td>
-                                                    <td data-th="Quantity">
-                                                        <input type="number" value="1"
-                                                            class="form-control quantity cart_update" min="1" />
-                                                    </td>
+                                                        <td data-th="Price">
+                                                            ₹{{ $package->price }}/-
+                                                        </td>
+                                                        <td data-th="Quantity">
+                                                            <input type="number" value="1"
+                                                                class="form-control quantity cart_update" min="1" />
+                                                        </td>
 
-                                                    <td data-th="Subtotal" class="text-center">
-                                                        ₹{{ $package['price'] }}/-</td>
+                                                        <td data-th="Subtotal" class="text-center">
+                                                            ₹{{ $package->price }}/-
+                                                        </td>
 
-
-                                                    <td class="actions">
-                                                        <button class="btn btn-danger btn-sm cart_remove"><i
-                                                                class="fa fa-trash-o"></i> Delete</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        <td class="actions">
+                                                            <button class="btn btn-danger btn-sm cart_remove" value="{{$package->id}}">
+                                                                <i
+                                                                    class="fa fa-trash-o"></i> Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
+
+
+
+
+
                                         <tfoot>
                                             <tr>
                                                 <td colspan="5" class="text-right">
