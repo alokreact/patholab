@@ -124,12 +124,12 @@
 
     <div class="container mt-4">
         <div class="row">
-            @include('Front-end.Search.template.sidebar')
-    
+                @include('Front-end.Components.sidebar')
+            
             <main class="col-md-9">
                 <header class="border-bottom mb-4 pb-3">
                     <div class="form-inline">
-                        <span class="mr-md-auto">{{count($all_categories)}} Items Found</span>
+                        <span class="mr-md-auto">Showing {{count($all_categories)}} results</span>
                     </div>
                 </header><!-- sect-heading -->
 

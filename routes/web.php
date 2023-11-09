@@ -117,8 +117,9 @@ Route::post('/create/otp', [App\Http\Controllers\AuthController::class,'generate
 Route::post('/verify/otp', [App\Http\Controllers\AuthController::class,'verifyOTP'])->name('otp.verify');
 
 Route::post('/test/add-to-cart', [App\Http\Controllers\CartController::class,'addToCart']);
-
-
 Route::get('/download/reports/{id}', [App\Http\Controllers\ProfileController::class,'downloadReports'])->name('download.reports');
+
+Route::post('/search/test', [App\Http\Controllers\HomeController::class,'getMultipleSearchTest']);
+Route::post('/remove/test', [App\Http\Controllers\HomeController::class,'removeSearchTest']);
 
 include"admin.php";

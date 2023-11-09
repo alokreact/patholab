@@ -78,16 +78,20 @@ class CheckoutController extends Controller
     }
 
     public function checkout(){
-       try{
-            $cartItems =  \Cart::content();              
+         try{
+
+
+            $cartItems =  \Cart::content(); 
+            $type  = CartService::getType($cartItems);             
             //dd($cartItems);
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
             $addresses = Address::where('user_id', Auth::user()->id)->get();
             $product_names = OrderService::getProductnames($cartItems);
-            return view('Front-end.Checkout.newcheckout',\compact('cartItems','patients','addresses','product_names'));
+            
+            return view('Front-end.Checkout.newcheckout',\compact('type','cartItems','patients','addresses','product_names'));
         }
         catch (Exception $e){
-            \DB::rollback();
+            //\DB::rollback();
             return  response()->json(['data'=>[],'message'=>'Some Error, Please try again!'],400);
         }
     }

@@ -23,7 +23,10 @@
 </style>
 
 <div class="col-xl-4">
+   
     <div class="card checkout-order-summary">
+        
+        
         <div class="card-body">
             <div class="p-3 bg-light mb-3">
                 <h5 class="font-size-16 mb-0">Bill Summary<span class="float-end ms-2"></span></h5>
@@ -31,16 +34,17 @@
 
             <div class="table-responsive">
                 <table class="table table-centered mb-0 table-nowrap">
-                    
-                    
                     <thead>
                         <tr>
                             <th class="border-top-0" style="width: 330px;" scope="col">Test/Package</th>
                             <th class="border-top-0" scope="col">Price</th>
                         </tr>
                     </thead>
+
+                    @if($type === 'test')
                     <tbody>
                         @php $total = 0 @endphp
+               
                         @foreach ($cartItems as $id => $details)
                             <tr>
                                 <td style="max-width: 240px">
@@ -62,34 +66,39 @@
                             </tr>
                         @endforeach
 
-                        <tr>
+                         <tr>
                             <td colspan="1">
                                 <h5 class="font-size-14 m-0">Sub Total :</h5>
                             </td>
                             <td>
                                 ₹{{ $details->price }}/-
                             </td>
-                        </tr>
+                         </tr>
 
-                        <tr>
+                         <tr>
                             <td colspan="1">
                                 <h5 class="font-size-14 m-0">Estimated Tax :</h5>
                             </td>
                             <td>
                                 0%
                             </td>
-                        </tr>
-
-                        <tr class="bg-light">
+                         </tr>
+                       
+                         <tr class="bg-light">
                             <td colspan="1">
                                 <h5 class="font-size-14 m-0">Total:</h5>
                             </td>
                             <td>
                                 ₹{{ $details->price }}/-
                             </td>
-                        </tr>
+                         </tr>
+
                     </tbody>
 
+                    @else
+
+
+                    @endif
                 </table>
             </div>
 
@@ -133,5 +142,8 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>

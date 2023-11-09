@@ -119,6 +119,7 @@
 </style>
 @extends('Front-end.layout.mainlayout')
 @section('content')
+
     <section class="page-title bg-1">
         <div class="overlay"></div>
         <div class="container">

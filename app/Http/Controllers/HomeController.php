@@ -17,6 +17,8 @@ use PhpParser\Node\Stmt\GroupUse;
 use Session;
 use App\Models\Cart;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class HomeController extends Controller
 {
      
@@ -62,8 +64,7 @@ class HomeController extends Controller
     }
 
     public function searchsubtest(Request $request){        
-        if($request->input('subtest') !== null) {
-        
+        if($request->input('subtest') !== null) {    
             \Cart::destroy();
             
             $submittedValue = $request->input('subtest');
@@ -84,7 +85,6 @@ class HomeController extends Controller
 
                     $labName = $lab->lab_name;
                     $labId = $lab->id;
-                  
                     $price = $lab->pivot->price; // You might need to adjust this based on your data structure
             
                     if (!array_key_exists($labName, $combinedResults)) {
@@ -115,9 +115,7 @@ class HomeController extends Controller
             $organs = Organ::take(12)->get();
             $categories = Category::take(12)->get();
 
-                
             Session::put('selectedProducts', $previousValues);
-
             return  view('Front-end.Search.index', compact('labs','combinedResults','organs','categories')); 
         }
         else {
@@ -218,4 +216,107 @@ class HomeController extends Controller
     public function about(){        
         return view('Front-end.About.index');
     }
+
+
+    public function getMultipleSearchTest(Request $request){
+        
+        $test_id = $request->input('checkBoxValue');
+        $tests = SubTest::with('getLab')->find($test_id);
+
+        $test_names = $tests->pluck('sub_test_name')->flatten();
+        $test_ids = $tests->pluck('id')->toArray();
+       
+        $search_test_data = [];
+        foreach($test_names as $index=>$name){
+                $search_test_data['name'][]= $name;
+                $search_test_data['id'][]= $test_ids[$index];
+
+        }
+        //dd($search_test_data);
+
+
+        $labs = $tests->pluck('getLab')->flatten();
+        
+        $combinedResults =[];
+
+        foreach ($labs as $lab) {
+            $labName = $lab->lab_name;
+            $labId = $lab->id;
+            $price = $lab->pivot->price; // You might need to adjust this based on your data structur
+
+            if (!array_key_exists($labName, $combinedResults)) {
+                $combinedResults[$labName] = [
+                    'lab_name' => $labName,
+                    'lab_id'=>$labId,
+                    'total_price' => $price,
+                    'city'=>$lab->city,
+                    'image'=>$lab->image,
+                    'single_price'=>  $lab->pivot->price,
+                    'test_names'=>$test_names,
+                    'test_ids'=>$test_ids                   
+                ];
+            } else {
+                $combinedResults[$labName]['total_price'] += $price;
+                $combinedResults[$labName]['single_price'].=', '.$lab->pivot->price;
+            }
+        }
+        //dd($combinedResults);
+        return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
+    }
+
+    public function removeSearchTest(Request $request){
+
+        $dataArr = $request->input('dataArray');
+
+        $test_id =[];
+
+        foreach($dataArr as $index=>$value){
+
+                $test_id[] = $dataArr[$index]['id'];
+        }
+
+        //dd($arr);
+
+        $tests = SubTest::with('getLab')->find($test_id);
+        
+        $test_names = $tests->pluck('sub_test_name')->flatten();
+        $test_ids = $tests->pluck('id')->toArray();
+       
+        $search_test_data = [];
+        foreach($test_names as $index=>$name){
+                $search_test_data['name'][]= $name;
+                $search_test_data['id'][]= $test_ids[$index];
+
+        }
+        //dd($search_test_data);
+
+        $labs = $tests->pluck('getLab')->flatten();
+        $combinedResults =[];
+
+        foreach ($labs as $lab) {
+            $labName = $lab->lab_name;
+            $labId = $lab->id;
+            $price = $lab->pivot->price; // You might need to adjust this based on your data structur
+
+            if (!array_key_exists($labName, $combinedResults)) {
+                $combinedResults[$labName] = [
+                    'lab_name' => $labName,
+                    'lab_id'=>$labId,
+                    'total_price' => $price,
+                    'city'=>$lab->city,
+                    'image'=>$lab->image,
+                    'single_price'=>  $lab->pivot->price,
+                    'test_names'=>$test_names,
+                    'test_ids'=>$test_ids                    
+                ];
+            } else {
+
+                $combinedResults[$labName]['total_price'] += $price;
+                $combinedResults[$labName]['single_price'].=', '.$lab->pivot->price;
+            }
+        }
+        //dd($combinedResults);
+        return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
+    }
+
 }

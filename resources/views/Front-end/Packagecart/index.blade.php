@@ -70,9 +70,9 @@
                                                         </td>
 
                                                         <td class="actions">
-                                                            <button class="btn btn-danger btn-sm cart_remove" value="{{$package->id}}">
-                                                                <i
-                                                                    class="fa fa-trash-o"></i> Delete</button>
+                                                            <button class="btn btn-danger btn-sm cart_remove"
+                                                                value="{{ $package->id }}">
+                                                                <i class="fa fa-trash-o"></i> Delete</button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
