@@ -101,13 +101,13 @@
                             <div class="row" style="display: flex;justify-content:space-between">
                                 @include('Front-end.Profile.sidebar')
 
-                                <div class="single-blog-item col-md-8">
+                                <div class="single-blog-item col-md-8 mt-2">
                                     <div class="booking-container">
                                         <p class="booking-date">
                                             Add Patient:
                                         </p>
 
-                                        <div class="booking-box">
+                                        <div class="booking-box mt-4">
 
                                             <form id="#" class="appoinment-form" method="post"
                                                 enctype="multipart/form-data" action="{{ route('prescription.submit') }}">

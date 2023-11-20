@@ -132,12 +132,10 @@
  <script src="{{ asset('js/script.js') }}"></script>
  <script src="{{ asset('js/contact.js') }}"></script>
  <script src="{{ asset('js/custom.js') }}"></script>
-
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
  @stack('after-scripts')
-
  <script>
      $.ajaxSetup({
          headers: {
@@ -146,7 +144,7 @@
      });
 
      $('#search-input').on('input', function() {
-         console.log('wrt');
+         //console.log('wrt');
          var locationurl = "{{ route('subtest.ajax') }}";
          var query = $(this).val();
 
@@ -159,18 +157,20 @@
                      query: query
                  },
                  success: function(data) {
-                     $('#search-results').empty();
+                     $('#search').empty();
                      if (data.length > 0) {
                          $.each(data, function(index, product) {
-                             $('#search-results').append(
+                             $('#search').append(
                                  '<a href="#" class="list-group-item list-group-item-action" data-id="' +
                                  product.id + '">' + product.sub_test_name + '</a>');
                          });
                      } else {
-                         $('#search-results').append($('<option>', {
+                         $('#search').append($('<option>', {
                              value: '',
                              text: 'No results found'
-                         }));
+                         })
+                         
+                        );
                      }
                  },
                  error: function(error) {
@@ -178,8 +178,7 @@
                  }
              });
          } else {
-
-             $('#search-results').empty();
+             $('#search').empty();
          }
      });
 
@@ -189,20 +188,44 @@
 
          var productName = $(this).text();
          console.log('productname', productName);
-
          var subtest = $(this).data("id");
+
          console.log('subtest', subtest);
-
-         $('#selectedProduct').val(subtest);
-         $('#search-input').val(productName);
+         //$('#selectedProduct').val(subtest);
+         //$('#search-input').val(productName);
          $('#search-results').empty();
-         $('#searchSubtest-form').off('submit').submit();
+         //$('#searchSubtest-form').off('submit').submit();
 
-     });
+                    $.ajax({
+                        url:"{{route('searchsubtest')}}",
+                        method:'POST',
+                        data:{subtest:subtest},
+                        success:function(response,textStatus,xhr){
+
+                            //console.log('>>res',response);
+
+                            console.log('>>res',encodeURIComponent(response.data));
+                            //return;
+
+                            var testDiv ='';
+                                if(xhr.status === 200){
+                                    window.location.href = APP_URL+response.redirectTo+'?data='+encodeURIComponent(response.data);
+                                    //loadData(response.data);
+                               
+                        }
+
+                }
+            })
+        });
+
+
+     function loadData(data){
+
+        console.log('data',data);
+     }   
 
      // ... (code for remove search item)
      $(document).ready(function() {
-
          $('.removeSelected').on("click", function() {
              //alert("Icon clicked!");
              var removeUrl = "{{ route('remove-test') }}";
@@ -361,6 +384,7 @@
 
 
      $("#loadedViewContainer").on("click", ".removeSelected", function() {
+        
          var removeUrl = "{{ route('remove-test') }}";
          var selectedValues = $(this).data("id");
 
@@ -384,8 +408,9 @@
          // Show all items on initial page load
          $('.filter-item').addClass('fade-in').show();
          // Handle button click event
-         $('button').click(function() {
+         $('.category-btn').click(function() {
              var categoryId = $(this).attr('id');
+             
              // Filter the items based on the button ID
              if (categoryId === 'btn-all') {
                  $('.filter-item').addClass('fade-in').show();
@@ -442,7 +467,7 @@
                          id: ele
                      },
                      success: function(response) {
-                        
+
                          window.location.reload();
                      }
                  });
@@ -469,14 +494,11 @@
      });
 
 
-     $(document).ready(function() {
-
-     });
-
+      
      $(document).on('click', '.delete_patient', function(e) {
 
          e.preventDefault();
-         var id = $(this).data('id');
+         var id = $(this).val();
          var itemDiv = $(this).closest('.booking-container');
 
          Swal.fire({
@@ -496,9 +518,11 @@
                          id
                      },
                      success: function(response) {
-                         itemDiv.fadeOut('slow', function() {
-                             $(this).remove();
-                         });
+                        //  itemDiv.fadeOut('slow', function() {
+                        //      $(this).remove();
+                        //  });
+
+                        window.location.reload();
                      }
                  })
 
@@ -588,7 +612,7 @@
 
      $(document).on('click', '#btn-verify-otp', function() {
 
-         var otps = $('input[type="number"][name="otp[]"]');
+         var otps = $('input[type="text"][name="otp[]"]');
          var phone = $('#mobile').val();
          var dataToSend = {};
 
@@ -606,18 +630,28 @@
                  dataToSend[element.name] = element.value;
              }
          });
+
          dataToSend['phone'] = phone;
+        
+         if(otps.length < 4){
+             Swal.fire({
+                 icon: 'error',
+                 //title: 'Validation Errors',
+                 html: 'Fill the fields!',
+             });
+
+             return;
+
+         }
 
          $.ajax({
              url: "{{ route('otp.verify') }}",
              data: dataToSend,
              method: 'post',
-             success: function(response,textStatus,xhr) {
-                console.log('xhr',xhr)
-                console.log('xhr',response)
-                
-                if(response.status === 'success') {   
-                    Swal.fire({
+             success: function(response, textStatus, xhr) {
+                 console.log('xhr', xhr)
+                 if (response.status === 'success') {
+                     Swal.fire({
                          icon: 'success',
                          //title: 'Login Error',
                          html: response.message,
@@ -626,13 +660,13 @@
                              window.location.href = response.redirectTo;
                          }
                      })
-                } else {
-                     console.log('eerrr')   
+                 } else {
+                     console.log('eerrr')
                      Swal.fire({
                          icon: 'error',
                          html: response.message,
                      })
-                }
+                 }
              }
          })
 
@@ -642,15 +676,10 @@
  <script>
      APP_URL = '{{ url('/') }}';
  </script>
+ 
  @yield('page_specific_js')
 
+ @yield('register_js')
 
- {{-- https://tezo.com/wp-content/uploads/2023/10/MicrosoftTeams-image.png
-
-<?php //echo get_template_directory_uri()
-?>/TezoLogo.svg
-
-
-https://tezo.com/wp-content/uploads/2023/10/Comp-1-5.mp4
-
-https://tezo.com/wp-content/uploads/2023/10/tezo_logo.png --}}
+ @yield('search-scripts')
+  

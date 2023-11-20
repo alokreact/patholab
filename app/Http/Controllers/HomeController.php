@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
-     
     /**
      * Show the application dashboard.
      *
@@ -63,8 +62,10 @@ class HomeController extends Controller
         return  response()->json($subtests, 200);
     }
 
-    public function searchsubtest(Request $request){        
+    public function searchsubtest(Request $request){  
+
         if($request->input('subtest') !== null) {    
+            
             \Cart::destroy();
             
             $submittedValue = $request->input('subtest');
@@ -114,9 +115,17 @@ class HomeController extends Controller
             
             $organs = Organ::take(12)->get();
             $categories = Category::take(12)->get();
-
             Session::put('selectedProducts', $previousValues);
-            return  view('Front-end.Search.index', compact('labs','combinedResults','organs','categories')); 
+           // dd($combinedResults);
+
+            $responseData =['data' =>$submittedValue,'redirectTo'=>'/search-result'];
+
+            //$html = view('Front-end.Search.removesearch', compact('labs','organs','combinedResults','categories'))->render();
+  
+            //return response()->json(['html' => $html]);  
+            return response()->json($responseData,200);
+             
+            //return  view('Front-end.Search.index', compact('labs','combinedResults','organs','categories')); 
         }
         else {
                 # code...
@@ -194,7 +203,7 @@ class HomeController extends Controller
     }
 
     public function  get_all_category(){
-        $all_categories = Category::all();
+        $all_categories = Category::paginate(12);
         //dd($categories);
         $organs = Organ::take(12)->get();
         $categories = Category::take(12)->get();
@@ -223,8 +232,11 @@ class HomeController extends Controller
         $test_id = $request->input('checkBoxValue');
         $tests = SubTest::with('getLab')->find($test_id);
 
+        
         $test_names = $tests->pluck('sub_test_name')->flatten();
         $test_ids = $tests->pluck('id')->toArray();
+       
+        dd($test_names);
        
         $search_test_data = [];
         foreach($test_names as $index=>$name){
@@ -319,4 +331,10 @@ class HomeController extends Controller
         return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
     }
 
+
+    public function searchResult(Request $request){
+
+
+        return view('Front-end.Search.search-result');
+    }
 }

@@ -13,7 +13,6 @@ use App\Mail\WelcomeEmail;
 use Illuminate\Support\Facades\Http;
 use PragmaRX\Google2FA\Google2FA;
 
-
 use App\Mail\RegistrationEmail;
 
 class AuthController extends Controller{
@@ -48,9 +47,11 @@ class AuthController extends Controller{
     }
 
     public function register(Request $request){
-
+        
         if($request->isMethod('post')) { 
+
             $data = $request->all();
+
             $this->validate($request,[
                 'email'=>'required|unique:users,email',
                 'name'=>'required',
@@ -58,22 +59,30 @@ class AuthController extends Controller{
                 'phone'=>'required|numeric|min:10|unique:users,phone',
                 
               ]);          
-            $user = User::create([
+
+              $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 //'password' => Hash::make($request->password),
                 'phone'=>$request->phone,
                 'role'=>2
             ]);
-            $emaildata =['name'=> $request->name,'email'=>$request->email,'phone'=>$request->phone];
-                if($user->id){
 
-                    Mail::to('me.alokprasad54@gail.com')->send(new RegistrationEmail($emaildata));
-                    Mail::to($request->email)->send(new WelcomeEmail($emaildata));  
-                    return redirect()->route('signin')->with('message','Registered Succesully. Pleas login into your account.');
+            $emaildata =['name'=> $request->name,'email'=>$request->email,'phone'=>$request->phone];
+            
+            if($user->id){
+                    
+                Mail::to('me.alokprasad54@gail.com')->send(new RegistrationEmail($emaildata));
+                
+                Mail::to($request->email)->send(new WelcomeEmail($emaildata));  
+
+                return response()->json(['message'=>'Registered Succesfully','redirectTo'=>'/signin'],201);
+
                 }
             }
+        
         else{
+
             return view('Front-end.Auth.register');
         }  
     }
@@ -83,11 +92,9 @@ class AuthController extends Controller{
        
         $credentials = $request->only('phone'); // User's phone number
         //dd($credentials['phone']);
-
         $user = User::where('phone',$request->only('phone'))->get();
         //dd($user);  
         if(count($user->toArray())>0){
-
             $otp = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
             $expiresAt = now()->addMinutes(10);
     
@@ -102,23 +109,16 @@ class AuthController extends Controller{
             $response = $this->sendOTP($credentials['phone'], $otp);
             //dd($response);
             return response()->json(['status'=>'success','message' => 'OTP sent successfully']);
-
         }
         else{
             return response()->json(['status'=>'error','message' => 'This Phone no is not register with us.']);
-
         }
-
-        
     }
-
     public function verifyOTP(Request $request){
-       
         //dd($request->all());
-        // Get the OTP entered by the user
+        //Get the OTP entered by the user
         $credentials = $request->input('phone');
         //dd($credentials);
-
         $userOTP = $request->input('otp');
        // dd(implode('',$userOTP));
         // Retrieve the stored OTP data for the user
@@ -128,27 +128,25 @@ class AuthController extends Controller{
             ->first();
 
         if($otpRecord) {
+            
              $user = User::where('phone',$request->only('phone'))->first();
              //dd($user['email']);
              // OTP is valid and not expired, perform the desired action
-
-             Auth::login($user);
-             \DB::table('otps')->where('id', $otpRecord->id)->delete();
-              return response()->json(['status'=>'success','message' => 'OTP verified successfully','redirectTo' => route('home')]);            
+            Auth::login($user);
+            \DB::table('otps')->where('id', $otpRecord->id)->delete();
+            return response()->json(['status'=>'success','message' => 'OTP verified successfully','redirectTo' => route('home')]);            
         }
         else{
-            
             return response()->json(['status'=>'error','message' => 'Invalid OTP']);
          }
     }
 
     private function sendOTP($phoneNumber, $otp){
-
         //dd($phoneNumber);
-
         // Use the third-party API to send the OTP to the user's phone number
         
         $baseUrl = 'smspackage.wiaratechnologies.com/api/mt/SendSMS';
+        
         $queryParameters =  [
             'APIKey' => 'eFdx3x5kT0yNhX1EnTqtCw',
             'senderid' => 'CALABS',

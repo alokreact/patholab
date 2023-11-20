@@ -126,12 +126,6 @@
 
         console.log($('.upload-file-preview').length)
 
-        // if ($('.upload-file-preview').length > 0) {
-        //     fileUrl = $('.upload-file-preview').attr('href');
-        //     $('#fileInput').hide();
-        //     $('.upload-file-preview, #removeFileBtn').show();
-        // }
-
         $('.custom-file-input').on('change', function() {
             var fileInput = $(this)[0].files[0];
             console.log('fileInput', fileInput)
@@ -153,6 +147,8 @@
                 formData.append('testId', testId);
                 formData.append('user_id', user_id);
 
+                //console.log('formData',formData)
+                //return;
                 $.ajax({
                     url: '{{ route('upload.report') }}',
                     method: 'POST',
@@ -160,6 +156,7 @@
                     contentType: false,
                     processData: false,
                     success: function(response) {
+
                         // Handle the response from the server
                         //$('.upload-spinner').addClass('d-none');
 
@@ -210,6 +207,7 @@
                 }
             });
         });
+
 
         $('#itemModal .modal-body').on('click', '#uploadButton', function() {
             console.log('>>>>')

@@ -34,5 +34,9 @@ return [
         'key_id' => env('RAZORPAY_KEY_ID'),
         'key_secret' => env('RAZORPAY_KEY_SECRET'),
     ],
+    'sms' => [
+        'api_url' => env('SMS_API_URL'),
+        'api_key'=>env('SMS_API_KEY')
+    ],
 
 ];

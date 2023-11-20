@@ -31,6 +31,4 @@ class PatientController extends Controller
 
         return redirect()->route('patient');        
     }
-
-
 }

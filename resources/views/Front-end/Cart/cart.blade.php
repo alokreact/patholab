@@ -37,80 +37,83 @@
                                         <tbody>
                                             @php $total = 0 @endphp
                                             @php $cti_total = 0 @endphp
-                                         
-                                            @if(count($cart_items)>0)
-                                           
-                                            @foreach ($cart_items as $id => $details)
-                                                @php $total += $details['price'] * $details['qty'] @endphp
-                                                <tr data-id="{{ $id }}">
-                                                    <td data-th="Product">
-                                                        <div class="row">
-                                                            <div class="col-sm-9">
-                                                                <h4 class="nomargin">{{ ucfirst($details['name']) }}
-                                                                </h4>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td data-th="Price">{{ ucfirst($details['lab_name']) }}</td>
 
-                                                    <td data-th="Price">₹{{ $details['price'] }}</td>
-                                                    <td data-th="Quantity">
-                                                        <input type="number" value="{{ $details['qty'] }}"
-                                                            class="form-control quantity cart_update" min="1" />
-                                                    </td>
-                                                    <td data-th="Subtotal" class="text-center">
-                                                        ₹{{ $details['price'] * $details['qty'] }}</td>
-                                                    <td class="actions" data-th="">
-                                                        <button class="btn btn-danger btn-sm cart_remove"><i
-                                                                class="fa fa-trash-o"></i> Delete</button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                            @if (count($cart_items) > 0)
+                                                @foreach ($cart_items as $id => $details)
+                                                    @php $total += $details['price'] * $details['qty'] @endphp
+                                                    <tr data-id="{{ $id }}">
+                                                        <td data-th="Product">
+                                                            <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <h4 class="nomargin">{{ ucfirst($details['name']) }}
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td data-th="Price">{{ ucfirst($details['lab_name']) }}</td>
+
+                                                        <td data-th="Price">₹{{ $details['price'] }}</td>
+                                                        <td data-th="Quantity">
+                                                            <input type="number" value="{{ $details['qty'] }}"
+                                                                class="form-control quantity cart_update" min="1" />
+                                                        </td>
+                                                        <td data-th="Subtotal" class="text-center">
+                                                            ₹{{ $details['price'] * $details['qty'] }}</td>
+                                                        <td class="actions" data-th="">
+                                                            <button class="btn btn-danger btn-sm cart_remove"><i
+                                                                    class="fa fa-trash-o"></i> Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @endif
 
 
-                                            @if(count($cart_test_items)>0)
+                                            @if (count($cart_test_items) > 0)
+                                                @foreach ($cart_test_items as $id => $details)
+                                                    @php $cti_total += $details['price'] * $details['qty'] @endphp
 
-                                            @foreach ($cart_test_items as $id => $details)
-                                                @php $cti_total += $details['price'] * $details['qty'] @endphp
-                                                
-                                                <tr data-id="{{ $id }}">
-                                                    <td data-th="Product">
-                                                        <div class="row">
-                                                            <div class="col-sm-9">
-                                                                <h4 class="nomargin">{{ ucfirst($details['name']) }}
-                                                                </h4>
+                                                    <tr data-id="{{ $id }}">
+                                                        <td data-th="Product">
+                                                            <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <h4 class="nomargin">
+                                                                        {{ ucfirst($details['name']) }}
+                                                                    </h4>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td data-th="Price">{{ ucfirst($details['lab_name']) }}</td>
+                                                        </td>
 
-                                                    <td data-th="Price">₹{{ $details['price'] }}</td>
-                                                    <td data-th="Quantity">
-                                                        <input type="number" value="{{ $details['qty'] }}"
-                                                            class="form-control quantity cart_update" min="1" />
-                                                    </td>
-                                                    <td data-th="Subtotal" class="text-center">
-                                                        ₹{{ $details['price'] * $details['qty'] }}</td>
-                                                
+                                                        <td data-th="Price">
+                                                            {{ ucfirst($details['lab_name'])}}
+                                                        </td>
+
+                                                        <td data-th="Price">₹{{ $details['price'] }}</td>
+                                                        <td data-th="Quantity">
+                                                            <input type="number" value="{{ $details['qty'] }}"
+                                                                class="form-control quantity cart_update" min="1" />
+                                                        </td>
+                                                        <td data-th="Subtotal" class="text-center">
+                                                            ₹{{ $details['price'] * $details['qty'] }}</td>
+
                                                         <td class="actions" data-th="">
-                                                
-                                                            <button class="btn btn-danger btn-sm cart_remove" value="{{$details->id}}">
-                                                                <i class="fa fa-trash-o"></i> 
+
+                                                            <button class="btn btn-danger btn-sm cart_remove"
+                                                                value="{{ $details->id }}">
+                                                                <i class="fa fa-trash-o"></i>
                                                                 Delete
                                                             </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @endif
 
 
-                                        
+
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="5" class="text-right">
-                                                    <h3><strong>Total ₹{{ $total ? $total:0 + $cti_total }}</strong></h3>
+                                                    <h3><strong>Total ₹{{ $total ? $total : 0 + $cti_total }}</strong></h3>
                                                 </td>
                                             </tr>
                                             <tr>

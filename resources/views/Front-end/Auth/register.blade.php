@@ -1,5 +1,10 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
+    <div id="loader"
+        class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center z-50 hidden">
+        <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
+    </div>
+
     <section class="page-title bg-1">
         <div class="overlay"></div>
         <div class="container">
@@ -14,94 +19,6 @@
             </div>
         </div>
     </section>
-
-    {{-- <section class="appoinment section">
-  <div class="side-overlay"></div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-5">
-        <div class="mt-3">
-          <div class="feature-icon mb-3">
-            <i class="icofont-support text-lg"></i>
-          </div>
-          <span class="h3">Call for an Emergency Service!</span>
-          <h2 class="text-color mt-3">+{{env('PHONE')}} </h2>
-        </div>
-        <img src="{{asset('images/bg/book-test.png')}}"  class="img-responsive" style="max-width: 100%"/>
-      
-      </div>
-
-      <div class="col-lg-7">
-        <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
-          <h2 class="mb-2 title-color">Sign Up</h2>
-          <p class="mb-4">Get medicine information, order medicines, book lab tests and consult online from the comfort of your home.</p>
-          <form id="#" class="appoinment-form" method="post" action="{{route('signup')}}" autocomplete="off">
-            @csrf
-            <div class="row">
-
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="name">First Name:</label>
-                  <input name="name" id="name" type="text" class="form-control" placeholder="Name" autocomplete="off">
-
-                  @if ($errors->has('name'))
-                  <strong style="color:red"> {{ $errors->first('name') }}</strong>
-                  @endif
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="name">Email:</label>
-
-                  <input name="email" id="email" type="email" class="form-control" placeholder="Email" autocomplete="off">
-
-                  @if ($errors->has('email'))
-                  <strong style="color:red"> {{ $errors->first('email') }}</strong>
-                  @endif
-
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="name">Phone:</label>
-
-                  <input name="phone" id="phone" type="text" class="form-control" placeholder="Phone" maxlength="10" autocomplete="off">
-
-                  @if ($errors->has('phone'))
-                  <strong style="color:red"> {{ $errors->first('phone') }}</strong>
-                  @endif
-                </div>
-              </div>
-
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label for="name">Password:</label>
-
-                  <input name="password" id="password" type="password" class="form-control" placeholder="Password" maxlength="15" autocomplete="off">
-
-                  @if ($errors->has('password'))
-                  <strong style="color:red"> {{ $errors->first('password') }}</strong>
-                  @endif
-
-                </div>
-              </div>
-
-            </div>
-
-            <button type="submit" class="btn btn-main btn-round-full">Register<i class="icofont-simple-right ml-2"></i></button>
-          </form>
-        </div>
-
-        <p style="margin: 40px">Have an account? <a href="{{route('signin')}}" style="color:coral;font-weight:700"> Login</a></p>
-
-      </div>
-    </div>
-  </div>
-  </div>
-</section> --}}
-
 
 
     <div class="conatiner">
@@ -122,6 +39,9 @@
                             <input name="name" id="name" type="text" class="form-control" placeholder="Name"
                                 autocomplete="off">
 
+                            <span class="error_name" style="color:red"></span>
+
+
                             @if ($errors->has('name'))
                                 <strong style="color:red"> {{ $errors->first('name') }}</strong>
                             @endif
@@ -131,11 +51,12 @@
                     <div class="flex mt-4">
                         <div class="w-full mr-4">
 
-
                             <label for="name">Email:</label>
 
                             <input name="email" id="email" type="email" class="form-control" placeholder="Email"
                                 autocomplete="off">
+
+                            <span class="error_email" style="color:red"></span>
 
                             @if ($errors->has('email'))
                                 <strong style="color:red"> {{ $errors->first('email') }}</strong>
@@ -151,6 +72,8 @@
                             <input name="phone" id="phone" type="text" class="form-control" placeholder="Phone"
                                 maxlength="10" autocomplete="off">
 
+                            <span class="error_phone" style="color:red"></span>
+
                             @if ($errors->has('phone'))
                                 <strong style="color:red"> {{ $errors->first('phone') }}</strong>
                             @endif
@@ -163,7 +86,6 @@
 
                             <input type="checkbox" name="check" class="mr-2" />
                             <span>Are you agree to Terms of Condition and Privacy Policy.</span>
-
                         </div>
                     </div>
 
@@ -171,9 +93,9 @@
                     <div class="flex mt-4">
                         <div class="w-full mr-4 flex flex-around">
                             <button
-                                class="border w-full p-3  border-green-500 text-base 
-                      text-black hover:bg-green-400 hover:text-white"
-                                type="submit">
+                                class="border w-full p-3 border-green-500 text-base 
+                      text-black hover:bg-green-400 hover:text-white focus:outline-none register_btn"
+                                type="button">
                                 Register
                             </button>
 
@@ -183,4 +105,94 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('register_js')
+    <script>
+        $('.register_btn').on('click', function(e) {
+            e.preventDefault;
+            console.log('>>>working')
+
+            var email = $('#email').val();
+            var name = $('#name').val();
+            var phone = $('#phone').val();
+            var valid = true;
+
+            var iconUrl = '<i class="icofont-spinner-alt-6 text-2xl text-black" style="padding:2px"></i>';
+
+            if (name === '') {
+                $('.error_name').html('<i class=\"icofont-info-circle\"></i> &nbsp;Name is required.');
+                valid = false;
+            } else {
+                $('.error_name').html('');
+            }
+
+            if (email === '') {
+                $('.error_email').html('<i class=\"icofont-info-circle\"></i> &nbsp;Email is required.');
+                valid = false;
+            } else {
+                $('.error_email').html('');
+            }
+            if (phone === '') {
+                $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone is required.');
+                valid = false;
+            }
+
+            if (phone) {
+                if (!$.isNumeric(phone)) {
+                    $('.error_phone').html('<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be numeric.');
+                    valid = false;
+                } else if (phone.trim().length > 10 || phone.trim().length < 10) {
+                    $('.error_phone').html(
+                        '<i class=\"icofont-info-circle\"></i> &nbsp;Phone should be at least 10 digits.');
+                    valid = false;
+                } else {
+                    $('.error_phone').html('');
+                }
+            }
+
+            if (name !== '' && phone !== '' && email !== '') {
+                valid = true;
+                console.log('>>>', APP_URL)
+            }
+
+            if (valid) {
+
+                $('#loader').removeClass('hidden');
+
+                $.ajax({
+                    'url': APP_URL + '/signup',
+                    'method': 'POST',
+                    'data': {
+                        'name': name,
+                        'email': email,
+                        'phone': phone
+                    },
+                    success: function(response, textStatus, xhr) {
+                        if (xhr.status === 201) {
+
+                            $('#loader').addClass('hidden');
+
+                            Swal.fire({
+                                icon: 'success',
+                                //title: 'Login Error',
+                                html: response.message,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = APP_URL + response.redirectTo;
+                                }
+                            })
+                        } else {
+                            console.log('eerrr')
+                            Swal.fire({
+                                icon: 'error',
+                                html: response.message,
+                            })
+                        }
+                    }
+
+                })
+            }
+        });
+    </script>
 @endsection

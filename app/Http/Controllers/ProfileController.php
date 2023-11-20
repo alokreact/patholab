@@ -16,7 +16,10 @@ use App\Models\Address;
 use App\Models\Patient;
 use ZipArchive;
 use File;
+use App\Mail\RegistrationEmail;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class ProfileController extends Controller{
 
@@ -73,6 +76,7 @@ class ProfileController extends Controller{
     }
 
     public function send_email(){
+      
         $data= [
             'date'=>now(),
             'order_id'=>'123456',
@@ -86,17 +90,22 @@ class ProfileController extends Controller{
             ],
         ];
 
-        $pdfService = new PdfService();
-        $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
-    
-        //Send email with PDF attachment
-        $pdfFileName = 'order.pdf';
+       return view('Email.test');
 
-        Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName) {
-            $message->to('me.alokprasad54@gmail.com')
-                ->subject('Order Confirmation')
-                ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
-        });
+       //Mail::to('alok.nayak1026@gmail.com')->send(new RegistrationEmail($data));
+             
+
+        // $pdfService = new PdfService();
+        // $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
+    
+        // //Send email with PDF attachment
+        // $pdfFileName = 'order.pdf';
+
+        // Mail::send([], [], function ($message) use ($pdfContent, $pdfFileName) {
+        //     $message->to('me.alokprasad54@gmail.com')
+        //         ->subject('Order Confirmation')
+        //         ->attachData($pdfContent, $pdfFileName, ['mime' => 'application/pdf']);
+        // });
 
         return "Email sent with PDF attachment!";
     }
@@ -136,37 +145,52 @@ class ProfileController extends Controller{
 
     public function downloadReports($id){
         $order_items = OrderItem::where('order_id',$id)->get();   
-        $images = $order_items->pluck('report_url');
-       // dd($images);
-        $temp = '';
-        foreach($images as $image){
-            $temp .=$image.',';
-        }
-        //dd($temp);
-        $image_arr = explode(',', $temp);
-        $images =[];
+        
+        if($order_items->count()>0){
+            $images = $order_items->pluck('report_url');
+            
+            $temp = '';
+            foreach($images as $image){
+                $temp .=$image.',';
+            }
+            //dd($temp);
+            $image_arr = explode(',', $temp);
+            $images =[];
 
-        for($i=0 ; $i< count($image_arr)-1; $i++){
-            if(!in_array($image_arr[$i],$images)){
-                $images[] = public_path('images/reports/'.$image_arr[$i]);
+            for($i=0 ; $i< count($image_arr)-1; $i++){
+                if(!in_array($image_arr[$i],$images)){
+                    $images[] = public_path('images/reports/'.$image_arr[$i]);
+                }
+            }
+
+            //dd($images);
+
+            $zipFilePath = tempnam(sys_get_temp_dir(), 'download');
+
+            // Create a new ZipArchive instance
+            $zip = new ZipArchive();
+            
+            // Open the ZIP file for writing
+                if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+             
+                    foreach ($images as $image) {
+                        if (File::exists($image)) {
+                            $zip->addFile($image, basename($image));
+                        }
+                    }
+                    
+            $zip->close();
+            return Response::download($zipFilePath, 'reports.zip')->deleteFileAfterSend(true);
+
             }
         }
-        // $images = [
-        //     public_path('images/image1.jpg'),
-        //     public_path('images/image2.jpg'),
-        //     public_path('images/image3.jpg'),
-        // ];
-        $zipFileName = 'reports.zip';
-        $zip = new ZipArchive;
-        $zip->open(public_path($zipFileName), ZipArchive::CREATE);
+        else{
+            abort(404);
+        }    
+    }
 
-        foreach ($images as $image) {
-            if (File::exists($image)) {
-                $zip->addFile($image, basename($image));
-            }
-        }
-        $zip->close();
-        return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+    public function paymentFail(){
+        return view('Errors.Paymentfailed');
     }
 
 }

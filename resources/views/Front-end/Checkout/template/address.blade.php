@@ -1,7 +1,7 @@
 <li class="checkout-item">
     <div class="avatar checkout-icon p-1">
-        <div class="avatar-title rounded-circle">
-            1{{-- <i class="bx bxs-receipt text-white font-size-20"></i> --}}
+        <div class="avatar-title rounded-circle bg-green-400 text-white">
+            1
         </div>
     </div>
 
@@ -46,7 +46,7 @@
 
                                             <a href="{{ route('address.edit', [$address->id]) }}" class=""
                                                 data-id="{{ $address->id }}">
-                                                <i class="bx bxs-edit font-size-16"></i>
+                                                <i class="icofont-edit"></i>
                                             </a>
                                         </div>
                                     </div>

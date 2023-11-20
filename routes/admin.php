@@ -30,9 +30,7 @@ Route::get('/order/download/{id}', [App\Http\Controllers\Admin\OrderController::
 
 Route::get('/prescription/download', [App\Http\Controllers\Admin\OrderController::class, 'prescription_show'])->name('prescription.all');
 
-
 Route::get('/prescription/download/{id}', [App\Http\Controllers\Admin\OrderController::class, 'download_prescription'])->name('prescription.download');
-
 
 Route::get('/get-report', [App\Http\Controllers\Admin\OrderController::class,'getRecord'])->name('get-report');
 Route::get('/show/order', [App\Http\Controllers\Admin\OrderController::class, 'show_order'])->name('show.order');

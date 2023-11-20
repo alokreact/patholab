@@ -17,7 +17,6 @@ class PdfService
         $html = view($view, compact('data'))->render();
         $dompdf->loadHtml($html);
         $dompdf->render();
-
         return $dompdf->output();
     }
 }

@@ -9,7 +9,6 @@ use Session;
 class OrganController extends Controller{
 
     public $cartCount;
-
      
     public function index(){
         $cartCount = \Cart::count();

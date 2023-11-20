@@ -37,53 +37,31 @@ class CartController extends Controller{
         return false;
     }
 
-    public function addProduct(Request $request){
-        
-        $productId = $request->input('productId');
-        $productId_arr = explode(',',$productId);
-        $single_price = $request->input('singleprice');
-        $product = SubTest::find($productId_arr);
-        $labName = $request->input('labId');
-      
-        $price = $request->input('price');
-        $cart = session()->get('cart',[]);
-        $cart = \Session::forget('cart');
-
-            //Item doesn't exist in the cart, add it as a new item
-            $cart[] = [
-                'id' => $productId,
-                'lab_name' => $labName,
-                'price' => $price,
-                'quantity' => 1,
-                'name'=>$product->pluck('sub_test_name')->toArray(), 
-                'type'=>'test',
-                'singleprice'=>$single_price
-
-            ];
-        //Add the cart item to the 'cart' session
-        \Session::put('cart', $cart);
-         $items =  CartService::get_cart_items();
-        
-         $user = Auth::user();
-            
-         $cart = ['count'=>count($items)];
-        
-         return response()->json(['cart' =>$cart, 'message' =>'Succesfully Added'], Response::HTTP_OK);
-    }
+   
 
     public function addPackage(Request $request){       
+        if(\Cart::count() > 0){
+
+            $carts = \Cart::content();
+
+            $type = CartService::getType($carts);
+            //dd($type);
+
+            if(in_array('test',$type->toArray())){
+                \Cart::destroy();
+            }
+        }
         $productId = $request->input('productId');
         $product = Package::findOrFail($productId);
-      //  $labName = $product->getLab->lab_name;
-      //  $price = $request->input('price');
-
+    
       //  dd($product);
-
-
+        \Cart::setGlobalTax(0);
+        
         \Cart::add(['id' => $product->lab_name, 'name' => $product->package_name, 
                     'qty' => 1, 
                     'price' => $product->price,
-                    'weight' =>2, 
+                    'weight' =>0, 
+                    'taxRate'=>0,
                     'options' => ['product_id' => $productId,'type'=>'package']
                   ]);
 
@@ -96,26 +74,19 @@ class CartController extends Controller{
 
     public function cart(){
         $user = Auth::user();        
-        if($user && Auth::user()->role == '2') {
+        if($user && Auth::user()->role == '2'){
             $carts =[];
             $carts = \Cart::content();
-            //dd($carts);
-
             $product_names =[];
-            if( \Cart::count() > 0){
-
+            if(\Cart::count() > 0){
                 $type = CartService::getType($carts);
                 //dd($type);
-                
                 if($type[0] === 'package'){
-                    $product_id=$carts->pluck('options')->pluck('product_id');
-                   // dd($product_id);
+                    $product_id = $carts->pluck('options')->pluck('product_id');
                     $products = Package::find($product_id);    
-                    //dd($products);
-                  
-                    return view('Front-end.PackageCart.index',compact('carts','products'));
+                    //dd($product_id);
+                    return view('Front-end.Packagecart.index',compact('carts','products'));
                 }
-                
                 $product_id=$carts->pluck('options')[0]['product_id'];
                 $products = SubTest::find($product_id);
                 $product_names = $products->pluck('sub_test_name');
@@ -123,15 +94,12 @@ class CartController extends Controller{
             return view('Front-end.Cart.index',compact('carts','product_names'));
         } 
         else {
-
             return redirect()->route('signin');
         }
     }
 
-    public function remove_product(Request $request)
-    {
+    public function remove_product(Request $request){
        // dd($request->all());
-
         $productId = $request->input('id');
     
        // dd($productId);
@@ -181,5 +149,12 @@ class CartController extends Controller{
         return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
+
+    public function applyCoupon(Request $request){
+
+        dd($request->all());
+
+        $cartItems = \Cart::content();
+    }
 
 }

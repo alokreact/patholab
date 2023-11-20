@@ -215,6 +215,7 @@
         text-align: center !important;
         font-size: 18px !important;
     }
+
     .raised {
         font-size: 16px;
         color: #777;
@@ -222,6 +223,7 @@
         color: steelblue;
     }
 </style>
+
 <div class="container">
     <div class="logo">
         <img src="http://calllabs.in/images/Logo.jpeg" alt="cc-logo" border="0">
@@ -242,7 +244,7 @@
             <br><br>
 
         <p>Have an AWESOME day! <br>
-            Just give us a call (7893762020) and we will help you complete your order..
+            Just give us a call (7893762020) and we will help you.
         </p>
         </p>
 

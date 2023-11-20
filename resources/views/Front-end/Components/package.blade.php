@@ -1,14 +1,6 @@
 {{-- <section class="section doctors">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 text-center">
-                <div class="section-title">
-                    <h2>Top Wellness Packages</h2>
-                    <div class="divider mx-auto my-4"></div>
-                </div>
-            </div>
-        </div>
-
+       
         {{-- <div class="package-header">
             <div class="text-center mb-5">
                 <div class="btn-group btn-group-toggle " data-toggle="buttons">
@@ -109,10 +101,11 @@
 
             <div class="flex category-header">
                 @forelse($categories as $index=>$category)
-                    <div class="flex items-center space-x-1 cursor-pointer mx-2" id="{{ $category->id }}">
+                    <div class="flex items-center space-x-1 cursor-pointer mx-2" >
                         <div
-                            class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 hover:text-white">
-                            {{$category->category_name }}
+                            class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 
+                            hover:text-white category-btn" id="{{$category->id}}">
+                            {{ $category->category_name }}
                         </div>
                     </div>
                 @empty
@@ -123,8 +116,8 @@
             <div class="space-x-4 lg:mt-0 mt-2">
                 <a href="{{ route('category.all') }}">
                     <button
-                    class="border border-green-500 w-[120px]  rounded-full p-2 text-black hover:scale-110 hover:bg-green-500 hover:text-white">View
-                    All</button></a>
+                        class="border border-green-500 w-[120px]  rounded-full p-2 text-black hover:scale-110 hover:bg-green-500 hover:text-white">View
+                        All</button></a>
             </div>
         </div>
     </div>
@@ -133,12 +126,12 @@
         <div class="flex">
             <div class="w-full md:w-2/3 flex justify-between flex-wrap package">
                 @forelse($packages as $package)
-                    <div class="w-full md:w-1/3 p-4">
+                    <div class="w-full md:w-1/3 p-4 filter-item {{$package->category}}">
                         <div
                             class="w-full  max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
                             <a href="#">
                                 <img class="p-2 rounded-t-lg"
-                                    src="{{ $package->image? asset('images/bg/'.$package->image) : asset('images/team/2.jpg') }}"
+                                    src="{{ $package->image ? asset('images/bg/' . $package->image) : asset('images/team/2.jpg') }}"
                                     alt="product image" />
                             </a>
 
@@ -174,11 +167,12 @@
                                     <span
                                         class="text-base font-bold text-gray-700 dark:text-white">₹{{ $package->price }}/-</span>
 
-                                    <a href="{{route('package-details',[$package->id])}}"
+                                    <a href="{{ route('package-details', [$package->id]) }}"
                                         class="w-[140px] ml-4 text-black border 
                                 border-bg-green  font-medium rounded-full text-base 
-                                p-2 text-center hover:bg-green-500 hover:text-white">Know More
-                                        </a>
+                                p-2 text-center hover:bg-green-500 hover:text-white">Know
+                                        More
+                                    </a>
 
                                 </div>
 
@@ -198,23 +192,24 @@
 
                     <div class="flex border flex-col" style="background-color: #f7e99e">
 
-                            <div class="flex justify-center">
+                        <div class="flex justify-center">
 
-                                    <img src="{{asset('Image/202309191851kidney.png')}}" class="w-[245px]"/>
-                            </div>
+                            <img src="{{ asset('Image/202309191851kidney.png') }}" class="w-[245px]" />
+                        </div>
 
-                            <div class="btn view-more flex flex-col mt-2">
-                              
-                                <p class="text-basic text-black text-xs mt-1 p-2 line-height-26">  
-                                    Offer - Upto 30% OFF on single package & upto 40% OFF on 
-                                    double packages</p>
-                                <h4 class="text-xl text-black mt-1 p-2"> Only For -  599/-</h4>
+                        <div class="btn view-more flex flex-col mt-2">
 
-                                <button class="border bg-yellow-500 border-yellow-400 p-2 text-black text-xl mt-1 bg-red-500 hover:text-white">
-                                    Check Now
-                                </button>
+                            <p class="text-basic text-black text-xs mt-1 p-2 line-height-26">
+                                Offer - Upto 30% OFF on single package & upto 40% OFF on
+                                double packages</p>
+                            <h4 class="text-xl text-black mt-1 p-2"> Only For - 599/-</h4>
 
-                            </div>
+                            <button
+                                class="border bg-yellow-500 border-yellow-400 p-2 text-black text-xl mt-1 bg-red-500 hover:text-white">
+                                Check Now
+                            </button>
+
+                        </div>
 
                     </div>
 

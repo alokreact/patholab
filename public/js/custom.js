@@ -1,3 +1,5 @@
+//const { functions } = require("lodash");
+
 $(document).on('click', '.btn_add_to_cart_test', function () {
 
     var button = $(this);
@@ -527,14 +529,23 @@ $(document).on('click', '.menu_toggle',function(){
 
 
 $(document).on('click', '.search_multiple_test_btn',function(){
-    
     var checkBoxValue = [];
+
     $('input[name="test[]"]:checked').each( function (){
             checkBoxValue.push($(this).val());
     });
+
+    console.log('checkBoxValue',checkBoxValue.length)
+
+    if(checkBoxValue.length < 1){
+
+        alert('Please select tests');
+        return;
+    }
     $('#loader').removeClass('hidden');
     
     $.ajax({
+        
         url:APP_URL+'/search/test',
         data:{checkBoxValue},
         method:'POST',
@@ -602,6 +613,14 @@ $(document).on('click','.remove_search_btn', function(){
         });
     });
 
+    console.log('lenght',dataAttributes.length)
+
+    if(dataAttributes.length === 1){
+
+       window.location.reload();    
+        return;
+    }
+   
     dataArray = $.grep(dataAttributes, function(item) {
         return item.id !== testId;
     });
@@ -659,3 +678,25 @@ $(document).on('click','.remove_search_btn', function(){
      })
 })
 
+
+$(document).on('click','#filterButton', function(){
+    console.log('>>>')
+    $('#filterDropdown').slideToggle();
+    $('#filterDropdown').removeClass('hidden');
+})
+
+$(document).on('click','#apply-btn', function(){
+
+        console.log('>>>')
+        var coupon = $('#apply_coupn').val();
+
+        $.ajax ({
+            'url':APP_URL+'/appply-coupon',
+            'data':{coupon:coupon},
+            'method':'POST',
+                success :function(res,textStatus,xhr){
+                        console.log(res);
+
+                }
+        })
+})

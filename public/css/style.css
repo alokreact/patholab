@@ -566,6 +566,18 @@ height: 100%;
   .banner {
     background: #fff !important;
   }
+
+  .badge{
+
+    left:-100px !important;
+    top:60px !important;
+  }
+
+  .with-image::before{
+
+    top:14% !important;
+
+  }
 }
 
 @media (max-width: 992px) {
@@ -1941,16 +1953,17 @@ height: 100%;
   color: #aaa;
   font-style: italic;
 }
+
 #search-results{
-  margin-top: 16.1rem!important;
+  margin-top: 16.1rem !important;
   max-height: 227px;
   overflow-y: auto;
   z-index: 1;
   position: absolute;
   font-family: inherit;
   font-size: 16px;
-  width: 574px;
-  margin-left: 37%;
+  width: 585px;
+  margin-left: 25%;
 }
 
 
@@ -2230,7 +2243,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   font-weight: 700; 
   outline:none
 }
-.category-btn{
+/* .category-btn{
   border: none;
   background-color: #FFE0AF;
   font-family: inherit;
@@ -2239,12 +2252,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm{
   text-align: center;
    padding: 3px; 
    outline:none
-}
+} */
 
-.feature-item h4{
+/* .feature-item h4{
   font-size: 18px;
   text-align: left;
-}
+} */
 .doctor-profile::after{
    content: "";
     width: 100%;
@@ -2598,4 +2611,8 @@ section.banner-sec{
 .inner-brand button{
 
   margin-left: 2px;
+}
+
+.collapse{
+  visibility: visible !important;
 }

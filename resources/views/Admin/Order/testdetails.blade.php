@@ -32,11 +32,9 @@
                                                 <td>{{ $test['price'] }}/-</td>
                                                 <td>
 
-                                                    @if (isset($test['report_url']))
+                                                    @if ($test['report_url'] !== null)
                                                         <div class="upload-file-preview">
-                                                            {{-- <a href="{{ asset('/public/Image/'.$test['report_url'])}}"
-                                                            download><i class="bi bi-download"></i></a> &nbsp;
-                                                            <i class="bi bi-trash"></i> --}}
+                                                        
 
                                                             <i class="bi-file-earmark-plus open-report"
                                                                 data-record-id="{{ $test['id'] }}"

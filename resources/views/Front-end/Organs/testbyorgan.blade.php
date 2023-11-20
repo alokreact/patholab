@@ -50,9 +50,11 @@
                     </div>
 
                     <div class="w-[50%] mb-4 text-xl font-semibold flex justify-end">
-                        <button class="p-2 text-black font-semibold  hover:bg-green-400 hover:text-white text-xs border border-green-500 
-                        search_multiple_test_btn">Check Now</button>
-                    </div>
+                        <button class="border border-green-500 w-[120px]  
+                        rounded-full p-2 text-basic text-black hover:scale-110 hover:bg-green-500 
+                        hover:text-white search_multiple_test_btn">Check Now</button>
+
+                     </div>
                 </div>
 
                 <div class="flex flex-wrap mx-2" id="organResult">

@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
@@ -87,25 +86,27 @@
 
 
                                     <tbody>
-                                        @forelse ($data['items'] as $item)
+                                        @forelse ($data['items']['name'] as $key => $item)
                                             <tr width="100%">
                                                 <td width="30%"
                                                     style="text-align:left;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:0;border-top:0;word-wrap:break-word;font-family:Verdana,Geneva,Tahoma, sans-serif;">
 
-                                                    @foreach ($data['product_names'] as $name)
-                                                        {{ $name }},
-                                                    @endforeach
+                                                    {{-- //@foreach ($data['product_names'] as $name) --}}
+                                                        
+                                                    {{ $data['product_names'][$key] }},
+
+                                                   {{-- // @endforeach --}}
 
                                                 </td>
                                                 <td width="15%"
                                                     style="text-align:right;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:0;border-top:0;font-family:Verdana, Geneva, Tahoma, sans-serif;">
-                                                    {{ ucfirst($item->name) }}
+                                                    {{ ucfirst($item) }}
                                                 </td>
                                                 <td width="20%"
                                                     style="text-align:right;vertical-align:middle;border-left:1px solid #eee;border-bottom:1px solid #eee;border-right:1px solid #eee;border-top:0;font-family:Verdana, Geneva, Tahoma, sans-serif;">
                                                     <span>
 
-                                                        {{ $item->price }}/-
+                                                        {{ $data['items']['price'][$key] }}/-
                                                     </span>
                                                 </td>
                                             </tr>
@@ -158,7 +159,7 @@
                                                     <strong>Email:</strong> {{ $data['address']['email'] }}
                                                 </p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;"><strong>Tel:</strong>
-                                                    {{ $data['address']['phone'] }}</p>
+                                                    {{ $data['phone'] }}</p>
                                                 <p style="margin:0;margin-bottom:10px;padding:0;">
                                                     <strong>Address:</strong> {{ $data['address']['address1'] }}
                                                 </p>
@@ -184,15 +185,28 @@
                                                 <h4 style="font-size:24px;margin:0;padding:0;margin-bottom:10px;">
                                                     Patient Details</h4>
 
-                                                @foreach ($data['patients'] as $patient)
-                                                    <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                        <strong>Name:</strong> {{ $patient->name }}
-                                                    </p>
-                                                    <p style="margin:0;margin-bottom:10px;padding:0;">
-                                                        <strong>Age:</strong> {{ $patient->age }}
-                                                    </p>
+                                                    @if(count($data['patients'])>0)
+                                                
+                                                    @foreach ($data['patients'] as $patient)
+                                                        <p style="margin:0;margin-bottom:10px;padding:0;">
+                                                            <strong>Name:</strong> {{ $patient->name }}
+                                                        </p>
+                                                        <p style="margin:0;margin-bottom:10px;padding:0;">
+                                                            <strong>Age:</strong> {{ $patient->age }}
+                                                        </p>
                                                 @endforeach
 
+                                                @else
+
+                                                    <p style="margin:0;margin-bottom:10px;padding:0;">
+                                                        <strong>Name:</strong> {{ $data['patients']->name }}
+                                                    </p>
+                                                    <p style="margin:0;margin-bottom:10px;padding:0;">
+                                                        <strong>Age:</strong> {{ $data['patients']->age }}
+                                                    </p>
+
+                                                @endif
+                                            
                                             </td>
                                         </tr>
                                     </tbody>

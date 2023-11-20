@@ -45,7 +45,9 @@
                                                                 <h6 class="nomargin">
                                                                     @forelse($product_names as $name)
                                                                         {{ $name }},
-                                                                    @empty
+                                                                        
+                                                                        @empty
+
                                                                     @endforelse
                                                                 </h6>
                                                             </div>

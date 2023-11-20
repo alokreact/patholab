@@ -1,10 +1,11 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
+
     @include('Front-end.Components.banner')
 
     @include('Front-end.Components.organs')
 
-    <section class="features section-sm gray-bg">
+    {{-- <section class="features section-sm gray-bg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -49,11 +50,12 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     @include('Front-end.Components.package')
 
+    
     {{-- <section class="section about gray-bg">
         <div class="container">
             <div class="row align-items-center">
@@ -87,4 +89,6 @@
    
     @include('Front-end.Components.services');   
     @include('Front-end.Components.labs');
+
+
 @endsection

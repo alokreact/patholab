@@ -72,7 +72,9 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <a href="{{route('profile')}}"><h4>Booking</h4></a>
+                        <a href="{{ route('profile') }}">
+                            <h4>Booking</h4>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -93,7 +95,9 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <a href="{{route('upload-prescription')}}"><h4>Prescrption</h4></a>
+                        <a href="{{ route('upload-prescription') }}">
+                            <h4>Prescrption</h4>
+                        </a>
                     </div>
                 </div>
 
@@ -112,7 +116,9 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <a href="{{route('address')}}"><h4>Address</h4></a>
+                        <a href="{{ route('address') }}">
+                            <h4>Address</h4>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -130,7 +136,9 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                        <a href="{{route('patient')}}"><h4>Family Members</h4></a>
+                        <a href="{{ route('patient') }}">
+                            <h4>Family Members</h4>
+                        </a>
                     </div>
                 </div>
 
@@ -159,9 +167,29 @@
                         </svg>
                     </div>
                     <div class="list-item-name">
-                   
-                        <a href="{{route('coupon')}}"><h4>My Referal</h4></a>
-             
+
+                        <a href="{{ route('coupon') }}">
+                            <h4>My Referal</h4>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="account-list-item">
+                    <div>
+                        <button class="p-2" type="submit">
+                            <i class="icofont-sign-out text-2xl text-black"></i>
+                        </button>
+
+                    </div>
+                    <div class="list-item-name">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+
+                            <a class="btn">
+                                <h4>Logout</h4>
+                            </a>
+                        </form>
+
                     </div>
                 </div>
 

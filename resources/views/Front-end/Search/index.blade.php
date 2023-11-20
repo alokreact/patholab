@@ -224,7 +224,6 @@
 
                     @include('Front-end.Components.sidebar')
 
-
                     <div class="w-full md:w-3/4 p-4">
 
                         <div class="w-full mb-4 text-xl font-semibold">

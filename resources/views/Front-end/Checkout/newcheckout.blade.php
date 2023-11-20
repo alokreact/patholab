@@ -46,7 +46,7 @@
         position: relative;
         padding-bottom: 24px;
         padding-left: 35px;
-        border-left: 2px solid #f5f6f8
+        border-left: none
     }
 
     .activity-checkout .checkout-item {

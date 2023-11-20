@@ -1,121 +1,11 @@
 <style>
-    .icon-control {
-        margin-top: 5px;
-        float: right;
-        font-size: 80%;
-    }
-
-    .btn-light {
-        background-color: #fff;
-        border-color: #e4e4e4;
-    }
-
-    .list-menu {
-        list-style: none;
-        margin: 0;
-        padding-left: 0;
-    }
-
-    .list-menu a {
-        color: #343a40;
-    }
-
-    .card-product-grid .info-wrap {
-        overflow: hidden;
-        padding: 18px 20px;
-    }
-
-
-    .card-product-grid:hover .btn-overlay {
-        opacity: 1;
-    }
-
-    .card-product-grid .btn-overlay {
-        -webkit-transition: .5s;
-        transition: .5s;
-        opacity: 0;
-        left: 0;
-        bottom: 0;
-        color: #fff;
-        width: 100%;
-        padding: 5px 0;
-        text-align: center;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.5);
-
-    }
-
-    .bg-light-subtle {
-        max-width: 95%;
-        flex-direction: row !important;
-        background-color: #696969;
-        border: 0;
-        box-shadow: 0 7px 7px rgba(0, 0, 0, 0.18);
-        /* margin: 0px auto; */
-    }
-
-    .card.dark {
-        color: #fff;
-    }
-
-    .card.card.bg-light-subtle .card-title {
-        color: dimgrey;
-    }
-
-    .card img {
-        max-width: 25%;
-        margin: 22px;
-        padding: 0.5em;
-        border-radius: 0.7em;
-    }
-
-    .testcard-body {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .text-section {
-        max-width: 55%;
-    }
-
-    .text-section h5 {
-        color: #00a651 !important;
-        font-size: 18px !important;
-    }
-
-    .text-section span,
-    p {
-
-        font-size: 14px;
-        color: #222;
-        font-weight: 500;
-    }
-
-    .cta-sectionn {
-        max-width: 45%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
-
-    .cta-sectionn .btn {
-        padding: 0.3em 0.5em;
-        /* color: #696969; */
-    }
-
-    .card.bg-light-subtle .cta-sectionn .btn {
-        background-color: #00a651;
-        border-color: #00a651;
-    }
-
-    @media screen and (max-width: 475px) {
+    
+    /* @media screen and (max-width: 475px) {
         .card {
             font-size: 0.9em;
         }
     }
-</style>
+</style> */
 </style>
 @extends('Front-end.layout.mainlayout')
 @section('content')
@@ -138,7 +28,6 @@
     <section class="section contact-info pb-0">
         <div class="container">
             {{-- <div class="row">
-                @include('Front-end.Search.template.sidebar')
                 <main class="col-md-9">
                     @forelse($packages as $package) --}}
             {{-- <div class="col-lg-4 col-sm-6 col-md-6" style="margin-bottom:3px">
@@ -253,15 +142,18 @@
                 <div class="flex md:flex-row flex-col">
                     @include('Front-end.Components.sidebar')
                     <div class="w-full md:w-3/4 p-4">
-                        <div class="w-full mb-4 text-xl font-semibold">
+                        <div class="w-full mb-4 text-xs font-semibold">
                             Showing {{ count($packages) }} results
                         </div>
 
                         <div class="flex flex-wrap mx-2">
                             @forelse($packages as $package)
                                 <div class="w-full md:w-[31%] mb-4 border mx-2">
-                                    <div class="border-b-2 rounded w-[260px]  p-1 mx-auto">
-                                        <img src="{{ asset('images/bg/' . $package->image) }}" class="" />
+                                    <div class="border-b-2 rounded w-full p-1 mx-auto">
+                                        <a href="{{ route('package-details', [$package->id]) }}">
+                                    
+                                            <img src="{{ asset('images/bg/'.$package->image) }}" class="" />
+                                        </a>
                                     </div>
 
                                     <div class="p-4 mt-1 items-center flex justify-center">

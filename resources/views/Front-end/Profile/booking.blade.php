@@ -131,14 +131,14 @@
          
                                                     @if($items->order_status === '5')
                                                     <a href="{{ route('download.reports', [$items->id]) }}">
-                                                        <button class="btn btn-main-2 btn-full-round"
+                                                        <button class="border p-3 bg-green-600 font-semibold  text-basic text-white"
                                                             type="button">Download
                                                             Reports</button>
                                                     </a>
                                                     @else
-                                                    <button class="btn btn-main-2 btn-full-round" type="button">
+                                                    <button class="border p-3 btn-full-round bg-red-600 font-semibold  text-basic text-white" type="button">
                                                     
-                                                        Reports Not Ready</button>
+                                                        Reports Pending </button>
                                                     @endif  
                                                 </div>
 

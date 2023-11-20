@@ -1,23 +1,23 @@
 {
     "nunito": {
-        "300_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_300_italic_8c587846ba82f4bb389504ae26bbb0a3",
-        "italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_italic_13d3c78bd6235bbe2b1c2e26e985b9a9",
-        "600_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_600_italic_a993411f3f7d0632e9165af21543d7b1",
-        "bold_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_bold_italic_21892ffe28c9693cfe42f837ac11f53a",
-        "300": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_300_a4c86207efc6de7831e6fe2b6a6018d8",
-        "normal": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_normal_586f3f8a461df5c8635a870033365d5e",
-        "600": "nunito_600_20ff5cd6c5269dcc48ef3e7c73cd0a00",
-        "bold": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_bold_ea226530427d2573f837779baf2817af"
+        "300_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_300_italic_5564b019de9ee757b8e74969231a39c6",
+        "italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_italic_7a5e338072de710d78e80a0b7b676e13",
+        "600_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_600_italic_70540b8497fcdcad67439a1da170a6cd",
+        "bold_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_bold_italic_f7385ade290a5e83b60b5666bb14efdd",
+        "300": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_300_ee9ff98a878d2bcec5ac60166e67ac59",
+        "normal": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_normal_51264aea5373c13e99081e0e39bbfb0d",
+        "600": "nunito_600_462968132f9bb0b300c9ac89cb99aa5d",
+        "bold": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/nunito_bold_a3fe31648353394ca5aaeaff65373ead"
     },
     "open sans": {
-        "300_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_300_italic_bb146112d596ee666a352152372bf194",
-        "italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_italic_e750f4e6c467519d43b9146e74e849fa",
-        "600_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_600_italic_b7186ceab3a3c60062904f8ad6fcd1d0",
-        "bold_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_bold_italic_7f89a6469a4b2ce47223ab1cc575eab1",
-        "300": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_300_c71809dadd1d66d9409095b367397db3",
-        "normal": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_normal_58432f442db7592a77647319d9a050fa",
-        "600": "open_sans_600_9cc423d04ae7ffc0bddf21f1b769e623",
-        "bold": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_bold_9b93feee637c3c387cc32cdb0344a7df"
+        "300_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_300_italic_bbf022708fbc12b32e436c3fc9556a14",
+        "italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_italic_ce12633a2ffe234946eafc57381caa3a",
+        "600_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_600_italic_d5465e8d9fbc8917307f8ac7dca96398",
+        "bold_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_bold_italic_c02c7106f1b3bee9ca386a6f0b03ab93",
+        "300": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_300_38aaef3a6f81e0869aefd29fb43eb15a",
+        "normal": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_normal_d26ccb22614ae36546477dab90017d0e",
+        "600": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/open_sans_600_624d6e61f7711aa5830c80aa3bba1264",
+        "bold": "open_sans_bold_4238b33012be0cc2f17eea1b2179dc6e"
     },
     "poppins": {
         "300_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_300_italic_56b93a487d8c28777146ffd1eef895fd",
@@ -26,9 +26,9 @@
         "600_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_600_italic_5bc21aa56d8039e2f3d1b8f790f9558d",
         "bold_italic": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_bold_italic_1918f692c841b01acf827608eecc4cdd",
         "300": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_300_999a4088f0da952988730996a4bec1d8",
-        "normal": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_normal_ee697d7869cb745ccf3ccccc013145ad",
+        "normal": "poppins_normal_442dffd12abdf0df26c14405d3f49bfa",
         "500": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_500_fce53b208cddccda1573b7620b579598",
-        "600": "poppins_600_9623fbc18c38938c2057a9aae8390a42",
+        "600": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_600_9623fbc18c38938c2057a9aae8390a42",
         "bold": "C:\\xampp\\htdocs\\patholab\\storage\\fonts\/poppins_bold_8fe618268f56b4b8f1e70e87a9e99fc0"
     },
     "boxicons": {

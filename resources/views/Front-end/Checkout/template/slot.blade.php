@@ -1,5 +1,5 @@
 <div class="avatar checkout-icon p-1">
-    <div class="avatar-title rounded-circle bg-primary">
+    <div class="avatar-title rounded-circle bg-green-400 text-white">
         3{{--  <i class="bx bxs-wallet-alt text-white font-size-20"></i> --}}
     </div>
 </div>

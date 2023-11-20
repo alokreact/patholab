@@ -8,12 +8,6 @@
                 <div class="block text-center">
                     <span class="text-white">Your Cart</span>
                     <h1 class="text-capitalize mb-5 text-lg">Checkout</h1>
-
-                    <!-- <ul class="list-inline breadcumb-nav">
-                                                          <li class="list-inline-item"><a href="index.html" class="text-white">Home</a></li>
-                                                          <li class="list-inline-item"><span class="text-white">/</span></li>
-                                                          <li class="list-inline-item"><a href="#" class="text-white-50">Book your Seat</a></li>
-                                                        </ul> -->
                 </div>
             </div>
         </div>
@@ -23,13 +17,9 @@
 <section class="appoinment section">
     <div class="container">
         <div class="row">
-
-
-
             <div class="col-lg-10">
                 <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
                     <h2 class="mb-2 title-color">Checkout</h2>
-
 
                     <div class="container mt-1">
                         <div class="card mx-auto border-0" style="width: 100%;">
@@ -110,31 +100,6 @@
 
                                                 <span class="error error_phone"></span>
                                             </div>
-
-                                            <!-- <div class="form-group">
-
-
-                                                <label for="pay">Pay Option</label>
-                                                <div class="form-group">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="pay_option" id="flexRadioDefault1" value="2">
-                                                        <label class="form-check-label" for="flexRadioDefault1">
-                                                            COD
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="pay_option" id="flexRadioDefault2" value="1">
-                                                        <label class="form-check-label" for="flexRadioDefault2">
-                                                            Online
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <span class="error error_pay_option"></span>
-                                            </div> -->
-
-
-
 
                                             <div class="text-right pt-4">
                                                 <button type="button" class="btn btn-primary" id="details_btn">Save & Next</button>

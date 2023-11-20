@@ -1,8 +1,9 @@
 <form action="{{ route('payment.callback') }}" method="POST" id="payment-form">
     @csrf
-    <input type="hidden" name="razorpay_order_id" value="{{ $response['orderId'] }}">
+    <input type="hidden" name="razorpay_order_id" value="{{ $response['razorpayOrderId'] }}">
     <input type="hidden" id="razorpay_payment_id" name="razorpay_payment_id">
     <input type="hidden" id="razorpay_signature" name="razorpay_signature">
+  
     <input type="hidden" id="address" name="address" value="{{$response['user_address'] }}">
     
     <input type="hidden" id="patient" name="patient" value="{{$response['patient'] }}">
@@ -11,9 +12,10 @@
     <input type="hidden" id="slot_day" name="slot_day" value="{{$response['order_date'] }}">
     <input type="hidden" id="slot_time" name="slot_time" value="{{$response['collection_time'] }}">
 
+    <input type="hidden" id="user_id" name="address" value="{{$response['user_id'] }}">
+    
     <button type="submit" id="pay-button" style="display: none">Pay Now</button>
 </form>
-
 
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -26,7 +28,7 @@
         "name": "CALL LABS",
         "description": "Test Transaction",
         "image": "http://calllabs.in/images/Logo-removebg.png",
-        "order_id": "{{ $response['orderId'] }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "order_id": "{{ $response['razorpayOrderId'] }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "callback_url": "{{ route('confirmation') }}",
         "handler": function(response) {
             alert(response);
@@ -63,17 +65,17 @@
 
     rzp1.on('payment.failed', function(response) {
         console.log('trrrw', response)
-        alert(response.error.code);
-        alert(response.error.description);
-        alert(response.error.source);
-        alert(response.error.step);
-        alert(response.error.reason);
-        alert(response.error.metadata.order_id);
-        alert(response.error.metadata.payment_id);
+        // alert(response.error.code);
+        // alert(response.error.description);
+        // alert(response.error.source);
+        // alert(response.error.step);
+        // alert(response.error.reason);
+        // alert(response.error.metadata.order_id);
+        // alert(response.error.metadata.payment_id);
     });
 
     rzp1.on('payment.authorized', function(response) {
-        alert(response);
+        //alert(response);
         // console.log('response',response);return;
     });
 </script>

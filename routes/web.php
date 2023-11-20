@@ -95,8 +95,6 @@ Route::get('/edit/address/{id}', [App\Http\Controllers\AddressController::class,
 Route::put('/update/address/{id}', [App\Http\Controllers\AddressController::class,'update'])->name('address.update');
 Route::delete('/delete/address/{id}', [App\Http\Controllers\AddressController::class,'destroy'])->name('address.delete');
 
-
-
 Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
 
@@ -121,5 +119,13 @@ Route::get('/download/reports/{id}', [App\Http\Controllers\ProfileController::cl
 
 Route::post('/search/test', [App\Http\Controllers\HomeController::class,'getMultipleSearchTest']);
 Route::post('/remove/test', [App\Http\Controllers\HomeController::class,'removeSearchTest']);
+Route::get('/payment-fail', [App\Http\Controllers\ProfileController::class,'paymentFail']);
+
+
+
+Route::post('/apply-coupon', [App\Http\Controllers\CartController::class,'applyCoupon'])->name('apply.coupon');
+
+Route::get('/search-result', [App\Http\Controllers\HomeController::class,'searchResult']);
+
 
 include"admin.php";

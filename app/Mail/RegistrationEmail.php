@@ -30,8 +30,7 @@ class RegistrationEmail extends Mailable
     public function build()
     {
        // return $this->markdown('emails.registration');
-
-       return $this->view('Email.registration_email')
+       return $this->view('Email.test')
                     ->subject('New User Registration');
     }
 }

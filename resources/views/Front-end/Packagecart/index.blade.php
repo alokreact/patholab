@@ -1,5 +1,6 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
+
     <section class="page-title bg-1">
         <div class="overlay"></div>
         <div class="container">
@@ -50,16 +51,14 @@
                                                             </div>
                                                         </td>
 
-
                                                         <td data-th="Price">
                                                             <h4>{{ $package->getLab->lab_name }}</h4>
                                                         </td>
 
-
-
                                                         <td data-th="Price">
                                                             ₹{{ $package->price }}/-
                                                         </td>
+
                                                         <td data-th="Quantity">
                                                             <input type="number" value="1"
                                                                 class="form-control quantity cart_update" min="1" />
@@ -80,27 +79,24 @@
                                         </tbody>
 
 
-
-
-
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="5" class="text-right">
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" class="text-right">
-                                                    <a href="{{ url('/') }}" class="btn btn-danger"> <i
-                                                            class="fa fa-arrow-left"></i> Continue</a>
-
-                                                    <a href="{{ route('checkout') }}" class="btn btn-success">
-                                                        <i class="fa fa-money"></i>
-                                                        Checkout</a>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-right">
+                </td>
+            </tr>
+            
+                <tr>
+                    <td colspan="5" class="text-right">
+                        <a href="{{ url('/') }}" class="btn btn-danger"> 
+                            <i class="fa fa-arrow-left"></i> Continue</a>
+                                <a href="{{ route('checkout') }}" class="btn btn-success">
+                                    <i class="fa fa-money"></i>Checkout</a>
+                    </td>
+                </tr>
+            
+            </tfoot>
+                
+            </table>
 
                                 </div>
                             </div>
