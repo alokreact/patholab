@@ -47,7 +47,6 @@ class TestByOrganController extends Controller
         $data = $request->all();
         try {
             DB::beginTransaction();  
-                    
             //$organ = Organ::find($request->organ);
             $organ = Organ::where('id',$request->organ)->first();
             //dd($organ);
@@ -134,9 +133,11 @@ class TestByOrganController extends Controller
      */
     public function destroy($id)
     {
-        $organtest = OrganTest::find($id);
+        $organtest = Organ::with('subtest')->find($id);
+        //dd($organtest);
+      
         $organtest->delete();
-        $organtest->subtest()->wherePivot('grouptest_id', $grouptest->id)->detach();
-        return redirect()->route('organtest.index')->with('message','Deleted Successfully');
+        $organtest->subtest()->delete();
+        return redirect()->back()->with('message','Deleted Successfully');
     }
 }

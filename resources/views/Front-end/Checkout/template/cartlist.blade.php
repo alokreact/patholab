@@ -1,9 +1,8 @@
 <style>
     .PriceDetails_wrapper {
-        border-bottom: 1px solid #d9d9d9;
+        /* border-bottom: 1px solid #d9d9d9; */
         border-radius: 15px;
         margin-top: 20px;
-        display: flex;
         flex-direction: column;
         gap: 10px;
         padding-top: 20px
@@ -45,7 +44,6 @@
 
                         <tbody>
                             @php $total = 0 @endphp
-
                             @foreach ($cartItems as $id => $details)
                                 <tr>
                                     <td style="max-width: 240px">
@@ -89,7 +87,7 @@
                                 <td colspan="1">
                                     <h5 class="font-size-14 m-0">Total:</h5>
                                 </td>
-                                <td>
+                                <td id="total">
                                     ₹{{ $details->price }}/-
                                 </td>
                             </tr>
@@ -119,9 +117,7 @@
                                 <h5 class="font-size-14 m-0">Sub Total :</h5>
                             </td>
                             <td>
-
                                 {{ $total }}
-
                             </td>
                         </tr>
 
@@ -133,14 +129,12 @@
                                 0%
                             </td>
                         </tr>
-
                         <tr class="bg-light">
                             <td colspan="1">
                                 <h5 class="font-size-14 m-0">Total:</h5>
                             </td>
-                            <td>
+                            <td id="total">
                                 {{ $total }}
-
                             </td>
                         </tr>
 
@@ -148,21 +142,33 @@
                 </table>
             </div>
 
-
             <div class="p-3 bg-light mb-3 mt-4">
-                <h6 class="PriceDetails_head font-size-16 mb-0">Apply Coupon</h6>
-                <div class="PriceDetails_wrapper">
+                <h6 class="apply_coupon_title font-size-16 mb-0">Apply Coupon</h6>
+                
+                <div class="PriceDetails_wrapper mt-1 flex">
                     <input type="text" name="apply_coupon" class="form-control" id="apply_coupon"/>
+
+                    <span class="coupon_error" style="color: red"></span>
+
+                    <button type="button" class="border bg-yellow-400 text-basic text-white 
+                    font-semibold mt-1 p-3 w-[45%] focus:outline-none active:outline-none" id="apply-coupon-btn">
+                    APPLY COUPON  <span class="spinner hidden"><i class="icofont-spinner-alt-1"></i></span>
+                </button>
                 </div>
-                <button type="button" class="border bg-yellow-700 text-basic text-white font-semibold mt-3 p-3">APPLY COUPON</button>
-           
+
+
+                <div class="mt-2 applied_coupon_box hidden">
+                    <div class="flex border p-1 w-[100%] mt-2">
+                        <span class="text-black p-2">FREE10 </span>
+                        <i class="icofont-close-line-squared-alt"></i>
+                    </div>
+                </div>
+
             </div>
 
             <div class="p-3 bg-light mb-3 mt-4">
                 <h6 class="PriceDetails_head font-size-16 mb-0">Payment</h6>
-
                 <div class="PriceDetails_wrapper">
-
                     <div class="PriceDetails_details card-radio">
                         <p style="margin: 0px">
                             <img src="{{ asset('images/service/razorpay.png') }}"

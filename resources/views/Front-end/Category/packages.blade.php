@@ -1,16 +1,8 @@
-<style>
-    
-    /* @media screen and (max-width: 475px) {
-        .card {
-            font-size: 0.9em;
-        }
-    }
-</style> */
-</style>
+ 
 @extends('Front-end.layout.mainlayout')
 @section('content')
 
-    <section class="page-title bg-1">
+    {{-- <section class="page-title bg-1">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -23,7 +15,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="section contact-info pb-0">
         <div class="container">
@@ -139,6 +131,18 @@
 
 
             <div class="container mx-auto">
+
+                <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
+                    <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
+                    <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
+                    <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>
+                    
+                    <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
+                    <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">  {{ $category['category_name'] }}</a>
+                    
+                  
+                </nav>
+           
                 <div class="flex md:flex-row flex-col">
                     @include('Front-end.Components.sidebar')
                     <div class="w-full md:w-3/4 p-4">

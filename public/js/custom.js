@@ -524,6 +524,8 @@ $('.sidebar_toggle').on('click',function(){
 })
 
 $(document).on('click', '.menu_toggle',function(){
+    console.log('menu_toggle');
+
     $('#mobile-menu').show();
 })
 
@@ -597,10 +599,9 @@ $(document).on('click', '.search_multiple_test_btn',function(){
 })
 
 
-$(document).on('click','.remove_search_btn', function(){
-  
+$(document).on('click','.remove_search_btn', function(){  
     $('#loader').removeClass('hidden');
-  
+    
     var testId = $('.remove_search_btn').attr('data-id');
     //console.log('>>>working',testId)
 
@@ -667,8 +668,7 @@ $(document).on('click','.remove_search_btn', function(){
                     });  
     
                 $('#organResult').hide();
-                $('#loader').addClass('hidden');    
-            
+                $('#loader').addClass('hidden');                
                 $('#searchResult').html(testDiv);
                 $('#test_header').hide();
                 $('#searchBreadcumb').removeClass('hidden');
@@ -685,18 +685,32 @@ $(document).on('click','#filterButton', function(){
     $('#filterDropdown').removeClass('hidden');
 })
 
-$(document).on('click','#apply-btn', function(){
+$(document).on('click','#apply-coupon-btn', function(){
 
-        console.log('>>>')
-        var coupon = $('#apply_coupn').val();
+        var coupon = $('#apply_coupon').val();
+        if(coupon === ''){
+            $('.coupon_error').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
+            return;
+        }
 
+        var btn =$('#apply-coupon-btn');
+        var spinner = btn.find('.spinner');
+        $(spinner).removeClass('hidden');
+
+        console.log('>>>')      
+        
         $.ajax ({
-            'url':APP_URL+'/appply-coupon',
+            'url':APP_URL+'/apply-coupon',
             'data':{coupon:coupon},
             'method':'POST',
                 success :function(res,textStatus,xhr){
-                        console.log(res);
-
+                   if(xhr.status === 200){
+                        $(spinner).addClass('hidden');
+                        $('.apply_coupon_title').html('Coupon Applied');
+                        $('.PriceDetails_wrapper').addClass('hidden');
+                        $('.applied_coupon_box').removeClass('hidden');
+                        $('#total').html(res.total);
+                   }
                 }
         })
 })

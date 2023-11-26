@@ -147,13 +147,14 @@ class ProfileController extends Controller{
         $order_items = OrderItem::where('order_id',$id)->get();   
         
         if($order_items->count()>0){
-            $images = $order_items->pluck('report_url');
-            
+            $images = $order_items->pluck('report_url')->toArray();  
+            $filteredImages = array_filter($images, function ($value) {
+                return $value !== null;
+            });
             $temp = '';
-            foreach($images as $image){
+            foreach($filteredImages as $image){
                 $temp .=$image.',';
             }
-            //dd($temp);
             $image_arr = explode(',', $temp);
             $images =[];
 
@@ -163,13 +164,10 @@ class ProfileController extends Controller{
                 }
             }
 
-            //dd($images);
-
             $zipFilePath = tempnam(sys_get_temp_dir(), 'download');
 
             // Create a new ZipArchive instance
-            $zip = new ZipArchive();
-            
+            $zip = new ZipArchive(); 
             // Open the ZIP file for writing
                 if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
              
@@ -192,5 +190,7 @@ class ProfileController extends Controller{
     public function paymentFail(){
         return view('Errors.Paymentfailed');
     }
+
+    
 
 }

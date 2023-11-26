@@ -1,9 +1,11 @@
  @import url("https://fonts.googleapis.com/css?family=Exo:500,600,700|Roboto&display=swap");
 
+
  :root{
   --primary-color: #00a651;
   --secondary-color: #F01400;
   --color-greys: #222;
+  --image-color:#b3ecc0;
 
    --color-light: hsl(0, 0%, 95%);
    --color-white: hsl(0, 0%, 100%);
@@ -1825,7 +1827,7 @@ height: 100%;
 
     .badge {
         position: relative;
-        left: -6px;
+        left: -20px;
         top: -11px;
         text-transform: uppercase;
         font-size: 14px;
@@ -2615,4 +2617,21 @@ section.banner-sec{
 
 .collapse{
   visibility: visible !important;
+}
+
+.slick-initialized .slick-slide{
+  display: flex !important;
+}
+
+.discount::before{
+
+  content: "";
+    position: relative;
+    top: 0%;
+    right: -14px;
+    width: 30%;
+    height: 56%;
+    background-size: cover;
+    z-index: 9;
+  background: url('../images/about/dis.png') no-repeat left top;;
 }

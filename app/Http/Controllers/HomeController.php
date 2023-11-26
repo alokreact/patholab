@@ -231,12 +231,11 @@ class HomeController extends Controller
         
         $test_id = $request->input('checkBoxValue');
         $tests = SubTest::with('getLab')->find($test_id);
+        //dd($tests);
 
-        
         $test_names = $tests->pluck('sub_test_name')->flatten();
         $test_ids = $tests->pluck('id')->toArray();
-       
-        dd($test_names);
+        //dd($test_names);
        
         $search_test_data = [];
         foreach($test_names as $index=>$name){
@@ -245,8 +244,6 @@ class HomeController extends Controller
 
         }
         //dd($search_test_data);
-
-
         $labs = $tests->pluck('getLab')->flatten();
         
         $combinedResults =[];
@@ -277,18 +274,13 @@ class HomeController extends Controller
     }
 
     public function removeSearchTest(Request $request){
-
+       // dd($request->input('testArr'));
         $dataArr = $request->input('dataArray');
-
         $test_id =[];
-
         foreach($dataArr as $index=>$value){
-
                 $test_id[] = $dataArr[$index]['id'];
         }
-
         //dd($arr);
-
         $tests = SubTest::with('getLab')->find($test_id);
         
         $test_names = $tests->pluck('sub_test_name')->flatten();
@@ -301,7 +293,6 @@ class HomeController extends Controller
 
         }
         //dd($search_test_data);
-
         $labs = $tests->pluck('getLab')->flatten();
         $combinedResults =[];
 
@@ -331,10 +322,107 @@ class HomeController extends Controller
         return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
     }
 
-
     public function searchResult(Request $request){
-
-
-        return view('Front-end.Search.search-result');
+        $organs = Organ::take(12)->get();
+        $categories = Category::take(12)->get();
+        return view('Front-end.Search.search-result',compact('organs','categories'));
     }
+    public function searchTest(Request $request){
+        //dd($request->all());
+        $test_id = $request->input('test_id');
+        $tests = SubTest::with('getLab')->find($test_id);
+        $labs = $tests->pluck('getLab')->flatten();
+        $test_names = $tests->pluck('sub_test_name')->flatten();
+        $test_ids = $tests->pluck('id')->toArray();
+        
+        $search_test_data = [];
+        foreach($test_names as $index=>$name){
+                $search_test_data['name'][]= $name;
+                $search_test_data['id'][]= $test_ids[$index];
+
+        }
+        //dd($search_test_data);
+        $combinedResults =[];
+
+        foreach ($labs as $lab) {
+            $labName = $lab->lab_name;
+            $labId = $lab->id;
+            $price = $lab->pivot->price; // You might need to adjust this based on your data structur
+
+            if (!array_key_exists($labName, $combinedResults)) {
+                $combinedResults[$labName] = [
+                    'lab_name' => $labName,
+                    'lab_id'=>$labId,
+                    'total_price' => $price,
+                    'city'=>$lab->city,
+                    'image'=>$lab->image,
+                    'single_price'=>  $lab->pivot->price,
+                    'test_names'=>$test_names,
+                    'test_ids'=>$test_ids                   
+                ];
+            } else {
+                $combinedResults[$labName]['total_price'] += $price;
+                $combinedResults[$labName]['single_price'].=', '.$lab->pivot->price;
+            }
+        }
+        //dd($combinedResults);
+        return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
+    }
+
+
+
+    public function removeTests(Request $request){
+        // dd($request->input('testArr'));
+         $test_id = $request->input('dataArray');
+         
+         $tests = SubTest::with('getLab')->find($test_id);
+         
+         $test_names = $tests->pluck('sub_test_name')->flatten();
+         $test_ids = $tests->pluck('id')->toArray();
+        
+         $search_test_data = [];
+         foreach($test_names as $index=>$name){
+                 $search_test_data['name'][]= $name;
+                 $search_test_data['id'][]= $test_ids[$index];
+ 
+         }
+         //dd($search_test_data);
+         $labs = $tests->pluck('getLab')->flatten();
+         $combinedResults =[];
+ 
+         foreach ($labs as $lab) {
+             $labName = $lab->lab_name;
+             $labId = $lab->id;
+             $price = $lab->pivot->price; // You might need to adjust this based on your data structur
+ 
+             if (!array_key_exists($labName, $combinedResults)) {
+                 $combinedResults[$labName] = [
+                     'lab_name' => $labName,
+                     'lab_id'=>$labId,
+                     'total_price' => $price,
+                     'city'=>$lab->city,
+                     'image'=>$lab->image,
+                     'single_price'=>  $lab->pivot->price,
+                     'test_names'=>$test_names,
+                     'test_ids'=>$test_ids                    
+                 ];
+             } else {
+ 
+                 $combinedResults[$labName]['total_price'] += $price;
+                 $combinedResults[$labName]['single_price'].=', '.$lab->pivot->price;
+             }
+         }
+         //dd($combinedResults);
+         return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
+    }
+
+    public function coupon(){
+        
+        return view('Front-end.Coupon.index');
+    }
+ 
+
+
+
+
 }

@@ -36,7 +36,8 @@ Route::get('/category/package/{id}', [App\Http\Controllers\HomeController::class
 Route::get('/front-package/{id}', [App\Http\Controllers\HomeController::class,'package'])->name('package-details');
 Route::post('/subtestajax', [App\Http\Controllers\HomeController::class,'getlistofajaxSubtest'])->name('subtest.ajax');
 
-Route::post('/searchsubtest', [App\Http\Controllers\HomeController::class,'searchSubtest'])->name('searchsubtest');
+
+
 
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
@@ -127,5 +128,11 @@ Route::post('/apply-coupon', [App\Http\Controllers\CartController::class,'applyC
 
 Route::get('/search-result', [App\Http\Controllers\HomeController::class,'searchResult']);
 
+Route::post('/searchsubtest', [App\Http\Controllers\HomeController::class,'searchSubtest'])->name('searchsubtest');
+
+Route::post('/search-test', [App\Http\Controllers\HomeController::class,'searchTest'])->name('search-test');
+Route::post('/remove-test', [App\Http\Controllers\HomeController::class,'removeTests'])->name('removeTests');
+
+Route::get('/show/coupon', [App\Http\Controllers\HomeController::class,'coupon'])->name('show.coupon');
 
 include"admin.php";

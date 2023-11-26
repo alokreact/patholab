@@ -4,7 +4,6 @@
 @section('content')
     <main id="main" class="main">
         @include('Admin.layout.partials.breadcrumb')
-
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
@@ -17,7 +16,7 @@
                             <table class="table datatable">
                                 <thead>
                                     <tr>
-                                        <th>Organ Name</th>
+                                        <th>Organ Names</th>
                                         <th>Sub Test</th>
                                         <th>Action</th>
                                     </tr>
@@ -41,7 +40,7 @@
                                                                 class="bi bi-pencil-square"></i></button>
                                                     </a>
 
-                                                    <form action="{{ route('admintestbyorgan.destroy', [$organ->id]) }}"
+                                                    <form action="{{ route('admintestbyorgan.destroy',[$organ->id]) }}"
                                                         method="post" style="display:inline">
                                                         @csrf
                                                         @method('DELETE')

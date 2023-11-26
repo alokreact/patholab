@@ -1,6 +1,5 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
-
     <div id="loader"
         class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center z-50 hidden">
         <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
@@ -43,18 +42,20 @@
         <div class="flex flex-col md:flex-row">
             @include('Front-end.Components.sidebar')
 
-            <div class="w-full md:w-2/3 p-4" >
+            <div class="w-full md:w-2/3 p-4">
                 <div class="flex justify-between" id="count_result">
                     <div class="w-[50%] mb-4 text-xl font-semibold">
                         Showing {{ count($subtests) }} results
                     </div>
 
                     <div class="w-[50%] mb-4 text-xl font-semibold flex justify-end">
-                        <button class="border border-green-500 w-[120px]  
+                        <button
+                            class="border border-green-500 w-[120px]  
                         rounded-full p-2 text-basic text-black hover:scale-110 hover:bg-green-500 
-                        hover:text-white search_multiple_test_btn">Check Now</button>
+                        hover:text-white search_multiple_test_btn">Check
+                            Now</button>
 
-                     </div>
+                    </div>
                 </div>
 
                 <div class="flex flex-wrap mx-2" id="organResult">
@@ -65,7 +66,7 @@
                             </div>
 
 
-                            <div class="border-b-2 rounded w-[260px] p-3 mx-auto">
+                            <div class="border-b-2 rounded w-[106px] p-3 mx-auto">
                                 <img src="{{ asset('Image/' . $testsbyOrgan['image']) }}" class=""
                                     style="max-width: 100%" />
                             </div>
@@ -82,7 +83,7 @@
 
 
                                 <div class="sm"><img src="{{ asset('images/service/icon-1.png') }}" /></div>
-                                <div class="sm">Include : 1 Parameters </div>
+                                {{-- <div class="sm">Include : 1 Parameters </div> --}}
 
                             </div>
 

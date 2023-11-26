@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Admin\OrganCreateRequest;
 use App\Models\Organ;
 
-
 class OrganController extends Controller
 {
     /**
@@ -44,12 +43,12 @@ class OrganController extends Controller
         if($request->file('image')) {
     
             $file = $request->file('image');
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('Image'), $filename);
+         
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('images/organ'), $filename);
             $data['image'] = $filename;
             $data['status'] = 1;
         }
-    
         Organ::create($data);
         return redirect()->back()->with('message','Organ Created Succesfully');
     }

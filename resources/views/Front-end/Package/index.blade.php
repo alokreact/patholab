@@ -1,6 +1,6 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
-    <section class="page-title bg-1">
+    {{-- <section class="page-title bg-1">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -13,11 +13,25 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <section class="section department-single">
         <div class="container">
+
+            <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
+                <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
+                <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
+                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>
+                
+                {{-- <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
+                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">  {{ $category['category_name'] }}</a> --}}
+                
+                <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
+                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">  {{ ucfirst($package['package_name']) }}</a>
+              
+            </nav>
+       
             <div class="row">
                 <div class="col-lg-12">
                     <div class="department-img">
@@ -69,7 +83,7 @@
                             <li class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-4">Price:</h5>
                                 <span>
-                                    <h4>₹{{ $package['price'] }}</h4>
+                                    <h4>₹{{ $package['price'].'/-' }}</h4>
                                 </span>
                             </li>
 
@@ -96,9 +110,9 @@
                                 @endphp
 
                                 <button type="button" class="btn btn-main-2 btn-round-full btn_add_to_cart"
-                                        value="{{ $package['id'] }}" data-type="package">
-                                        Add To Cart
-                                    </button>
+                                    value="{{ $package['id'] }}" data-type="package">
+                                    Add To Cart
+                                </button>
 
                             </p>
 
@@ -130,7 +144,7 @@
                 type: "POST",
                 data: formData,
                 url: addToCarturl,
-                success: function(response,textStatus,xhr) {
+                success: function(response, textStatus, xhr) {
                     if (xhr.status === 200) {
                         Swal.fire({
                             icon: 'success',

@@ -11,23 +11,19 @@ class OrganController extends Controller{
     public $cartCount;
      
     public function index(){
-        $cartCount = \Cart::count();
-      
-        $allorgans = Organ::paginate(30);
+        $cartCount = \Cart::count();      
+        $allorgans = Organ::paginate(12);
         $organs = Organ::take(12)->get();
-     
         //dd($allorgans);
         return view('Front-end.Organs.index',compact('allorgans','organs','cartCount'));
     }
-    public function findTestbyOrgan($id){
 
+    public function findTestbyOrgan($id){
         $testsbyOrgan = Organ::find($id);
         $subtests= $testsbyOrgan->subtest;
+        
         $organs = Organ::take(12)->get();
-        $categories = Category::take(12)->get();
-        
-        //dd($testsbyOrgan);
-        
+        $categories = Category::take(12)->get();        
         return view('Front-end.Organs.testbyorgan',compact('testsbyOrgan','subtests','organs','categories'));
     }
 }

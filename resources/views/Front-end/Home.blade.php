@@ -2,7 +2,6 @@
 @section('content')
 
     @include('Front-end.Components.banner')
-
     @include('Front-end.Components.organs')
 
     {{-- <section class="features section-sm gray-bg">
@@ -85,10 +84,12 @@
     </section> --}}
 
 
-    @include('Front-end.Components.why');   
+    @include('Front-end.Components.why')      
+    @include('Front-end.Components.services')   
    
-    @include('Front-end.Components.services');   
-    @include('Front-end.Components.labs');
+    @include('Front-end.Components.coupon')
+   
+    @include('Front-end.Components.logo');
 
 
 @endsection

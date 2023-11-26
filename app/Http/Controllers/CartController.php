@@ -54,9 +54,8 @@ class CartController extends Controller{
         $productId = $request->input('productId');
         $product = Package::findOrFail($productId);
     
-      //  dd($product);
+        //dd($product);
         \Cart::setGlobalTax(0);
-        
         \Cart::add(['id' => $product->lab_name, 'name' => $product->package_name, 
                     'qty' => 1, 
                     'price' => $product->price,
@@ -67,9 +66,8 @@ class CartController extends Controller{
 
         $cart = \Cart::count();
         //dd($cart);
-
         return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
-       // return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
+       //return response()->json(['status' => 200, 'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
     public function cart(){
@@ -99,25 +97,19 @@ class CartController extends Controller{
     }
 
     public function remove_product(Request $request){
-       // dd($request->all());
-        $productId = $request->input('id');
-    
-       // dd($productId);
-
-            //Check if the product is already in the cart
-            $cartItem = \Cart::search(function ($cartItem, $rowId) use ($productId) {
+        //dd($request->all());
+        $productId = $request->input('id');    
+        //dd($productId);
+        //Check if the product is already in the cart
+        $cartItem = \Cart::search(function ($cartItem, $rowId) use ($productId) {
                 return $cartItem->id == $productId;
-            })->first();
-    
-           // dd($cartItem);
-            if($cartItem){
-                \Cart::remove($cartItem->rowId);
-            }
-
-            session()->flash('success', 'Product successfully removed!');
-        
+        })->first();
+        //dd($cartItem);
+        if($cartItem){
+            \Cart::remove($cartItem->rowId);
+        }
+        session()->flash('success', 'Product successfully removed!');   
     }
-
     public function update_product(Request $request)
     {
         if ($request->id && $request->quantity) {
@@ -127,7 +119,6 @@ class CartController extends Controller{
             session()->flash('success', 'Cart updated successfully');
         }
     }
-
 
     public function addToCart(Request $request){
         \Cart::destroy();
@@ -140,21 +131,72 @@ class CartController extends Controller{
         $price = $request->input('price');
         $lab = Lab::find($labId);
 
-       
-        \Cart::add(['id' => $labId, 'name' => $lab->lab_name, 
-        'qty' => 1, 'price' => $price, 'weight' =>2, 
-        'options' => ['product_id' => $productId_arr,'single_price'=>explode(',',$single_price),'type'=>'test']]);
+        \Cart::setGlobalTax(0);
+
+        \Cart::add( ['id' => $labId, 
+                    'name' => $lab->lab_name, 
+                    'qty' => 1, 'price' => $price, 
+                    'weight' =>2, 
+                    'options' => ['product_id' => $productId_arr,
+                                  'single_price'=>explode(',',$single_price),
+                                  'type'=>'test']
+                    ]
+                );
 
         $cart = \Cart::count();
         return response()->json(['cart'=>$cart,'message' =>'Succesfully Added'], Response::HTTP_OK);
     }
 
-
     public function applyCoupon(Request $request){
 
-        dd($request->all());
-
+        
         $cartItems = \Cart::content();
-    }
+        $type = CartService::getType($cartItems);
+        
+        if($type[0] === 'package'){
+            $totalWithoutDiscount = \Cart::total();
+                $cleanedString = str_replace(',', '', $totalWithoutDiscount);
+                $discountPercentage = 10;
+                //$discountAmount = ($discountPercentage / 100)* intval($cleanedString);
+                //dd($discountAmount);
 
+                foreach($cartItems as $item){
+                    
+                    $discountAmount =  ($discountPercentage / 100)* intval($item->price);
+                    $newPrice = intval($item->price) - intval($discountAmount);        
+                    
+                    \Cart::update($item->rowId, [
+                        'price' => $newPrice,
+                    ]);
+                }
+                $cartItems = \Cart::content();
+                $finalTotal = \Cart::total();
+                return response()->json(['total'=> $finalTotal], 200);
+        }
+        else{
+        
+            $totalWithoutDiscount = \Cart::total();
+            $cleanedString = str_replace(',', '', $totalWithoutDiscount);
+            $discountPercentage = 10;
+    
+            foreach($cartItems as $item){
+                    
+                $discountAmount =  ($discountPercentage / 100)* intval($item->price);
+                $newPrice = intval($item->price) - intval($discountAmount);        
+                
+                \Cart::update($item->rowId, [
+                    'price' => $newPrice,
+                ]);
+            }
+            $cartItems = \Cart::content();
+            $finalTotal = \Cart::total();
+            return response()->json(['total'=> $finalTotal], 200);
+            //dd($totalWithoutDiscount);
+
+        }
+        
+
+        //dd($finalTotal);
+       
+    }
 }

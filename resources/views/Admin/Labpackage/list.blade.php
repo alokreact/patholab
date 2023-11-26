@@ -27,16 +27,31 @@
                                         @foreach ($labs as $lab)
                                             <tr>
                                                 <td>{{ $lab->lab_name }}</td>
-
                                                 <td>
+                                                    <ul style="height: 450px ; overflow-x:hidden; overflow-y: scroll ">
                                                     @foreach ($lab->subtest as $subtest)
-                                                        <span class="badge bg-info text-dark">
+                                                        
+                                                        {{-- <div class="w-1/3 p-2" style="width:33%; paddding:1rem;display: flex ;justify-content: space-around">
+                                                        
+                                                            <span class="badge bg-danger text-white p-2" style="font-size: 12px">
+                                                                {{ ucfirst($subtest->sub_test_name) }}
+                                                            </span>
+
+                                                                <span
+                                                                class="badge bg-light text-dark">(Price-{{ $subtest->pivot->price }}/-)</span>
+    
+                                                        </div> --}}
+                                                    <li class="p-2"> 
+                                                            <span class="badge bg-danger text-white p-2">
                                                             {{ ucfirst($subtest->sub_test_name) }}</span>
 
-                                                        (Price- <span
-                                                            class="badge bg-light text-dark">{{ $subtest->pivot->price }}</span>)
+                                                            (Price-<span
+                                                            class="badge bg-light text-dark">{{ $subtest->pivot->price }}/-</span>)
+                                                        </li> 
+                                                   
+                                                    
                                                     @endforeach
-
+                                                        </ul>
                                                 </td>
 
 

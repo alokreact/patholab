@@ -94,18 +94,19 @@
 
 <section class="section doctors">
     <div class="container">
-        <div class="flex justify-between items-center">
-            <div class="section-title">
+            <div class="section-title flex justify-start md:justify-start sm:justify-center">
                 <h2 class="font-mediom text-2xl underline">Top Wellness Packages</h2>
             </div>
 
-            <div class="flex category-header">
+            <div class="flex justify-between items-center">
+       
+            <div class="flex">
                 @forelse($categories as $index=>$category)
                     <div class="flex items-center space-x-1 cursor-pointer mx-2" >
                         <div
-                            class="border text-green  text-2l  font-medium p-3 rounded-full hover:bg-green-500 
-                            hover:text-white category-btn" id="{{$category->id}}">
-                            {{ $category->category_name }}
+                            class="flex justify-center p-2 w-[130px] border  text-xs text-black  font-medium rounded-full hover:bg-green-500 
+                            hover:text-white category-btn" id="{{$category->id}}" >
+                            {{ ucfirst($category->category_name) }}
                         </div>
                     </div>
                 @empty
@@ -124,18 +125,18 @@
 
     <div class="container mx-auto">
         <div class="flex">
-            <div class="w-full md:w-2/3 flex justify-between flex-wrap package">
+            <div class="w-full md:w-2/3 flex justify-between flex-wrap">
                 @forelse($packages as $package)
                     <div class="w-full md:w-1/3 p-4 filter-item {{$package->category}}">
                         <div
-                            class="w-full  max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
+                            class="w-full flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mr-4 hover:scale-105 tranistion-transform rounded-lg">
                             <a href="#">
                                 <img class="p-2 rounded-t-lg"
                                     src="{{ $package->image ? asset('images/bg/' . $package->image) : asset('images/team/2.jpg') }}"
                                     alt="product image" />
                             </a>
 
-                            <div class="p-2 pb-1">
+                            <div class="p-2 pb-1 flex flex-col">
                                 <a href="#">
                                     <h5
                                         class="text-base text-center font-semibold tracking-tight text-gray-900 dark:text-white">
