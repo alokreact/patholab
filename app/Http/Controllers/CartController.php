@@ -148,7 +148,6 @@ class CartController extends Controller{
     }
 
     public function applyCoupon(Request $request){
-
         
         $cartItems = \Cart::content();
         $type = CartService::getType($cartItems);
@@ -174,13 +173,10 @@ class CartController extends Controller{
                 return response()->json(['total'=> $finalTotal], 200);
         }
         else{
-        
             $totalWithoutDiscount = \Cart::total();
             $cleanedString = str_replace(',', '', $totalWithoutDiscount);
             $discountPercentage = 10;
-    
-            foreach($cartItems as $item){
-                    
+            foreach($cartItems as $item){   
                 $discountAmount =  ($discountPercentage / 100)* intval($item->price);
                 $newPrice = intval($item->price) - intval($discountAmount);        
                 
@@ -190,13 +186,30 @@ class CartController extends Controller{
             }
             $cartItems = \Cart::content();
             $finalTotal = \Cart::total();
+
+
+
+            $this->insertCoupon();
+
+ //$data = ['coupoun_code']
+            //$user->update();
+
             return response()->json(['total'=> $finalTotal], 200);
             //dd($totalWithoutDiscount);
 
         }
-        
-
         //dd($finalTotal);
+    }
+
+    public function insertCoupon(){
+
+        $user = Auth::user();
+
+        $user = Auth::user();
+        $coupon = Coupon::find(1);
        
+        // Associate user with coupon and order
+        $user->coupons()->attach('1');
+
     }
 }

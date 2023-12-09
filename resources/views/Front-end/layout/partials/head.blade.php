@@ -15,8 +15,11 @@
   <!-- Icon Font Css -->
   <link rel="stylesheet" href="{{asset('plugins/icofont/icofont.min.css')}}">
   <!-- Slick Slider  CSS -->
-  <link rel="stylesheet" href="{{asset('plugins/slick-carousel/slick/slick.css')}}">
-  <link rel="stylesheet" href="{{asset('plugins/slick-carousel/slick/slick-theme.css')}}">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+  {{-- <link rel="stylesheet" href="{{asset('plugins/slick-carousel/slick/slick.css')}}">
+
+  <link rel="stylesheet" href="{{asset('plugins/slick-carousel/slick/slick-theme.css')}}"> --}}
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 

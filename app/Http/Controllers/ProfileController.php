@@ -14,6 +14,8 @@ use App\Mail\OrderEmail;
 use App\Models\Order;
 use App\Models\Address;
 use App\Models\Patient;
+use App\Models\Coupon;
+
 use ZipArchive;
 use File;
 use App\Mail\RegistrationEmail;
@@ -132,7 +134,12 @@ class ProfileController extends Controller{
         return view('Front-end.Profile.tpl.patient',compact('patients'));
     }
     public function coupon(){
-        return view('Front-end.Profile.tpl.coupon');
+        
+        $user_id = Auth::user()->id;
+        $coupon = Coupon::where('user_id',$user_id)->get();
+        //dd($coupon);
+
+        return view('Front-end.Profile.tpl.coupon',compact('coupon'));
     }
 
     public function createPatient(){

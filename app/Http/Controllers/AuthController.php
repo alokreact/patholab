@@ -140,22 +140,21 @@ class AuthController extends Controller{
             return response()->json(['status'=>'error','message' => 'Invalid OTP']);
          }
     }
-
     private function sendOTP($phoneNumber, $otp){
         //dd($phoneNumber);
         // Use the third-party API to send the OTP to the user's phone number
         
-        $baseUrl = 'smspackage.wiaratechnologies.com/api/mt/SendSMS';
+        $baseUrl = 'push.smsc.co.in/api/mt/SendSMS';
         
         $queryParameters =  [
-            'APIKey' => 'eFdx3x5kT0yNhX1EnTqtCw',
+            'APIKey' => 'V06umov14EC9ouOc62GwQQ',
             'senderid' => 'CALABS',
-            'channel'=>2,
+            'channel'=>'Trans',
             'DCS'=>0,
             'flashsms'=>0,
             'number'=>$phoneNumber,
             'text'=>'<#>Use ' .$otp.  ' as verification code on Calllabs. Valid for 10 minutes.',
-            'route'=>31
+            'route'=>47
             // Add any other POST data as needed
         ];
 

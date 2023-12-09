@@ -1,49 +1,36 @@
  @extends('Front-end.layout.mainlayout')
+ 
  @section('content')
-     <div id="loader"
+    <div id="loader"
          class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-75 flex justify-center items-center z-50 hidden">
          <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
      </div>
 
+     <section class="section contact-info pb-0">
+        <div class="container mx-auto">
+      
+            @include('Front-end.Components.breadcrumb',['breadcrumbs'=>$breadcrumbs])
 
+            <div class="flex flex-col md:flex-row">
 
-     <section class="page-title bg-1 hidden" id="searchBreadcumb">
-         <div class="overlay"></div>
-         <div class="container">
-             <div class="row">
-                 <div class="col-md-12">
-                     <div class="block text-center">
-                         <span class="text-white"></span>
-                         <h1 class="text-capitalize mb-5 text-lg">Select Lab for Home Sample Collection</h1>
+                 @include('Front-end.Components.sidebar')
 
-                         <div id="testChip"></div>
+                
+                <div class="w-full md:w-2/3 p-4">
+                   
+                    <div id="testChip" class="mt-1 mb-2 flex flex-row p-3 flex-wrap chip"></div>
 
-                     </div>
-                 </div>
-             </div>
-         </div>
-     </section>
+                    <div class="flex flex-wrap mx-2" id="searchHaederResult">
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-     <div class="container mx-auto">
-         <div class="flex flex-col md:flex-row">
-             @include('Front-end.Components.sidebar')
-
-             <div class="w-full md:w-2/3 p-4">
-
-
-                 <div class="flex flex-wrap mx-2" id="searchHaederResult">
-
-                 </div>
-
-             </div>
-         </div>
-     </div>
+    </section>
  @endsection
 
  @push('after-scripts')
      <script>
- 
         $.ajaxSetup({
              headers: {
                  'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -108,10 +95,12 @@
                      })
                      $.each(response.searchTerms.name, function(index, data) {
                          var id = response.searchTerms.id[index];
-                         searchDiv += '<div class="chip">';
+                         searchDiv += '<p class="ml-2">';
                          searchDiv += data +
-                             ' <i class="icofont-close-circled close_search_btn" data-id="' + id +
-                             '"></i></div>';
+                             '<i class="icofont-close-circled close_search_btn" data-id="' + id +
+                             '"></i>,</p>'
+                             
+                             ;
                      });
                      $('#loader').addClass('hidden');
                      $('#searchHaederResult').html(testDiv);
@@ -186,10 +175,9 @@
                             })
 
                             $.each(response.searchTerms.name ,function(index,data){  
-                            
                                 var id = response.searchTerms.id[index];
-                                searchDiv += '<div class="chip">';
-                                searchDiv +=  data + ' <i class="icofont-close-circled  close_search_btn" data-id="'+id+'"></i></div>';
+                                searchDiv += '<p>';
+                                searchDiv +=  data + ' <i class="icofont-close-circled  close_search_btn" data-id="'+id+'"></i></p>';
                             });  
             
                             $('#loader').addClass('hidden');

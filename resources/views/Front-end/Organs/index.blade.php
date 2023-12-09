@@ -1,60 +1,20 @@
 @extends('Front-end.layout.mainlayout')
 @section('content')
-    {{-- <section class="page-title bg-1">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="block text-center">
-                        <span class="text-white"></span>
-                        <h1 class="text-capitalize mb-5 text-lg">Organs</h1>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
-
-    {{-- <section class="section contact-info pb-0">
-    <div class="container">
-         <div class="row">
-          @forelse ($allorgans as $organ)
-          <div class="col-lg-4 col-sm-6 col-md-6" style="margin-bottom:3px">
-                <div class="contact-block mb-4 mb-lg-0">
-                
-                  <img src="{{asset('Image/'.$organ->image)}}" alt="{{$organ->name}}" class="img-fluid"  style="height:90px; width:80px">			  
-                   <a href="{{route('testbyorgan',$organ->id)}}"><h5>{{$organ->name}}</h5></a>
-                    
-                </div>
-            </div>
-          @empty
-          <p>Not Available for now.</p>
-            
-          @endforelse
-        </div>
-
-        {!! $allorgans->links() !!}
-    </div>
-</section> --}}
+     
+ 
     <section class="section contact-info pb-0">
         <div class="container mx-auto">
-            
-            <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
-                <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
-                <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
-                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Organs</a>
-                
-                
-            </nav>
-            
+
+            @include('Front-end.Components.breadcrumb',['breadcrumbs'=>$breadcrumbs])
+
+             
             <div class="flex md:flex-row flex-col">
                 @include('Front-end.Components.sidebar')
 
                 <div class="flex-col md:flex-row md:w-3/4 p-4 w-full">
-                    <div class="w-full mb-4 text-xl font-semibold">
+                    <div class="w-full mb-4 text-xs font-semibold">
                         Showing {{ count($allorgans) }} results
                     </div>
-
 
                     <div class="w-full flex flex-wrap mx-2">
                         @forelse ($allorgans as $organ)
@@ -78,6 +38,8 @@
                             <p> No Results Found!</p>
                         @endforelse
                     </div>
+
+
 
                     <div class="flex justify-end w-full mt-4 text-green-400">
                         {{ $allorgans->links() }}

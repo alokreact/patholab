@@ -19,7 +19,6 @@
 		{{-- //organs --}}
 
 	<div class="container">	
-	
 		<div class="row organs">
 			@forelse ($organs as $organ)
 				
@@ -34,6 +33,8 @@
 
 					<div class="flex justify-center mt-1">
 						<h4 class="text-xs text-black">{{$organ->name}}</h4>
+
+						
 					</div>
 
 				 </div>	   

@@ -14,8 +14,13 @@ class OrganController extends Controller{
         $cartCount = \Cart::count();      
         $allorgans = Organ::paginate(12);
         $organs = Organ::take(12)->get();
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Organs'],
+        ];
         //dd($allorgans);
-        return view('Front-end.Organs.index',compact('allorgans','organs','cartCount'));
+        return view('Front-end.Organs.index',compact('allorgans','organs','cartCount','breadcrumbs'));
     }
 
     public function findTestbyOrgan($id){
@@ -24,6 +29,14 @@ class OrganController extends Controller{
         
         $organs = Organ::take(12)->get();
         $categories = Category::take(12)->get();        
-        return view('Front-end.Organs.testbyorgan',compact('testsbyOrgan','subtests','organs','categories'));
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Organ'],
+            ['label' => $testsbyOrgan->name],
+            
+        ];
+
+        return view('Front-end.Organs.testbyorgan',compact('testsbyOrgan','subtests','organs','categories','breadcrumbs'));
     }
 }

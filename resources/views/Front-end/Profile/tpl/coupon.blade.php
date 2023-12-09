@@ -89,13 +89,20 @@
 
                                                         <div class="col-lg-12">
                                                             <div class="form-group">
-                                                                 
-                                                                        <h2>rC7sQW</h2><br/>
+                                                                @forelse($coupon as $element)
+                                                                        <h2>{{$element->name}}</h2><br/>
 
-                                                                        <h6>Get flat 10% off by using the coupon code.</h6>
+                                                                @empty
+                                                                <h2>No Active Coupon Yet!</h2><br/>
+        
+                                                                @endforelse
+                                                                
+                                                                    <h6>Get flat 10% cashback by sharing it to others.</h6>
+                                                             
                                                                         <br/>
                                                                         <span>Expiry Date:  30 December 2023</span>
-                                                             </div>
+                                                             
+                                                                    </div>
                                                         </div>
 
   

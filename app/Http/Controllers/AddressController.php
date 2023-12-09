@@ -16,25 +16,23 @@ class AddressController extends Controller
         $address->name = $request->input('name');
         $address->email = $request->input('email');
         $address->address1 = $request->input('address1');
-
         $address->phone = $request->input('phone');
         $address->state = $request->input('state');
         $address->city = $request->input('city');
         $address->zip = $request->input('zip');
         $address->save();
+        
         return response()->json(['message'=>'Address Saved Succesfully'], Response::HTTP_CREATED);
     }
 
     public function edit($id){
         $address = Address::find($id);
         //dd($address);
-
         return view('Front-end.Profile.components.address_edit', compact('address'));   
     }
 
     public function update(Request $request, $id){
             //dd($request->all());
-
             $address = Address::find($id);
                 $address->user_id = \Auth::user()->id;
                 $address->name = $request->input('name');

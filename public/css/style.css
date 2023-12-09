@@ -1,5 +1,7 @@
- @import url("https://fonts.googleapis.com/css?family=Exo:500,600,700|Roboto&display=swap");
+ /* @import url("https://fonts.googleapis.com/css?family=Exo:500,600,700|Roboto&display=swap"); */
 
+ 
+ @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&display=swap');
 
  :root{
   --primary-color: #00a651;
@@ -29,7 +31,7 @@ html {
 
 body {
   line-height: 1.6;
-  font-family: "Roboto", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   font-size: 16px;
   color: #6F8BA4;
@@ -37,7 +39,7 @@ body {
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-  font-family: "Exo", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   color: var(--color-greys);
 }
@@ -108,7 +110,7 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
   font-weight: 700;
   letter-spacing: .5px;
   padding: .75rem 2rem;
-  font-family: "Exo", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   text-transform: uppercase;
   border-radius: 5px;
   border: 2px solid transparent;
@@ -411,7 +413,7 @@ a:focus {
   font-weight: 600;
   padding: 10px 15px;
   color: #222;
-  font-family: "Exo", sans-serif;
+  font-family: 'DM Sans', sans-serif;
   text-transform: capitalize;
   font-size: 16px;
   transition: all .25s ease;
@@ -1593,15 +1595,16 @@ height: 100%;
 }
 
 .chip {
-  display: inline-block;
-  padding: 0 25px;
-  height: 50px;
-  font-size: 16px;
-  line-height: 50px;
-  border-radius: 25px;
-  background-color: #f1f1f1;
+  height: auto;
+  font-size: 14px;
+  line-height: 30px;
+  /* border-radius: 25px; */
+  /* background-color: #f1f1f1; */
+
+  border-bottom: 1px solid gray;
   margin:2px;
   cursor: pointer;
+  color: #000;
 }
 
 .chip img {
@@ -2634,4 +2637,37 @@ section.banner-sec{
     background-size: cover;
     z-index: 9;
   background: url('../images/about/dis.png') no-repeat left top;;
+}
+
+.slider-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+/* button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+} */
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
 }

@@ -6,7 +6,6 @@
 
     <main id="main" class="main">
         @include('Admin.layout.partials.breadcrumb')
-
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
@@ -35,10 +34,8 @@
                                     <div class="col-sm-10">
 
                                         <select class="form-control" name="type">
-
                                             <option value="1">Fixed</option>
                                             <option value="2">Percentage</option>
-
                                         </select>
 
                                         @if ($errors->has('type'))
@@ -46,7 +43,6 @@
                                         @endif
                                     </div>
                                 </div>
-
 
                                 <div class="row mb-3">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Percentage/Amount</label>
@@ -69,6 +65,22 @@
                                         @endif
                                     </div>
                                 </div>
+
+
+                                <div class="row mb-3">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">User</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control js-example-tags"  name="user_id">
+                                            @foreach ($users as $user)                
+                                                <option value="{{ $user->id}}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('user_id'))
+                                            <strong style="color:red"> {{ $errors->first('	user_id') }}</strong>
+                                        @endif
+                                    </div>
+                                </div> 
+
 
 
                                 <div class="text-center">

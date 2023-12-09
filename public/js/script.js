@@ -6,7 +6,6 @@
 	'use strict';
 	
  // SCROLL TO TOP
-  
   $(window).on('scroll', function () {
     if ($(window).scrollTop() > 70) {
         $('.backtop').addClass('reveal');
@@ -14,13 +13,11 @@
         $('.backtop').removeClass('reveal');
     }
 });
- 
 	$('.portfolio-single-slider').slick({
 		infinite: true,
 		arrows: false,
 		autoplay: true,
 		autoplaySpeed: 2000
-
 	});
 
 	$('.clients-logo').slick({
@@ -63,21 +60,19 @@
 		  
   		]
 	});
-
-
 	$('.package').slick({
-		infinite: false,
+		infinite: true,
 		arrows: true,
 		autoplay: false,
-		slidesToShow: 3,
-		slidesToScroll: 3,
+		slidesToShow: 5,
+		slidesToScroll: 1,
 		autoplaySpeed: 3000,
 		responsive: [
 		    {
 		      breakpoint: 1024,
 		      settings: {
 		        slidesToShow:3,
-		        slidesToScroll: 3,
+		        slidesToScroll: 1,
 		        infinite: true,
 		        dots: true
 		      }
@@ -149,6 +144,7 @@
   		]
 	});
 
+
 	$('.category').slick({
 		infinite: false,
 		arrows: true,
@@ -185,13 +181,10 @@
 		        slidesToShow: 1,
 		        slidesToScroll: 1
 		      }
-		    }
-		  
+		    } 
   		]
-	
 	});
 	
-
 	$('.testimonial-wrap').slick({
 		slidesToShow: 2,
 		slidesToScroll: 2,
@@ -232,7 +225,6 @@
 		        slidesToScroll: 1
 		      }
 		    }
-		  
   		]
 	});
 
@@ -279,9 +271,8 @@
 	});
 
 
-
+ 	 
 	var map;
-
 	function initialize() {
 		var mapOptions = {
 			zoom: 13,

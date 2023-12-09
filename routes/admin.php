@@ -1,11 +1,4 @@
 <?php 
-
-// Route::get('/category-create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])->name('category.create');
-
-// Route::get('/category', [App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('category');
- 
-// Route::post('/category-store', [App\Http\Controllers\Admin\CategoryController::class, 'store'])->name('category.store');
-
 Route::resource('/organ', 'App\Http\Controllers\Admin\OrganController');
 
 Route::resource('/test', 'App\Http\Controllers\Admin\TestController');
@@ -52,8 +45,6 @@ Route::get('/get/coupon', [App\Http\Controllers\Admin\CouponController::class, '
 Route::get('/get/user', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
 Route::get('/edit/user/{id}', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user.edit');
 Route::get('/post/user/{id}', [App\Http\Controllers\Admin\UserController::class, 'update'])->name('user.update');
-
-
 Route::post('/orderstatus/update', [App\Http\Controllers\Admin\OrderController::class, 'changeOrderStatus'])->name('orderstatus.update');
 
 Route::group(['middleware' => ['auth']], function () {   

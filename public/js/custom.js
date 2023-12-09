@@ -714,3 +714,21 @@ $(document).on('click','#apply-coupon-btn', function(){
                 }
         })
 })
+
+
+ 
+
+$('.dropdown-btn').on ('click', function(){
+    console.log('>>>')
+    $('.dropdown-menu').removeClass('hidden');
+    $('.dropdown-menu').css('display','block');
+
+})
+
+// $('.dropdown-btn').on ('mouseout', function(){
+
+//     console.log('>>>')
+//     $('.dropdown-menu').addClass('hidden');
+//     $('.dropdown-menu').css('display','none');
+
+// })

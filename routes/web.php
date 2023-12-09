@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::any('/signin', [App\Http\Controllers\AuthController::class, 'login'])->name('signin');
@@ -98,7 +99,6 @@ Route::delete('/delete/address/{id}', [App\Http\Controllers\AddressController::c
 
 Route::get('/coupon', [App\Http\Controllers\ProfileController::class,'coupon'])->name('coupon');
 Route::get('/check', [App\Http\Controllers\ProfileController::class,'check'])->name('check');
-
 
 Route::get('/all/patient', [App\Http\Controllers\ProfileController::class,'patient'])->name('patient');
 Route::get('/create/patient', [App\Http\Controllers\ProfileController::class,'createPatient'])->name('patient.create');

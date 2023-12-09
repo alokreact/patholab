@@ -18,9 +18,7 @@
 
         .resend-otp {
             font-size: 14px;
-
         }
-
         .resend-otp span {
             font-size: 14px;
         }
@@ -41,8 +39,6 @@
             </div>
         </div>
     </section>
-
-
 
     <div class="conatiner">
         <div class="flex flex-col lg:w-[35%] md:w-full p-4 shadow-lg mx-auto mt-4 mb-4" id="send-otp">
@@ -77,7 +73,6 @@
                             <img src="{{ asset('images/about/ArrowRight.png') }}"class="ml-2" />
                         </div>
                     </div>
-
 
                     <p class="mt-8 text-base font-semibold">
                         New on CALL LABS?

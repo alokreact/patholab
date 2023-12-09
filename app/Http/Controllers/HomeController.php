@@ -41,11 +41,8 @@ class HomeController extends Controller
             }
         }
         $cartCount = 1;
-        
-       // dd(\Cart::content());
 
         \View::share('cartCount', $cartCount);
-
         $categories = Category::with('package')->inRandomOrder()->take(6)->get();
         return view('Front-end.Home', compact('labs', 'organs', 'packages', 'categories','banners','cartCount'));
     }
@@ -119,7 +116,6 @@ class HomeController extends Controller
            // dd($combinedResults);
 
             $responseData =['data' =>$submittedValue,'redirectTo'=>'/search-result'];
-
             //$html = view('Front-end.Search.removesearch', compact('labs','organs','combinedResults','categories'))->render();
   
             //return response()->json(['html' => $html]);  
@@ -323,9 +319,15 @@ class HomeController extends Controller
     }
 
     public function searchResult(Request $request){
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Search Result'],
+        ];
+
         $organs = Organ::take(12)->get();
         $categories = Category::take(12)->get();
-        return view('Front-end.Search.search-result',compact('organs','categories'));
+        return view('Front-end.Search.search-result',compact('organs','categories','breadcrumbs'));
     }
     public function searchTest(Request $request){
         //dd($request->all());
