@@ -7,7 +7,6 @@
         gap: 10px;
         padding-top: 20px
     }
-
     .PriceDetails_details {
         display: flex;
         padding: 25px;
@@ -22,9 +21,7 @@
 </style>
 
 <div class="col-xl-4">
-
     <div class="card checkout-order-summary">
-
         <div class="card-body">
             <div class="p-3 bg-light mb-3">
                 <h5 class="font-size-16 mb-0">Bill Summary<span class="float-end ms-2"></span></h5>
@@ -32,170 +29,28 @@
 
             <div class="table-responsive">
                 <table class="table table-centered mb-0 table-nowrap">
+            
                     <thead>
                         <tr>
                             <th class="border-top-0" style="width: 330px;" scope="col">
-                                {{ $type[0] === 'test' ? 'Test' : 'Package' }}</th>
+                                {{$type[0] === 'test'?'Test':'Package'}}</th>
                             <th class="border-top-0" scope="col">Price</th>
                         </tr>
                     </thead>
 
-                    @if ($type[0] === 'test')
-
-                        <tbody>
-                            @php $total = 0 @endphp
-                            @foreach ($cartItems as $id => $details)
-                                <tr>
-                                    <td style="max-width: 240px">
-                                        <h5 class="font-size-16 text-truncate">
-                                            <a href="#" class="text-dark">
-
-                                                @foreach ($product_names as $name)
-                                                    {{ $name }},
-                                                @endforeach
-                                            </a>
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            <b>Lab -</b> {{ ucfirst($details->name) }}
-                                        </p>
-                                        <p class="text-muted mb-0 mt-1"></p>
-                                    </td>
-
-                                    <td>₹{{ $details->price }}/-</td>
-                                </tr>
-                            @endforeach
-
-                            <tr>
-                                <td colspan="1">
-                                    <h5 class="font-size-14 m-0">Sub Total :</h5>
-                                </td>
-                                <td>
-                                    ₹{{ $details->price }}/-
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="1">
-                                    <h5 class="font-size-14 m-0">Estimated Tax :</h5>
-                                </td>
-                                <td>
-                                    0%
-                                </td>
-                            </tr>
-
-                            <tr class="bg-light">
-                                <td colspan="1">
-                                    <h5 class="font-size-14 m-0">Total:</h5>
-                                </td>
-                                <td id="total">
-                                    ₹{{ $details->price }}/-
-                                </td>
-                            </tr>
-
-                        </tbody>
+                    @if($type[0] === 'test')
+                      @include('Front-end.Checkout.template.cart.testCart')
                     @else
-                        @foreach ($products as $id => $details)
-                            <tr>
-                                <td style="max-width: 240px">
-                                    <h5 class="font-size-16 text-truncate">
-                                        <a href="#" class="text-dark">
-                                            {{ ucfirst($details->package_name) }}
-                                        </a>
-                                    </h5>
-                                    <p class="text-muted mb-0">
-                                        <b>Lab -</b> {{ $details->getLab->lab_name }}
-                                    </p>
-                                    <p class="text-muted mb-0 mt-1"></p>
-                                </td>
-
-                                <td>₹{{ $details->price }}/-</td>
-                            </tr>
-                        @endforeach
-
-                        <tr>
-                            <td colspan="1">
-                                <h5 class="font-size-14 m-0">Sub Total :</h5>
-                            </td>
-                            <td>
-                                {{ $total }}
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="1">
-                                <h5 class="font-size-14 m-0">Estimated Tax :</h5>
-                            </td>
-                            <td>
-                                0%
-                            </td>
-                        </tr>
-                        <tr class="bg-light">
-                            <td colspan="1">
-                                <h5 class="font-size-14 m-0">Total:</h5>
-                            </td>
-                            <td id="total">
-                                {{ $total }}
-                            </td>
-                        </tr>
-
+                      @include('Front-end.Checkout.template.cart.packageCart')
                     @endif
+            
                 </table>
             </div>
 
-            <div class="p-3 bg-light mb-3 mt-4">
-                <h6 class="apply_coupon_title font-size-16 mb-0">Apply Coupon</h6>
-                
-                <div class="PriceDetails_wrapper mt-1 flex">
-                    <input type="text" name="apply_coupon" class="form-control" id="apply_coupon"/>
 
-                    <span class="coupon_error" style="color: red"></span>
-
-                    <button type="button" class="border bg-yellow-400 text-basic text-white 
-                    font-semibold mt-1 p-3 w-[45%] focus:outline-none active:outline-none" id="apply-coupon-btn">
-                    APPLY COUPON  <span class="spinner hidden"><i class="icofont-spinner-alt-1"></i></span>
-                </button>
-                </div>
+            @include('Front-end.Checkout.template.cart.referralSection')
 
 
-                <div class="mt-2 applied_coupon_box hidden">
-                    <div class="flex border p-1 w-[100%] mt-2">
-                        <span class="text-black p-2">FREE10 </span>
-                        <i class="icofont-close-line-squared-alt"></i>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="p-3 bg-light mb-3 mt-4">
-                <h6 class="PriceDetails_head font-size-16 mb-0">Payment</h6>
-                <div class="PriceDetails_wrapper">
-                    <div class="PriceDetails_details card-radio">
-                        <p style="margin: 0px">
-                            <img src="{{ asset('images/service/razorpay.png') }}"
-                                class="img-responsive razoprpayimg" />
-                        </p>
-
-                        <span>
-                            <div class="edit-btn rounded" style="margin-top:-15px">
-                                <input type="radio" name="pay_option" id="patient" class="card-radio-input"
-                                    style="display: block; height:30px" value="1">
-                            </div>
-                        </span>
-                    </div>
-
-
-                    <div class="PriceDetails_details card-radio">
-                        <p style="margin: 0px">Pay by Cash/Card</p>
-                        <span style="font-weight: 400;">
-                            <div class="edit-btn rounded" style="margin-top: -15px">
-                                <input type="radio" name="pay_option" id="patient" class="card-radio-input"
-                                    style="display: block; height:30px" value="2">
-                            </div>
-                        </span>
-                    </div>
-
-                </div>
-            </div>
         </div>
     </div>
 </div>

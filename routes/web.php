@@ -135,4 +135,6 @@ Route::post('/remove-test', [App\Http\Controllers\HomeController::class,'removeT
 
 Route::get('/show/coupon', [App\Http\Controllers\HomeController::class,'coupon'])->name('show.coupon');
 
+Route::post('/apply/referal-coupon', [App\Http\Controllers\CartController::class,'applyRefralCoupon'])->name('apply.referal-coupon');
+
 include"admin.php";

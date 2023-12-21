@@ -41,7 +41,6 @@
         top: -4px;
         left: -24px
     }
-
     .activity-checkout .checkout-item {
         position: relative;
         padding-bottom: 24px;
@@ -70,8 +69,6 @@
         top: 3px;
         left: -65px
     }
-
-
 
     .avatar-xs {
         height: 1rem;
@@ -360,30 +357,50 @@
 
                                     </div>
                                     </li>
-
-
                                     </ol>
                                 </div>
                             </div>
 
-
+                         
                     </div>
+
+                    <div id="tab4" class="tab-pane">
+                        <div class="card">
+                            <div class="card-body">
+                                <ol class="activity-checkout mb-0 px-4">
+                                    <li class="checkout-item">
+                                        <?php echo $__env->make('Front-end.Checkout.template.payment', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                        <div class="col" style="display: flex;place-content: end">
+                                            
+                           
+                                        </div>
+
+                                    </div>
+                                </li>
+
+
+                            </ol>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="row my-4">
-                    <div class="col">
-                        <a href="#" class="btn btn-link text-muted">
-                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-                    </div>
 
-                    <!-- end col -->
-                </div> <!-- end row-->
+
+        <div class="row my-4">
+            <div class="col">
+                <a href="#" class="btn btn-link text-muted">
+                    <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
             </div>
 
-            <?php echo $__env->make('Front-end.Checkout.template.cartlist', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <!-- end col -->
+        </div> <!-- end row-->
+    </div>
 
-            </form>
-        </div>
+    <?php echo $__env->make('Front-end.Checkout.template.cartlist', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+    </form>
+</div>
         <!-- end row -->
     </div>
     </div>

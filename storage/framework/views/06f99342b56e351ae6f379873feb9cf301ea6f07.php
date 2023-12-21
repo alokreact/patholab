@@ -144,7 +144,6 @@
      });
 
      $('#search-input').on('input', function() {
-         //console.log('wrt');
          var locationurl = "<?php echo e(route('subtest.ajax')); ?>";
          var query = $(this).val();
 
@@ -174,7 +173,6 @@
                      }
                  },
                  error: function(error) {
-                     console.log(error);
                  }
              });
          } else {
@@ -187,10 +185,7 @@
      $(document).on('click', '.list-group-item', function() {
 
          var productName = $(this).text();
-         console.log('productname', productName);
          var subtest = $(this).data("id");
-
-         console.log('subtest', subtest);
          //$('#selectedProduct').val(subtest);
          //$('#search-input').val(productName);
          $('#search-results').empty();
@@ -204,7 +199,6 @@
 
                             //console.log('>>res',response);
 
-                            console.log('>>res',encodeURIComponent(response.data));
                             //return;
 
                             var testDiv ='';
@@ -221,7 +215,6 @@
 
      function loadData(data){
 
-        console.log('data',data);
      }   
 
      // ... (code for remove search item)
@@ -231,7 +224,6 @@
              var removeUrl = "<?php echo e(route('remove-test')); ?>";
              var selectedValues = $(this).data("id");
 
-             console.log('>>', selectedValues)
              $.ajax({
                  url: removeUrl,
                  method: 'POST',
@@ -253,17 +245,15 @@
          var totalTabs = $(".tab-pane").length;
 
          function showTab(tabNumber) {
-             console.log('tabNumber', tabNumber)
              $(".tab-pane").removeClass("active");
-             $("#tab" + tabNumber).addClass("active");
+             $("#tab" +tabNumber).addClass("active");
          }
 
          showTab(currentTab);
 
          $("#nextTab").click(function(e) {
              e.preventDefault();
-             console.log('currentTab', currentTab)
-
+       
              if (currentTab === 1) {
                  var errors = [];
                  var address = $('input[name="address"]:checked').val();
@@ -290,7 +280,6 @@
                      $('.Stepper_step').eq(currentTab - 1).html('<i class="icofont-tick-mark"></i>');
                      //$('.Stepper_line').css('background','#28a745');
                      //$('.Stepper_line').css('background-position','50%')
-
                      showTab(nextTab);
                  }
              }
@@ -335,23 +324,56 @@
 
          $('#slot_tab_forward_btn').on('click', function(e) {
              if (nextTab === 3) {
-
                  var errors = [];
 
                  var slot_day = $('input[name="slot_day"]:checked').val();
                  var slot_time = $('input[name="slot_time"]:checked').val();
-                 var pay_option = $('input[name="pay_option"]:checked').val();
-
-                 console.log('currentTab3', currentTab)
-                 console.log('slot_day', slot_day)
-                 console.log('slot_time', slot_time)
-
+              
+          
                  if (!slot_day) {
                      errors.push('Please select a Date.');
                  }
                  if (!slot_time) {
                      errors.push('Please select a Time.');
                  }
+                
+                 if (errors.length > 0) {
+                     var errorHtml = '<ul>';
+                     errors.forEach(function(error) {
+                         errorHtml += '<li>' + error + '</li>';
+                     });
+                     errorHtml += '</ul>';
+
+                     Swal.fire({
+                         icon: 'error',
+                         //title: 'Validation Errors',
+                         html: errorHtml,
+                     });
+                 } else {
+                     
+                    nextTab = currentTab + 3;
+                    console.log('>>>>nextTab',currentTab)
+                    console.log('>>>>nextTab',nextTab)
+                    $('.Stepper_step').css('background-color', '#ccc');
+                    $('.Stepper_step').eq(currentTab - 1).css('background-color', '#1e7e34');
+                    $('.Stepper_step').eq(currentTab - 1).html('<i class="icofont-tick-mark"></i>');
+                  
+                    $('.Stepper_step').eq(currentTab).css('background-color', '#1e7e34');
+                    $('.Stepper_step').eq(currentTab).html('<i class="icofont-tick-mark"></i>');
+                    $('.Stepper_step').eq(currentTab + 1).css('background-color', '#1e7e34');
+                    $('.Stepper_step').eq(currentTab + 1).html('<i class="icofont-tick-mark"></i>');
+                
+                    showTab(nextTab);
+                }
+             }
+         });
+
+
+         $('#payment_tab_forward_btn').on('click', function(e) {
+             if (nextTab === 4) {
+                 var errors = [];
+                 var pay_option = $('input[name="pay_option"]:checked').val();
+
                  if (!pay_option) {
                      errors.push('Please select a Pay Option.');
                  }
@@ -370,9 +392,10 @@
                  } else {
 
                      $('#checkout-form').off('submit').submit();
-                 }
-             }
-         });
+                 } 
+            }
+        });
+
 
 
          if (currentTab > totalTabs) {
@@ -439,7 +462,6 @@
      });
 
      $("#show_patient_btn").click(function(e) {
-         console.log('>>>')
          e.preventDefault();
          $(this).hide();
          $('#patient-add').show();
@@ -570,8 +592,7 @@
                          startTimer();
                      } else {
 
-                         console.log('errr')
-
+                   
                          Swal.fire({
                              icon: 'error',
                              title: 'Login Error',
@@ -608,10 +629,7 @@
          }, 1000);
      }
 
-
-
      $(document).on('click', '#btn-verify-otp', function() {
-
          var otps = $('input[type="text"][name="otp[]"]');
          var phone = $('#mobile').val();
          var dataToSend = {};
@@ -649,7 +667,6 @@
              data: dataToSend,
              method: 'post',
              success: function(response, textStatus, xhr) {
-                 console.log('xhr', xhr)
                  if (response.status === 'success') {
                      Swal.fire({
                          icon: 'success',
@@ -661,7 +678,6 @@
                          }
                      })
                  } else {
-                     console.log('eerrr')
                      Swal.fire({
                          icon: 'error',
                          html: response.message,

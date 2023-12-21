@@ -1598,10 +1598,10 @@ height: 100%;
   height: auto;
   font-size: 14px;
   line-height: 30px;
-  /* border-radius: 25px; */
-  /* background-color: #f1f1f1; */
+  border-radius: 50px; 
+  background-color:var(--image-color);
 
-  border-bottom: 1px solid gray;
+  /* border-bottom: 1px solid gray; */
   margin:2px;
   cursor: pointer;
   color: #000;

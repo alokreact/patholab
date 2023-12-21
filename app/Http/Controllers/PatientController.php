@@ -23,12 +23,10 @@ class PatientController extends Controller
     public function update(Request $request, $id){
 
         $patient = Patient::find($id);
-
         $patient->name = $request->input('name');
         $patient->age = $request->input('age');
         $patient->gender = $request->input('gender');
         $patient->save();
-
         return redirect()->route('patient');        
     }
 }

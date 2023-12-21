@@ -2,12 +2,12 @@
     <div class="flex items-center justify-between p-2  text-white" style="background-color: #28a745">
         <div class="flex flex-col p-2 w-full relative">
             <div class="flex-grow mx-4  items-center flex justify-center ">
-                    <input type="text" placeholder="Search for Tests (CBC, MRI, etc...)"
-                        class="w-full  md:w-[50%]  p-4 text-center border border-green-400 shadow-md 
+                <input type="text" placeholder="Search for Tests (CBC, MRI, etc...)"
+                    class="w-full  md:w-[50%]  p-4 text-center border border-green-400 shadow-md 
                     bg-white rounded-full  text-black focus:outline-none"
-                        id="search-input" autocomplete="off" />
+                    id="search-input" autocomplete="off" />
 
-                    
+                
             </div>
 
             <div id="search"
@@ -21,35 +21,37 @@
             <div class="relative flex justify-between p-2">
                 <?php if(auth()->check()): ?>
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('isUser')): ?>
-               
-                        <button class="px-4 py-2 rounded-md focus:outline-none dropdown-btn">
+                        <button class="px-4 py-2 rounded-md focus:outline-none dropdown-btn flex">
                             <i class="icofont-user-male text-2xl text-white"></i>
+                            <i class="icofont-caret-down text-2xl text-white ml-2"></i>
                         </button>
-            
-            <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden">
-                <a href="<?php echo e(route('address')); ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Address</a>
-                <a href="<?php echo e(route('profile')); ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Booking</a>
-                <a href="<?php echo e(route('patient')); ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Members</a>
-                <a href="<?php echo e(route('coupon')); ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">My Referral</a>
-                
-                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST">
-                    <?php echo csrf_field(); ?>
-                    <button class="p-2 focus:outline-none" type="submit">
-                        <i class="icofont-sign-out text-2xl text-white"></i>Logout
-                    </button>
-                </form>
-            </div>
+
+                        <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg hidden">
+                            <a href="<?php echo e(route('address')); ?>"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Address</a>
+                            <a href="<?php echo e(route('profile')); ?>"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Booking</a>
+                            <a href="<?php echo e(route('patient')); ?>"
+                                class="block px-4 py-2 text-gray-800 hover:bg-gray-300">Members</a>
+                            <a href="<?php echo e(route('coupon')); ?>" class="block px-4 py-2 text-gray-800 hover:bg-gray-300">My
+                                Referral</a>
+
+                            <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <button class="p-2 focus:outline-none" type="submit">
+                                    <i class="icofont-sign-out text-2xl text-white"></i>Logout
+                                </button>
+                            </form>
+                        </div>
                     <?php endif; ?>
+                    
                 <?php else: ?>
                     <a href="<?php echo e(route('signin')); ?>">
                         <i class="icofont-user-male text-2xl text-white"></i>
                     </a>
                 <?php endif; ?>
             </div>
-
-
-            
-
+ 
             <div class="text-xl flex justify-space p-2">
                 <a href="<?php echo e(route('cart')); ?>" class="call-us-desk mr-2">
                     <i class="icofont-cart text-2xl text-white"></i>

@@ -1,22 +1,15 @@
 
-
-
-
 <?php $__env->startSection('content'); ?>
-    
+ 
 
     <div class="container mt-4">
-        <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
-            <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
-            <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
-            <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>
-            
-            
-        </nav>
-   
-        <div class="row">
 
-         
+
+        <?php echo $__env->make('Front-end.Components.breadcrumb', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+        
+   
+        <div class="row">        
             <?php echo $__env->make('Front-end.Components.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             
             <main class="col-md-9">
@@ -45,7 +38,7 @@
                             <p>No Results Found!</p>
                         <?php endif; ?>
                     </div>
-
+                    
                     <div class="flex justify-end w-full mt-4 text-green-400">
                         <?php echo e($all_categories->links()); ?>
 

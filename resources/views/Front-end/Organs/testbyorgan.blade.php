@@ -5,7 +5,7 @@
         <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-12 w-12"></div>
     </div>
 
-    <section class="page-title bg-1 hidden" id="searchBreadcumb">
+    {{-- <section class="page-title bg-1 hidden" id="searchBreadcumb">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="section contact-info pb-0">
 
@@ -31,16 +31,16 @@
 
                 @include('Front-end.Components.sidebar')
 
-                <div class="w-full md:w-2/3 p-4">
+                <div class="w-full md:w-2/3 p-0">
 
-                    <div class="flex justify-between p-2  my-2" id="count_result">
+                    <div class="flex justify-between p-1  my-2" id="count_result">
                         Showing {{ count($subtests) }} results
-
                         <button
                             class="border border-green-500 w-[120px]  rounded-full p-2 text-black hover:scale-110 hover:bg-green-500 hover:text-white search_multiple_test_btn">Check
                             Now</button>
 
                     </div>
+
 
                     <div class="flex flex-wrap mx-2" id="organResult">
                         @forelse($subtests as $test)
@@ -74,6 +74,8 @@
                         @empty
                         @endforelse
                     </div>
+
+                    <div id="chipResult" class="mt-1 mb-2 flex flex-row p-1 flex-wrap"></div>
 
                     <div class="flex flex-wrap mx-2" id="searchResult">
                     </div>

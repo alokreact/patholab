@@ -20,6 +20,13 @@
             </div>
             <span>Time</span>
         </div>
+
+        <div class="Stepper_stepCont">
+            <div class="Stepper_step" style="background: rgb(157, 159, 161);">
+                <span class="Stepper_number"><a href="#tab4">4</a></span>
+            </div>
+            <span>Payment</span>
+        </div>
     </div>
 
         <hr class="Stepper_line" style="background-position: 100% 0px;">

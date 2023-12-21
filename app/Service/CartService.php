@@ -8,16 +8,10 @@ use App\Models\SubTest;
 class CartService{
 
     public static function get_cart_items(){
-
         $packages =[];
         $tests =[];
-
-        $cart = session()->get('cart', []);
-     
-      
-         
+        $cart = session()->get('cart', []);         
         return $cart;
-
         //return $items;
     }
 
@@ -49,16 +43,29 @@ class CartService{
 
          return $type;
     }
-
     public static function flatten_ar($arr){
         $temp =[];
-
         foreach($arr as $val){
                 if(is_array($val)){
                     $temp =$val;
                 }
         }
         return $temp;
+    }
+
+    public static function  discountCalculation($totalWithoutDiscount){
+
+        $cartItems =  \Cart::content(); 
+        $cleanedString = str_replace(',', '', $totalWithoutDiscount);
+        $discountPercentage = 10;
+    
+            $discountAmount =  ($discountPercentage / 100)* intval($cleanedString);
+            
+            $newPrice = intval($cleanedString) - intval($discountAmount);        
+
+      
+        return $newPrice;
+
     }
 
 }

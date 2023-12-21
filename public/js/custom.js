@@ -518,77 +518,85 @@ $('.appointment-btn').on('click', function () {
     }
 })
 
-$('.sidebar_toggle').on('click',function(){
+$('.sidebar_toggle').on('click', function () {
     console.log('err');
     $('#mobile-menu').hide();
 })
 
-$(document).on('click', '.menu_toggle',function(){
+$(document).on('click', '.menu_toggle', function () {
     console.log('menu_toggle');
 
     $('#mobile-menu').show();
 })
 
 
-$(document).on('click', '.search_multiple_test_btn',function(){
+$(document).on('click', '.search_multiple_test_btn', function () {
     var checkBoxValue = [];
 
-    $('input[name="test[]"]:checked').each( function (){
-            checkBoxValue.push($(this).val());
+    $('input[name="test[]"]:checked').each(function () {
+        checkBoxValue.push($(this).val());
     });
 
-    console.log('checkBoxValue',checkBoxValue.length)
+    console.log('checkBoxValue', checkBoxValue.length)
 
-    if(checkBoxValue.length < 1){
+    if (checkBoxValue.length < 1) {
 
         alert('Please select tests');
         return;
     }
     $('#loader').removeClass('hidden');
-    
+
     $.ajax({
-        
-        url:APP_URL+'/search/test',
-        data:{checkBoxValue},
-        method:'POST',
-        success:function(response,textStatus,xhr){
-            var testDiv ='';
-            var searchDiv ='';  
-    
-            if(xhr.status === 200){
-                $.each(response.tests ,function(index,data){
-                       var imageName = APP_URL+'/Image/'+data.image;
-                       //console.log('imageName',imageName)
-                        testDiv += '<div class="w-full md:w-[31%] mb-4 border mx-2">';
-                        testDiv += '<div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">';
-                        testDiv +=' <img src=" '+ imageName+' "/>';
-                        testDiv +='</div>';
 
-                        testDiv +='<div class="p-4 mt-2 items-center flex justify-between">';
-                        testDiv +='<h6 class="text-black text-basic font-semibold mb-2">';
-                        testDiv += '<i class="icofont-google-map" style="font-size:16px;color:#000"></i>Hyderabad</h6>';
-                        testDiv += '<button class="w-[120px]  border-green-500 text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white btn_add_to_cart_test" value="'+data.test_ids+'" data-type="test" data-lab="'+data.lab_id+'"';
-                        testDiv += 'data-price="'+data.total_price+'"';
-                        testDiv += 'data-singleprice="'+data.single_price+'">';
-                        testDiv += 'Add To Cart</button></div>';
-                        testDiv += ' <div class="p-3 mt-1 mb-1 items-center bg-gray-100 flex justify-between my-1 mx-1 rounded-full text-black">';
-                        testDiv +='<del>₹<span>'+ data.total_price *2 + '/-</span></del>';
-                        testDiv +='<span>₹'+ data.total_price + '/-</span>';
-                        testDiv +='<div class="sm">50% discount </div>';
-                        testDiv +='</div> </div>';
-                    })
+        url: APP_URL + '/search/test',
+        data: { checkBoxValue },
+        method: 'POST',
+        success: function (response, textStatus, xhr) {
+            var testDiv = '';
+            var searchDiv = '';
 
-                $.each(response.searchTerms.name ,function(index,data){  
-                    
-                    console.log(data)
+            if (xhr.status === 200) {
+                $.each(response.tests, function (index, data) {
+                    var imageName = APP_URL + '/Image/' + data.image;
+                    //console.log('imageName',imageName)
+                    testDiv += '<div class="w-full md:w-[31%] mb-4 border mx-2">';
+                    testDiv += '<div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">';
+                    testDiv += ' <img src=" ' + imageName + ' "/>';
+                    testDiv += '</div>';
+
+                    testDiv += '<div class="p-4 mt-2 items-center flex justify-between">';
+                    testDiv += '<h6 class="text-black text-basic font-semibold mb-2">';
+                    testDiv += '<i class="icofont-google-map" style="font-size:16px;color:#000"></i>Hyderabad</h6>';
+                    testDiv += '<button class="w-[120px]  border-green-500 text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white btn_add_to_cart_test" value="' + data.test_ids + '" data-type="test" data-lab="' + data.lab_id + '"';
+                    testDiv += 'data-price="' + data.total_price + '"';
+                    testDiv += 'data-singleprice="' + data.single_price + '">';
+                    testDiv += 'Add To Cart</button></div>';
+                    testDiv += ' <div class="p-3 mt-1 mb-1 items-center bg-gray-100 flex justify-between my-1 mx-1 rounded-full text-black">';
+                    testDiv += '<del>₹<span>' + data.total_price * 2 + '/-</span></del>';
+                    testDiv += '<span>₹' + data.total_price + '/-</span>';
+                    testDiv += '<div class="sm">50% discount </div>';
+                    testDiv += '</div> </div>';
+                })
+
+                $.each(response.searchTerms.name, function (index, data) {
+
                     var id = response.searchTerms.id[index];
-                    searchDiv += '<div class="chip">';
-                    searchDiv +=  data + ' <i class="icofont-close-circled remove_search_btn" data-id="'+id+'"></i></div>';
-                });  
+                    var count = 45;
+
+                    var result = data.slice(0, count) + (data.length > count ? "..." : "");
+
+                    searchDiv += '<span class="ml-2 p-2 chip">';
+                    searchDiv += result +
+                        '<i class="icofont-close-line-squared-alt remove_search_btn text-xl p-1 mb-1" data-id="' + id +
+                        '"></i></span>';
+
+                    // searchDiv += '<div class="chip">';
+                    // searchDiv +=  data + ' <i class="icofont-close-circled remove_search_btn" data-id="'+id+'"></i></div>';
+                });
 
                 $('#count_result').hide();
                 $('#organResult').hide();
-                $('#loader').addClass('hidden');    
+                $('#loader').addClass('hidden');
                 $('#searchResult').html(testDiv);
                 $('#test_header').hide();
                 $('#searchBreadcumb').removeClass('hidden');
@@ -599,136 +607,170 @@ $(document).on('click', '.search_multiple_test_btn',function(){
 })
 
 
-$(document).on('click','.remove_search_btn', function(){  
+$(document).on('click', '.remove_search_btn', function () {
     $('#loader').removeClass('hidden');
-    
+
     var testId = $('.remove_search_btn').attr('data-id');
     //console.log('>>>working',testId)
 
     var dataAttributes = [];
-    $('.remove_search_btn').each(function() {
+    $('.remove_search_btn').each(function () {
         // Get data attributes for each element
-        var id = $(this).attr('data-id');        
+        var id = $(this).attr('data-id');
         dataAttributes.push({
-            id: id     
+            id: id
         });
     });
 
-    console.log('lenght',dataAttributes.length)
+    console.log('lenght', dataAttributes.length)
 
-    if(dataAttributes.length === 1){
+    if (dataAttributes.length === 1) {
 
-       window.location.reload();    
+        window.location.reload();
         return;
     }
-   
-    dataArray = $.grep(dataAttributes, function(item) {
+
+    dataArray = $.grep(dataAttributes, function (item) {
         return item.id !== testId;
     });
-  
-    console.log('>>>working',dataArray)
 
-     $.ajax({
-        url :APP_URL+'/remove/test',
-        method:'POST',
-        data:{dataArray},
-        success:function(response,textStatus,xhr){
+    console.log('>>>working', dataArray)
 
-            var testDiv ='';
-            var searchDiv ='';  
-    
-            if(xhr.status === 200){
-                $.each(response.tests ,function(index,data){
-                       var imageName = APP_URL+'/Image/'+data.image;
-                       //console.log('imageName',imageName)
-                        testDiv += '<div class="w-full md:w-[31%] mb-4 border mx-2">';
-                        testDiv += '<div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">';
-                        testDiv +=' <img src=" '+ imageName+' "/>';
-                        testDiv +='</div>';
+    $.ajax({
+        url: APP_URL + '/remove/test',
+        method: 'POST',
+        data: { dataArray },
+        success: function (response, textStatus, xhr) {
 
-                        testDiv +='<div class="p-4 mt-2 items-center flex justify-between">';
-                        testDiv +='<h6 class="text-black text-basic font-semibold mb-2">';
-                        testDiv += '<i class="icofont-google-map" style="font-size:16px;color:#000"></i>Hyderabad</h6>';
-                        testDiv += '<button class="w-[120px]  border-green-500 text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white btn_add_to_cart_test" value="+data.id+" data-type="test" data-lab="+data.lab_id+"';
-                        testDiv += 'data-price="+data.total_price+"';
-                        testDiv += 'data-singleprice="+data.single_price+">';
-                        testDiv += 'Add To Cart</button></div>';
-                        testDiv += ' <div class="p-3 mt-1 mb-1 items-center bg-gray-100 flex justify-between my-1 mx-1 rounded-full text-black">';
-                        testDiv +='<del>₹<span>'+ data.total_price *2 + '/-</span></del>';
-                        testDiv +='<span>₹'+ data.total_price + '/-</span>';
-                        testDiv +='<div class="sm">50% discount </div>';
-                        testDiv +='</div> </div>';
-                    })
+            var testDiv = '';
+            var searchDiv = '';
 
-                    $.each(response.searchTerms.name ,function(index,data){  
-                    
-                        var id = response.searchTerms.id[index];
-                        searchDiv += '<div class="chip">';
-                        searchDiv +=  data + ' <i class="icofont-close-circled remove_search_btn" data-id="'+id+'"></i></div>';
-                    });  
-    
+            if (xhr.status === 200) {
+                $.each(response.tests, function (index, data) {
+                    var imageName = APP_URL + '/Image/' + data.image;
+                    //console.log('imageName',imageName)
+                    testDiv += '<div class="w-full md:w-[31%] mb-4 border mx-2">';
+                    testDiv += '<div class="border-b-2 rounded w-[260px] h-[144px] p-3 mx-auto">';
+                    testDiv += ' <img src=" ' + imageName + ' "/>';
+                    testDiv += '</div>';
+
+                    testDiv += '<div class="p-4 mt-2 items-center flex justify-between">';
+                    testDiv += '<h6 class="text-black text-basic font-semibold mb-2">';
+                    testDiv += '<i class="icofont-google-map" style="font-size:16px;color:#000"></i>Hyderabad</h6>';
+                    testDiv += '<button class="w-[120px]  border-green-500 text-green-500 rounded-full border p-2 hover:bg-green-500 hover:text-white btn_add_to_cart_test" value="+data.id+" data-type="test" data-lab="+data.lab_id+"';
+                    testDiv += 'data-price="+data.total_price+"';
+                    testDiv += 'data-singleprice="+data.single_price+">';
+                    testDiv += 'Add To Cart</button></div>';
+                    testDiv += ' <div class="p-3 mt-1 mb-1 items-center bg-gray-100 flex justify-between my-1 mx-1 rounded-full text-black">';
+                    testDiv += '<del>₹<span>' + data.total_price * 2 + '/-</span></del>';
+                    testDiv += '<span>₹' + data.total_price + '/-</span>';
+                    testDiv += '<div class="sm">50% discount </div>';
+                    testDiv += '</div> </div>';
+                })
+
+                $.each(response.searchTerms.name, function (index, data) {
+                    var id = response.searchTerms.id[index];
+                    var count = 45;
+                    var result = data.slice(0, count) + (data.length > count ? "..." : "");
+                    searchDiv += '<span class="ml-2 p-2 chip">';
+                    searchDiv += result +
+                        '<i class="icofont-close-line-squared-alt remove_search_btn text-xl p-1 mb-1" data-id="' + id +
+                        '"></i></span>';
+
+                    // searchDiv += '<div class="chip">';
+                    // searchDiv +=  data + ' <i class="icofont-close-circled remove_search_btn" data-id="'+id+'"></i></div>';
+                });
+
                 $('#organResult').hide();
-                $('#loader').addClass('hidden');                
+                $('#loader').addClass('hidden');
                 $('#searchResult').html(testDiv);
                 $('#test_header').hide();
                 $('#searchBreadcumb').removeClass('hidden');
                 $('#chipResult').html(searchDiv);
             }
         }
-     })
+    })
 })
 
 
-$(document).on('click','#filterButton', function(){
+$(document).on('click', '#filterButton', function () {
     console.log('>>>')
     $('#filterDropdown').slideToggle();
     $('#filterDropdown').removeClass('hidden');
 })
 
-$(document).on('click','#apply-coupon-btn', function(){
 
-        var coupon = $('#apply_coupon').val();
-        if(coupon === ''){
-            $('.coupon_error').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
-            return;
+$(document).on('click', '#apply-coupon-btn', function () {
+    var coupon = $('#apply_coupon').val();
+    if (coupon === '') {
+        $('.coupon_error').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
+        return;
+    }
+    var btn = $('#apply-coupon-btn');
+    var spinner = btn.find('.spinner');
+    $(spinner).removeClass('hidden');
+
+  
+    $.ajax({
+        'url': APP_URL + '/apply-coupon',
+        'data': { coupon: coupon },
+        'method': 'POST',
+        success: function (res, textStatus, xhr) {
+            if (xhr.status === 200) {
+                $(spinner).addClass('hidden');
+                $('.coupon_applied').removeClass('hidden');
+                $('#total').html(res.total);
+                $('.referal_coupon_box').removeClass('hidden')
+                $('.applied_coupon_box').addClass('hidden');
+            }
         }
-
-        var btn =$('#apply-coupon-btn');
-        var spinner = btn.find('.spinner');
-        $(spinner).removeClass('hidden');
-
-        console.log('>>>')      
-        
-        $.ajax ({
-            'url':APP_URL+'/apply-coupon',
-            'data':{coupon:coupon},
-            'method':'POST',
-                success :function(res,textStatus,xhr){
-                   if(xhr.status === 200){
-                        $(spinner).addClass('hidden');
-                        $('.apply_coupon_title').html('Coupon Applied');
-                        $('.PriceDetails_wrapper').addClass('hidden');
-                        $('.applied_coupon_box').removeClass('hidden');
-                        $('#total').html(res.total);
-                   }
-                }
-        })
+    })
 })
 
 
- 
+$(document).on('click', '#apply-referal-coupon-btn', function () {
+    var coupon = $('#apply_referal_coupon').val();
+    console.log('coupon',coupon)
+    
+    if (coupon === '') {
+        $('.coupon_error').html('<i class=\"icofont-info-circle\"></i> &nbsp;Select an option.');
+        return;
+    }
+    var btn = $('#apply-referal-coupon-btn');
+    var spinner = btn.find('.spinner');
+    
+    $(spinner).removeClass('hidden');
 
-$('.dropdown-btn').on ('click', function(){
+    console.log('>>>')
+    
+    $.ajax({
+        'url': APP_URL + '/apply/referal-coupon',
+        'data': { coupon: coupon },
+        'method': 'POST',
+        success: function (res, textStatus, xhr) {
+            if (xhr.status === 200) {
+
+                $(spinner).addClass('hidden');
+                //$('.coupon_applied').removeClass('hidden');
+                $('#total').html(res.total);
+                $('.referal_input_box').addClass('hidden');     
+                $('.referal_coupon_applied').removeClass('hidden');
+                $('.referal-text').html('Coupon ' + res.coupon_name +  ' Applied')
+            }
+        }
+    })
+})
+
+
+$('.dropdown-btn').on('click', function () {
     console.log('>>>')
     $('.dropdown-menu').removeClass('hidden');
-    $('.dropdown-menu').css('display','block');
+    $('.dropdown-menu').css('display', 'block');
 
 })
 
 // $('.dropdown-btn').on ('mouseout', function(){
-
 //     console.log('>>>')
 //     $('.dropdown-menu').addClass('hidden');
 //     $('.dropdown-menu').css('display','none');
-
 // })

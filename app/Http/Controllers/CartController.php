@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Lab;
 use App\Models\SubTest;
-use App\Models\Cart;
+
+//use App\Models\Cart;
+
 use App\Models\Package;
 use App\Service\CartService;
 use App\Models\CartItem;
+use App\Models\Coupon;
+
 use Auth;
-//use Gloudemans\Shoppingcart\Facades\Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,9 +39,7 @@ class CartController extends Controller{
             }
         }
         return false;
-    }
-
-   
+    }   
 
     public function addPackage(Request $request){       
         if(\Cart::count() > 0){
@@ -110,6 +112,7 @@ class CartController extends Controller{
         }
         session()->flash('success', 'Product successfully removed!');   
     }
+
     public function update_product(Request $request)
     {
         if ($request->id && $request->quantity) {
@@ -151,19 +154,17 @@ class CartController extends Controller{
         
         $cartItems = \Cart::content();
         $type = CartService::getType($cartItems);
-        
+
+        $coupon_code = $request->post('coupon_code');
+
         if($type[0] === 'package'){
             $totalWithoutDiscount = \Cart::total();
                 $cleanedString = str_replace(',', '', $totalWithoutDiscount);
                 $discountPercentage = 10;
-                //$discountAmount = ($discountPercentage / 100)* intval($cleanedString);
-                //dd($discountAmount);
-
-                foreach($cartItems as $item){
-                    
+        
+                foreach($cartItems as $item){            
                     $discountAmount =  ($discountPercentage / 100)* intval($item->price);
                     $newPrice = intval($item->price) - intval($discountAmount);        
-                    
                     \Cart::update($item->rowId, [
                         'price' => $newPrice,
                     ]);
@@ -173,41 +174,94 @@ class CartController extends Controller{
                 return response()->json(['total'=> $finalTotal], 200);
         }
         else{
+
             $totalWithoutDiscount = \Cart::total();
             $cleanedString = str_replace(',', '', $totalWithoutDiscount);
             $discountPercentage = 10;
+        
             foreach($cartItems as $item){   
                 $discountAmount =  ($discountPercentage / 100)* intval($item->price);
-                $newPrice = intval($item->price) - intval($discountAmount);        
-                
+                $newPrice = intval($item->price) - intval($discountAmount);            
                 \Cart::update($item->rowId, [
                     'price' => $newPrice,
                 ]);
             }
-            $cartItems = \Cart::content();
-            $finalTotal = \Cart::total();
 
+            $res = $this->saveCcouponInsession($coupon_code,'10',$totalWithoutDiscount);
 
+            if($res){
 
-            $this->insertCoupon();
-
- //$data = ['coupoun_code']
-            //$user->update();
-
+                $cartItems = \Cart::content();
+                $finalTotal = \Cart::total();
+               
+            }
             return response()->json(['total'=> $finalTotal], 200);
-            //dd($totalWithoutDiscount);
-
+        
         }
-        //dd($finalTotal);
     }
+
+    public function saveCcouponInsession($coupon_code,$amt,$totalWithoutDiscount ){
+        $cartItems = \Cart::content();
+        $Total = \Cart::total();
+
+        $data =[
+                'coupon_name'=>$coupon_code,
+                'amount'=>$amt,
+                'cartItems'=>$cartItems,
+                'price'=>$totalWithoutDiscount,
+                'total'=>$Total                
+        ];
+
+        session(['coupon_sesssion' => $data]);
+        return true;
+        //$request->session()->put('coupon', $data);
+    }
+
+
+    public function applyRefralCoupon(Request $request){
+        $coupon_code = $request->post('coupon');
+        $valid_coupon = $this->isValidCoupon($coupon_code);  
+        
+        if($valid_coupon){
+            $cartItems = \Cart::content();
+            $sessionArray = session('coupon_sesssion', []);
+            $toTal = $sessionArray ['total'];
+            $finalTotal = CartService::discountCalculation($toTal);
+           
+            $data =[
+                'coupon_name'=>$coupon_code,
+                'cartItems'=>$cartItems,
+                'price'=>$sessionArray['price'],
+                'total'=>$finalTotal,
+                'coupon_id'=>$valid_coupon[0]->id,                
+            ]; 
+
+            session(['coupon_sesssion' => $data]);
+     
+            return response()->json(['total'=> $finalTotal,'coupon_name'=>$valid_coupon[0]->name], 200);
+        
+        }
+      
+
+    }
+
+    public function isValidCoupon($coupon_code){
+
+        //\DB::connection()->enableQueryLog();
+
+        $coupon_code = trim($coupon_code);
+        $coupon = Coupon::search($coupon_code)->get();
+        if($coupon){
+            return $coupon;
+        }
+    }
+  
 
     public function insertCoupon(){
 
         $user = Auth::user();
-
         $user = Auth::user();
-        $coupon = Coupon::find(1);
-       
+        $coupon = Coupon::find(1);       
         // Associate user with coupon and order
         $user->coupons()->attach('1');
 

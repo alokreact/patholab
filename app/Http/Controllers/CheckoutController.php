@@ -83,21 +83,22 @@ class CheckoutController extends Controller
     public function checkout(){
         try{
             $cartItems =  \Cart::content(); 
+            
             $type  = CartService::getType($cartItems);   
             $products =[];  
             $total =[];
-            //dd($type);
             
             if($type[0] === 'package'){    
                 $product_id = $cartItems->pluck('options')->pluck('product_id');
                 $products = Package::find($product_id);  
                 $total = \Cart::total();
             }
-            //dd($cartItems);
+           
             $patients = Patient::where('user_id','=',Auth::user()->id)->get();
             $addresses = Address::where('user_id', Auth::user()->id)->get();
-            $product_names = OrderService::getProductnames($cartItems);
-                   
+            $product_names = OrderService::getProductnames($cartItems);   
+            //dd($cartItems);
+            
             return view('Front-end.Checkout.newcheckout',\compact('type','total','products','cartItems','patients','addresses','product_names'));
         }
         catch (Exception $e){
@@ -218,6 +219,7 @@ class CheckoutController extends Controller
                 $res = $this->save_test_order_items($order,$items,$razorpay_payment_id);
                 
                     if($res){
+                        
                         return redirect()->route('confirmation');
                     }
         
@@ -311,7 +313,6 @@ class CheckoutController extends Controller
             $data['slot_day'] = $order->order_date;
             $data['slot_time'] = $order->collection_time;
             $data['phone']  = Auth::user()->phone;                        
-            //dd($data);
         
             $pdfService = new PdfService();
             $pdfContent = $pdfService->generatePdfFromView('emails.order', $data);
@@ -329,9 +330,14 @@ class CheckoutController extends Controller
 
             if(isset($data['phone'])){
                 SmsService::sendConfirmationmsg($data['phone'],$recieptId);            
-            }   
+            }  
+
             \Cart::destroy();
-            $cartItems =   \Cart::content();
+            
+            $cartItems = \Cart::content();
+
+            $request->session()->forget('coupon_sesssion');   
+  
             
             if(count($cartItems)===0 ){
                 return true;

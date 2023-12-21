@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="block text-center">
-                        <h1 class="text-capitalize mb-5 text-lg">My Profile</h1>
-                        <span class="text-white">Upload Prescription</span>
+                        <h1 class="text-capitalize mb-5 text-lg">My Referal</h1>
+                        <span class="text-white"></span>
                     </div>
                 </div>
             </div>

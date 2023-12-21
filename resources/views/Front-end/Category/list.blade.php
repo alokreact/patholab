@@ -1,35 +1,19 @@
-
-
-
 @extends('Front-end.layout.mainlayout')
 @section('content')
-    {{-- <section class="page-title bg-1">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="block text-center">
-                        <span class="text-white">All Health Package</span>
-                        <h1 class="text-capitalize mb-5 text-lg">Categories</h1>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
+ 
 
     <div class="container mt-4">
-        <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
+
+
+        @include('Front-end.Components.breadcrumb')
+
+        {{-- <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
             <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
             <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
-            <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>
-            
-            
-        </nav>
+            <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>    
+        </nav> --}}
    
-        <div class="row">
-
-         
+        <div class="row">        
             @include('Front-end.Components.sidebar')
             
             <main class="col-md-9">
@@ -58,7 +42,7 @@
                             <p>No Results Found!</p>
                         @endforelse
                     </div>
-
+                    
                     <div class="flex justify-end w-full mt-4 text-green-400">
                         {{ $all_categories->links() }}
                     </div>

@@ -130,7 +130,6 @@ class HomeController extends Controller
     }
 
     public function removeSelectedTest(Request $request){
-
         $selectedValues = $request->input('selectedValues');
         $previousValues = Session::get('selectedProducts', []); 
         //dd($previousValues);
@@ -148,14 +147,12 @@ class HomeController extends Controller
         Session::forget('selectedProducts');
 
         Session::put('selectedProducts', $previousValues);
-
         $combinedResults = [];
     
         foreach ($labs as $test) {
             foreach ($test->getLab as $lab) {
                 $labName = $lab->lab_name;
                 $price = $lab->pivot->price; // You might need to adjust this based on your data structure
-        
                 if (!array_key_exists($labName, $combinedResults)) {
                     $combinedResults[$labName] = [
                         'id'=>$test->id,
@@ -173,29 +170,24 @@ class HomeController extends Controller
         }
         $cart = session()->get('cart',[]);
         $cart = \Session::forget('cart');
-
         $html = view('Front-end.Search.removesearch', compact('labs','organs','combinedResults','categories'))->render();
         return response()->json(['html' => $html]);
     }
 
     public function package($id){
-
         $all_labs = Lab::all();
         $package = Package::with('getLab', 'grouptest.subtest')->find($id)->toArray();
-        // $parent_tests = $package->parenttest()->get()->toArray();
-        // $subtests = $parent_tests->subtest()->get();
-        //dd($subtests);
-        //$values = new \Illuminate\Support\Collection(explode(",", $package->parent_test_id));
-        // $parent_tests = \DB::table('parent_tests')
-
-        //     ->select('parent_tests.parent_test_name as parent_name', 'parent_tests.id as id', 'parent_tests.sub_tests as parent_sub_tests')
-        //     ->whereIn('parent_tests.id', $values)
-        //     ->get()->toArray();
-
         $cart = session()->get('cart', []);
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Package'],
+            ['label' =>  $package['package_name']],  
+        ];
+        
         //$package_id = collect($cart->pluck('package_name')->toArray());
         //dd($package_id);
-        return view('Front-end.Package.index', compact('package',  'all_labs', 'cart'));
+        return view('Front-end.Package.index', compact('package',  'all_labs', 'cart','breadcrumbs'));
     }
 
     public function  get_all_category(){
@@ -203,7 +195,13 @@ class HomeController extends Controller
         //dd($categories);
         $organs = Organ::take(12)->get();
         $categories = Category::take(12)->get();
-        return view('Front-end.Category.list', compact('all_categories','organs','categories')); 
+
+        $breadcrumbs = [
+            ['label' => 'Home', 'url' => route('home')],
+            ['label' => 'Package'],
+        ];
+       
+        return view('Front-end.Category.list', compact('all_categories','organs','categories','breadcrumbs')); 
     }
 
     public function  get_package_from_category($id){
@@ -223,12 +221,10 @@ class HomeController extends Controller
     }
 
 
-    public function getMultipleSearchTest(Request $request){
-        
+    public function getMultipleSearchTest(Request $request){   
         $test_id = $request->input('checkBoxValue');
         $tests = SubTest::with('getLab')->find($test_id);
-        //dd($tests);
-
+      
         $test_names = $tests->pluck('sub_test_name')->flatten();
         $test_ids = $tests->pluck('id')->toArray();
         //dd($test_names);
@@ -370,8 +366,6 @@ class HomeController extends Controller
         //dd($combinedResults);
         return response()->json(['tests'=>$combinedResults,'searchTerms'=>$search_test_data],Response::HTTP_OK);
     }
-
-
 
     public function removeTests(Request $request){
         // dd($request->input('testArr'));

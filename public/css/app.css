@@ -832,8 +832,8 @@ video {
 .w-\[320px\] {
   width: 320px;
 }
-.w-\[44\%\] {
-  width: 44%;
+.w-\[35\%\] {
+  width: 35%;
 }
 .w-\[45\%\] {
   width: 45%;
@@ -843,6 +843,9 @@ video {
 }
 .w-\[55px\] {
   width: 55px;
+}
+.w-\[57\%\] {
+  width: 57%;
 }
 .w-\[70\%\] {
   width: 70%;
@@ -856,8 +859,14 @@ video {
 .w-full {
   width: 100%;
 }
+.min-w-full {
+  min-width: 100%;
+}
 .max-w-6xl {
   max-width: 72rem;
+}
+.max-w-screen-md {
+  max-width: 768px;
 }
 .flex-grow {
   flex-grow: 1;
@@ -1063,6 +1072,9 @@ video {
 }
 .p-6 {
   padding: 1.5rem;
+}
+.p-8 {
+  padding: 2rem;
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -1288,6 +1300,9 @@ video {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline {
+  outline-style: solid;
 }
 .outline-0 {
   outline-width: 0px;

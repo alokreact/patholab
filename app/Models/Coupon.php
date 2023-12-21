@@ -16,4 +16,8 @@ class Coupon extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
+    public function scopeSearch($query, $keywords){
+
+        return $this->where('name', 'LIKE', '%'.$keywords.'%');
+    }
 }

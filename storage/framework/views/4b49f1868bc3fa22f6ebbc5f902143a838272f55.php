@@ -6,17 +6,8 @@
     <section class="section department-single">
         <div class="container">
 
-            <nav class="flex  mb-2 mt-0" aria-label="Breadcrumb">
-                <span class="text-gray-500 text-xs mx-2"><i class="icofont-home"></i>Home</span>
-                <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
-                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">Packages</a>
-                
-                
-                
-                <span class="mx-2 text-xs"> <i class="icofont-rounded-right"></i> </span>
-                <a href="#" class="text-black-500 text-xs font-semibold hover:underline mx-2">  <?php echo e(ucfirst($package['package_name'])); ?></a>
-              
-            </nav>
+            <?php echo $__env->make('Front-end.Components.breadcrumb', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            
        
             <div class="row">
                 <div class="col-lg-12">
